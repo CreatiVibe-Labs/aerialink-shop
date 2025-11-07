@@ -1,0 +1,207 @@
+"use client";
+import Checkbox from "@/components/common/checkbox";
+import Input from "@/components/common/input";
+import PrimaryButton from "@/components/common/primary-button";
+import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { useState } from "react";
+import { useProfile } from "@/contexts/profile-context";
+import { toast, ToastContainer } from "react-toastify";
+
+interface RegisterFormValues {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  password: string;
+  confirmPassword: string;
+  terms: boolean;
+}
+
+const RegisterForm = () => {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    watch,
+    formState: { errors, isSubmitting },
+  } = useForm<RegisterFormValues>();
+
+  const { register: registerUser } = useProfile();
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+
+  const password = watch("password");
+
+  const onSubmit = async (data: RegisterFormValues) => {
+    setErrorMessage(null);
+    setSuccessMessage(null);
+
+    try {
+      await registerUser(
+        `${data.firstName} ${data.lastName}`.trim(),
+        data.email,
+        data.password,
+        data.phone
+      );
+      toast.success("Account created successfully!");
+      // setSuccessMessage("Account created successfully!");
+      reset();
+    } catch (error: any) {
+      // Handle Laravel validation errors (422) or other errors
+      const message =
+        error?.response?.data?.error?.email?.[0] || // Extract email-specific error
+        error?.response?.data?.message || // Fallback to general message
+        "Registration failed. Please try again.";
+        toast.error(message);
+      // setErrorMessage(message);
+    }
+  };
+
+  return (
+    <div className="center-col items-start w-full">
+      {/* header */}
+      <div className="center-col items-start space-y-3">
+        <h1 className="text-4xl font-medium">Register</h1>
+        <p className="text-light-gray">Create your new account</p>
+      </div>
+      {/* form */}
+      <form
+      method="post"
+        onSubmit={handleSubmit(onSubmit)}
+        className="w-full max-w-[80%] max-xl:max-w-full space-y-5 mt-10"
+      >
+        {/* First and Last name */}
+        <div className="grid grid-cols-2 gap-3 max-md:grid-cols-1">
+          <div className="space-y-0.5">
+            <Input
+              type="text"
+              placeholder="First Name"
+              {...register("firstName", { required: "First name is required" })}
+            />
+            {errors.firstName && (
+              <span className="text-sm text-red-500">{errors.firstName.message}</span>
+            )}
+          </div>
+          <div className="space-y-0.5">
+            <Input type="text" placeholder="Last Name" {...register("lastName")} />
+          </div>
+        </div>
+
+        {/* Email and Phone */}
+        <div className="grid grid-cols-2 gap-3 max-md:grid-cols-1">
+          <div className="space-y-0.5">
+            <Input
+              type="email"
+              placeholder="Email"
+              {...register("email", {
+                required: "Email is required",
+                pattern: {
+                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                  message: "Enter a valid email",
+                },
+              })}
+            />
+            {errors.email && (
+              <span className="text-sm text-red-500">{errors.email.message}</span>
+            )}
+          </div>
+          <div className="space-y-0.5">
+            <Input
+              type="tel"
+              placeholder="Phone Number"
+              {...register("phone", {
+                required: "Phone number is required",
+                minLength: {
+                  value: 11,
+                  message: "Phone must be at least 11 digits",
+                },
+              })}
+            />
+            {errors.phone && (
+              <span className="text-sm text-red-500">{errors.phone.message}</span>
+            )}
+          </div>
+        </div>
+
+        {/* Password */}
+        <div className="space-y-0.5">
+          <Input
+            type="password"
+            placeholder="Password"
+            {...register("password", {
+              required: "Password is required",
+              minLength: {
+                value: 6,
+                message: "Password must be at least 6 characters",
+              },
+            })}
+          />
+          {errors.password && (
+            <span className="text-sm text-red-500">{errors.password.message}</span>
+          )}
+        </div>
+
+        {/* Confirm Password */}
+        <div className="space-y-0.5">
+          <Input
+            type="password"
+            placeholder="Confirm Password"
+            {...register("confirmPassword", {
+              required: "Confirm password is required",
+              validate: (value) => value === password || "Passwords do not match",
+            })}
+          />
+          {errors.confirmPassword && (
+            <span className="text-sm text-red-500">
+              {errors.confirmPassword.message}
+            </span>
+          )}
+        </div>
+
+        {/* Terms checkbox */}
+        <div className="flex items-center gap-2">
+          <Checkbox
+            label={
+              <>
+                I agree to all the{" "}
+                <span className="text-primary cursor-pointer">Terms</span> and{" "}
+                <span className="text-primary cursor-pointer">Privacy Policies</span>
+              </>
+            }
+            {...register("terms", {
+              required: "You must agree before creating an account",
+            })}
+          />
+        </div>
+        {errors.terms && (
+          <span className="text-sm text-red-500">{errors.terms.message}</span>
+        )}
+
+        {/* Error / Success messages */}
+        {errorMessage && (
+          <p className="text-sm text-red-500 font-medium">{errorMessage}</p>
+        )}
+        {successMessage && (
+          <p className="text-sm text-green-600 font-medium">{successMessage}</p>
+        )}
+
+        {/* form bottom */}
+        <div className="center-col space-y-2">
+          <PrimaryButton type="submit" loading={isSubmitting} disabled={isSubmitting}>
+            {isSubmitting ? "Creating account..." : "Create account"}
+          </PrimaryButton>
+
+          <p className="text-sm">
+            Already have an account?{" "}
+            <Link href={"/login"} className="text-primary hover:underline font-medium">
+              Login
+            </Link>
+          </p>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export default RegisterForm;
