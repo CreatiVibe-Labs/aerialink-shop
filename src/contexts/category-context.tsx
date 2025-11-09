@@ -35,7 +35,7 @@ type Action =
   | { type: "CAT_START" }
   | { type: "CAT_SUCCESS"; payload: Category[] }
   | { type: "FETCH_ALL_START" }
-  | { type: "FETCH_ALL_SUCCESS"; payload: { products: Product[]; meta: Meta } }
+  | { type: "FETCH_ALL_SUCCESS"; payload: { products: Product[]; meta: Meta,   isFilterFetch?: boolean;  } }
   | {
       type: "SET_FILTERS";
       payload: { category?: number | null; sort?: string };
@@ -86,21 +86,48 @@ function categoryReducer(state: State, action: Action): State {
     case "FETCH_ALL_START":
       return { ...state, allLoading: true };
 
+    // case "FETCH_ALL_SUCCESS":
+    //   return {
+    //     ...state,
+    //     allLoading: false,
+    //     allProducts: action.payload.products,
+    //     allMeta: action.payload.meta,
+    //     filteredProducts: action.payload.products,
+    //     filteredMeta: action.payload.meta,
+    //   };
+
     case "FETCH_ALL_SUCCESS":
       return {
         ...state,
         allLoading: false,
-        allProducts: action.payload.products,
-        allMeta: action.payload.meta,
+        allProducts: action.payload.isFilterFetch
+          ? state.allProducts
+          : action.payload.products,
+        allMeta: action.payload.isFilterFetch
+          ? state.allMeta
+          : action.payload.meta,
         filteredProducts: action.payload.products,
         filteredMeta: action.payload.meta,
       };
 
+    // case "SET_FILTERS":
+    //   return {
+    //     ...state,
+    //     selectedCategory: action.payload.category ?? state.selectedCategory,
+    //     selectedSort: action.payload.sort ?? state.selectedSort,
+    //   };
+
     case "SET_FILTERS":
       return {
         ...state,
-        selectedCategory: action.payload.category ?? state.selectedCategory,
-        selectedSort: action.payload.sort ?? state.selectedSort,
+        selectedCategory:
+          action.payload.category !== undefined
+            ? action.payload.category
+            : state.selectedCategory,
+        selectedSort:
+          action.payload.sort !== undefined
+            ? action.payload.sort
+            : state.selectedSort,
       };
 
     case "FILTER_LOADING_START":
@@ -173,16 +200,49 @@ export const CategoryProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  // const fetchAllProducts = async (
+  //   categoryId: number | null = null,
+  //   page = 1,
+  //   append = false
+  // ) => {
+  //   dispatch({ type: "FETCH_ALL_START" });
+  //   dispatch({ type: "FILTER_LOADING_START" });
+  //   try {
+  //     let url = `${process.env.NEXT_PUBLIC_API_URL}/products?page=${page}`;
+  //     if (categoryId && categoryId !== null) {
+  //       url = `${process.env.NEXT_PUBLIC_API_URL}/products?category_id=${categoryId}`;
+  //     }
+
+  //     const res = await api.get(url);
+  //     const data = res.data.data || res.data;
+
+  //     const payload = {
+  //       products: append
+  //         ? [...state.allProducts, ...data.products]
+  //         : data.products,
+  //       meta: data.meta,
+  //     };
+
+  //     dispatch({ type: "FETCH_ALL_SUCCESS", payload });
+  //   } catch (err: any) {
+  //     console.error("Products error:", err);
+  //     dispatch({ type: "FETCH_ERROR", payload: "Failed to fetch products" });
+  //   } finally {
+  //     dispatch({ type: "FILTER_LOADING_END" });
+  //   }
+  // };
+
   const fetchAllProducts = async (
     categoryId: number | null = null,
     page = 1,
-    append = false
+    append = false,
+    isFilterFetch = false
   ) => {
     dispatch({ type: "FETCH_ALL_START" });
     dispatch({ type: "FILTER_LOADING_START" });
     try {
       let url = `${process.env.NEXT_PUBLIC_API_URL}/products?page=${page}`;
-      if (categoryId && categoryId !== null) {
+      if (categoryId) {
         url = `${process.env.NEXT_PUBLIC_API_URL}/products?category_id=${categoryId}`;
       }
 
@@ -191,9 +251,10 @@ export const CategoryProvider = ({ children }: { children: ReactNode }) => {
 
       const payload = {
         products: append
-          ? [...state.allProducts, ...data.products]
+          ? [...state.filteredProducts, ...data.products]
           : data.products,
         meta: data.meta,
+        isFilterFetch,
       };
 
       dispatch({ type: "FETCH_ALL_SUCCESS", payload });
@@ -220,7 +281,7 @@ export const CategoryProvider = ({ children }: { children: ReactNode }) => {
     if (id == null) {
       await fetchAllProducts(null, 1);
     } else {
-      await fetchAllProducts(id, 1);
+      await fetchAllProducts(id, 1, false, true); 
     }
   };
 
