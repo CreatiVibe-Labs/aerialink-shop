@@ -86,7 +86,7 @@ const ProductCard: FC<ProductCardI> = ({ product, onHeartOnClick }) => {
 
   return (
     <>
-      <div className="bg-white cover-shadow relative rounded-[14px] grid grid-cols-1 p-3 max-sm:p-2 px-4 gap-2">
+      <div className="bg-white cover-shadow relative rounded-[14px] grid grid-cols-1 p-4 max-sm:p-2 px-4 gap-2">
         {/* Wishlist Icon */}
         <div
           className={`absolute top-1 right-1 max-sm:top-1 max-sm:right-1 cursor-pointer z-10 transition-colors ${
@@ -108,15 +108,16 @@ const ProductCard: FC<ProductCardI> = ({ product, onHeartOnClick }) => {
 
         {/* Image + Link */}
         <Link href={productInnerLink} className="w-full">
-          <div className="w-full lg:w-[181px] mt-[45px] mx-auto min-h-[128px] max-md:min-h-40 max-sm:min-h-32 relative">
+          <div className="w-full h-full min-h-[200px] max-h-[200px] relative">
             <Image
               src={product?.images?.[0]?.url || "/fallback-image.jpg"}
               alt={
                 product?.translations?.[language === "EN" ? "en" : "jp"]
                   ?.name || "Product"
               }
-              fill
-              className="object-cover aspect-square"
+              width={500}
+              height={500}
+              className="object-cover w-full h-full rounded-md"
             />
           </div>
         </Link>
@@ -124,7 +125,7 @@ const ProductCard: FC<ProductCardI> = ({ product, onHeartOnClick }) => {
         {/* Details */}
         <div className="center-col items-start max-sm:text-xs gap-[6.23px]">
           <Link href={productInnerLink}>
-            <h2 className="text-[#666664] font-[500] text-[13px] leading-[19px] font-font-albert-sans">
+            <h2 className="text-[#666664] font-[500] text-[13px] leading-[19px] font-font-albert-sans line-clamp-1">
               {language === "EN"
                 ? product?.translations?.en?.name
                 : product?.translations?.jp?.name}

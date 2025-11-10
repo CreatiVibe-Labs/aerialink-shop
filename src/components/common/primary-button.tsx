@@ -29,7 +29,7 @@ const PrimaryButton: React.FC<ButtonProps> = ({
   return (
     <button
       disabled={disabled || loading}
-      className={`${baseStyles} ${variantStyles} ${
+      className={`cursor-pointer ${baseStyles} ${variantStyles} ${
         disabled || loading ? disabledStyles : ""
       } ${className}`}
       {...rest}
