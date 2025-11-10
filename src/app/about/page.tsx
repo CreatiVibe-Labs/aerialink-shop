@@ -59,10 +59,7 @@ export default function Page() {
 
   return (
     <main
-      className="flex flex-col items-center w-full  bg-[FFFFFF] text-gray-700 opacity-500 mt-3
-
-      "
-    >
+      className="flex flex-col items-center w-full  bg-[FFFFFF] text-gray-700 opacity-500 mt-3">
       {/* Hero Section */}
       <section className="relative w-full h-[400px] md:h-[580px] my-1.5">
         <Image
@@ -190,7 +187,7 @@ export default function Page() {
           </div>
 
           <button
-            className="font-poppins font-[500] leading-[25.71px] bg-primary text-white -700 text-[17px] 
+            className="font-poppins font-[500] leading-[25.71px] bg-primary text-white text-[17px] 
           px-10 py-2 rounded-[14px] w-[204px] h-[53px] cursor-pointer hover:bg-primary/80"
           >
             Contact Us
@@ -320,7 +317,7 @@ export default function Page() {
             <div
               key={idx}
               className="bg-white rounded-[14px] min-h-[279px] px-[25px] py-[34px]
-            shadow-[0px_1px_2px_0px_rgba(60,64,67,0.3),0px_2px_6px_2px_rgba(60,64,67,0.15)]
+           shadow-[0px_2.25px_11.26px_2.25px_#00000033]
             border border-[#0000004D] flex flex-col items-center text-center"
             >
               <h1 className="text-[36px] text-[#666664] font-bold leading-[33.79px] mb-[27.04px]">
