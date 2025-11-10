@@ -41,7 +41,7 @@ const VerifyCodeForm = () => {
       <BackButton
         href="/login"
         label="back to login"
-        className="absolute top-5 max-md:static max-md:mb-5 max-md:-ml-2"
+        className="mb-5 max-md:static max-md:mb-5 max-md:-ml-2"
       />
 
       <div className="center-col items-start space-y-3">
@@ -81,7 +81,7 @@ const VerifyCodeForm = () => {
           Didn’t get a code?{" "}
           <button
             type="button"
-            className="text-primary font-medium hover:underline"
+            className="text-primary font-medium hover:underline cursor-pointer"
             onClick={() => toast.info("Resend code clicked")}
           >
             Resend

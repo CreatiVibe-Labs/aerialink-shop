@@ -81,7 +81,7 @@ export const ProfileProvider = ({ children }: { children: React.ReactNode }) => 
   const [sessions, setSessions] = useState<Session[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Restore user from cookies at startup
+  // Restore user from cookies at startup   
   useEffect(() => {
     const token = Cookies.get("token");
     const userData = Cookies.get("user");
@@ -128,10 +128,18 @@ export const ProfileProvider = ({ children }: { children: React.ReactNode }) => 
     try {
       const res = await api.post("/login", { email, password });
       if (!res.data.success) throw new Error(res.data.message || "Login failed");
-
       const { token, user } = res.data.data;
-      Cookies.set("token", token, { expires: 30 });
-      Cookies.set("user", JSON.stringify(user), { expires: 30 });
+      console.log({token, user});
+        Cookies.set("token", token, { expires: 30, sameSite: "Lax", secure: false, path: "/" });
+        Cookies.set("user", JSON.stringify(user), { expires: 30 });
+        // Debug: Check if cookies are set and log environment
+        if (typeof window !== "undefined") {
+          console.log("[DEBUG] Cookies.set called on client");
+          console.log("[DEBUG] token:", Cookies.get("token"));
+          console.log("[DEBUG] user:", Cookies.get("user"));
+        } else {
+          console.log("[DEBUG] Cookies.set called on server (should not happen)");
+        }
       Cookies.remove("reset_email");
       Cookies.remove("reset_otp");
 
@@ -154,7 +162,7 @@ export const ProfileProvider = ({ children }: { children: React.ReactNode }) => 
     setUser(null);
     setWallet(null);
     setSessions([]);
-    router.push("/login");
+    // router.push("/login");
   };
 
   // --- Fetch profile
