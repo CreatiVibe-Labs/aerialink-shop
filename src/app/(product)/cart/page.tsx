@@ -52,7 +52,7 @@ const CartPage = () => {
           <MobileCartCard
             key={item.id}
             id={item.id}
-            image={item.images[0].url}
+            image={item?.images[0]?.url}
             name={item.translations.en.name}
             price={item.price}
             quantity={item.quantity}

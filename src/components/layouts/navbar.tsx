@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { FiShoppingCart } from "react-icons/fi";
@@ -31,17 +32,19 @@ const Navbar = () => {
   }, [isOpen]);
 
   return (
-    <nav className=" center  z-50 w-full sticky top-5">
-      <div className="bg-primary p-4  py-3 rounded-full  center-between max-w-7xl w-full max-2xl:mx-15 max-md:mx-10 max-sm:mx-3">
+    <nav className="z-50 sticky top-5 xl:px-0 lg:px-4 md:px-4 px-4">
+      <div className="bg-primary rounded-full max-w-7xl w-full mx-auto flex justify-between items-center py-3 px-8">
         {/* Mobile Menu Button */}
         <div className="center">
           <button
             onClick={handleToggle}
-            className="menu-btn text-white focus:outline-none mr-2 md:hidden"
+            className="menu-btn text-white focus:outline-none mr-2 ml-[-15px] md:hidden"
           >
             <IoIosMenu size={32} strokeWidth={1} />
           </button>
-          <div className="text-white font-bold text-xl">@erialink</div>
+          <div className="text-white font-bold text-xl">
+            <Image src={'/assets/common/ecommerce-logo.png'} width={100} height={100} alt="Aerialink" className="xl:w-12 xl:h-12 lg:w-12 lg:h-12 md:w-10 md:h-10 h-8 w-8 object-contain text-left" />
+          </div>
         </div>
         {/* shoping cart for mobile */}
         <div className="md:hidden relative">
@@ -52,7 +55,7 @@ const Navbar = () => {
           </div>
         </div>
         {/* Desktop Navigation */}
-        <ul className="hidden md:flex space-x-6">
+        <ul className="hidden md:flex xl:space-x-16 lg:space-x-16 md:space-x-10 font-semibold xl:text-2xl lg:text-xl md:text-lg">
           <li>
             <Link
               href="/"
@@ -82,15 +85,6 @@ const Navbar = () => {
           </li>
           <li>
             <Link
-              href="/wishlist/"
-              className="text-white hover:text-gray-200"
-              onClick={handleClose}
-            >
-              Wishlist
-            </Link>
-          </li>
-          <li>
-            <Link
               href="/about"
               className="text-white hover:text-gray-200"
               onClick={handleClose}
@@ -102,15 +96,13 @@ const Navbar = () => {
 
         {/* Mobile Sidebar */}
         <div
-          className={`fixed inset-0 bg-black/10 z-40 transition-opacity ${
-            isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
-          }`}
+          className={`fixed inset-0 bg-black/10 z-40 transition-opacity ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+            }`}
           onClick={handleClose}
         >
           <div
-            className={`sidebar fixed top-0 left-0 w-64 bg-primary h-full p-6 transform transition-transform ${
-              isOpen ? "translate-x-0" : "-translate-x-full"
-            }`}
+            className={`sidebar fixed top-0 left-0 w-64 bg-primary h-full p-6 transform transition-transform ${isOpen ? "translate-x-0" : "-translate-x-full"
+              }`}
           >
             <button
               onClick={handleToggle}
@@ -166,16 +158,6 @@ const Navbar = () => {
                   onClick={handleClose}
                 >
                   About us
-                </a>
-              </li>
-
-              <li>
-                <a
-                  href="/wishlist"
-                  className="text-white hover:text-gray-200 block"
-                  onClick={handleClose}
-                >
-                  Wishlist
                 </a>
               </li>
             </ul>

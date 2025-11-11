@@ -20,7 +20,7 @@ const SecondaryNavbar = () => {
   const router = useRouter();
 
   return (
-    <div className="max-w-7xl mx-auto mt-8 flex items-center justify-center w-full space-x-3 max-md:space-x-2 max-2xl:px-15 max-md:px-10 max-sm:px-3">
+    <div className="my-8 max-w-7xl w-full mx-auto xl:px-5 lg:px-10 md:px-10 px-5 flex justify-between items-center xl:gap-5 lg:gap-5 md:gap-5 gap-2">
         {/* Language Selector */}
       <Dropdown
         prefixIcon={<TfiWorld size={20} />}
@@ -88,10 +88,10 @@ const SecondaryNavbar = () => {
           onChange={(val: string) => console.log("Dropdown changed:", val)}
         />
       ) : (
-        <div className="relative max-w-fit z-[30] flex flex-col items-center">
+        <div className="max-md:hidden relative max-w-fit z-[30] flex flex-col items-center">
           <Link
             href="/login"
-            className="max-md:hidden text-white bg-primary rounded-2xl px-10 py-2 flex items-center justify-center space-x-2 cursor-pointer select-none"
+            className="text-white bg-primary rounded-2xl px-10 py-2 flex items-center justify-center space-x-2 cursor-pointer select-none"
           >
             Login
           </Link>

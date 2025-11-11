@@ -10,6 +10,7 @@ import { useCart } from "@/contexts/cart-context";
 import { useWishlist } from "@/contexts/wishlist-context";
 import { useProfile } from "@/contexts/profile-context";
 import LoginAlertModal from "../home/right-section/components/loginAlert";
+import toast, { Toaster } from "react-hot-toast";
 
 // Helper: Render stars with half-star support
 const renderStars = (rating: number, reviewCount: number) => {
@@ -40,7 +41,7 @@ const renderStars = (rating: number, reviewCount: number) => {
       ))}
 
       {/* Review Count */}
-      <span className="text-[#666664] text-[11px] font-[600] pl-1 leading-[16px] font-font-albert-sans">
+      <span className="text-[#666664] text-base font-[600] pl-1 leading-[16px] font-font-albert-sans">
         ({reviewCount})
       </span>
     </div>
@@ -63,9 +64,20 @@ const ProductCard: FC<ProductCardI> = ({ product, onHeartOnClick }) => {
 
   const inCart = isInCart(product.id);
   const inWishlist = isInWishlist(product.id);
+  const [addToCartLoading, setAddToCartLoading] = useState(false);
+  const [buttonText, setButtonText] = useState("Add to Cart");
 
   const handleAddToCart = () => {
-    if (!inCart) addToCart(product);
+    setAddToCartLoading(true);
+    addToCart(product);
+    setTimeout(() => {
+      toast.success("Product added to cart");
+      setButtonText("Added");
+      setTimeout(() => {
+        setButtonText("Add to Cart");
+      }, 1000);
+      setAddToCartLoading(false);
+    }, 1000);
   };
 
   const handleHeartClick = async (e: React.MouseEvent) => {
@@ -86,14 +98,14 @@ const ProductCard: FC<ProductCardI> = ({ product, onHeartOnClick }) => {
 
   return (
     <>
-      <div className="bg-white cover-shadow relative rounded-[14px] grid grid-cols-1 p-4 max-sm:p-2 px-4 gap-2">
+      <Toaster position="top-right" />
+      <div className="bg-[#FFFDFA] cover-shadow relative rounded-[14px] grid grid-cols-1 p-4 max-sm:p-2 px-4 gap-2">
         {/* Wishlist Icon */}
         <div
-          className={`absolute top-1 right-1 max-sm:top-1 max-sm:right-1 cursor-pointer z-10 transition-colors ${
-            loading
-              ? "opacity-50 cursor-not-allowed"
-              : "text-[#C5C9C5] hover:text-red-500"
-          }`}
+          className={`absolute top-1 right-1 max-sm:top-1 max-sm:right-1 cursor-pointer z-10 transition-colors ${loading
+            ? "opacity-50 cursor-not-allowed"
+            : "text-[#C5C9C5] hover:text-red-500"
+            }`}
           onClick={handleHeartClick}
         >
           {inWishlist ? (
@@ -108,16 +120,15 @@ const ProductCard: FC<ProductCardI> = ({ product, onHeartOnClick }) => {
 
         {/* Image + Link */}
         <Link href={productInnerLink} className="w-full">
-          <div className="w-full h-full min-h-[200px] max-h-[200px] relative">
+          <div className="w-full h-full xl:min-h-[200px] lg:min-h-[200px] md:min-h-[200px] min-h-[150px] xl:max-h-[200px] lg:max-h-[200px] md:max-h-[200px] max-h-[150px] relative">
             <Image
-              src={product?.images?.[0]?.url || "/fallback-image.jpg"}
+              src={product?.images?.[0]?.url || "/fallback-image.png"}
               alt={
                 product?.translations?.[language === "EN" ? "en" : "jp"]
                   ?.name || "Product"
               }
-              width={500}
-              height={500}
-              className="object-cover w-full h-full rounded-md"
+              fill
+              className="object-cover w-56 h-56 rounded-md"
             />
           </div>
         </Link>
@@ -125,35 +136,35 @@ const ProductCard: FC<ProductCardI> = ({ product, onHeartOnClick }) => {
         {/* Details */}
         <div className="center-col items-start max-sm:text-xs gap-[6.23px]">
           <Link href={productInnerLink}>
-            <h2 className="text-[#666664] font-[500] text-[13px] leading-[19px] font-font-albert-sans line-clamp-1">
+            <h2 className="text-[#666664] font-[500] text-base leading-[19px] my-1 font-font-albert-sans line-clamp-1">
               {language === "EN"
                 ? product?.translations?.en?.name
                 : product?.translations?.jp?.name}
             </h2>
           </Link>
 
-          <h3 className="text-[#DB4444] font-[500] text-[13px] leading-[19px] font-font-albert-sans">
+          <h3 className="text-[#DB4444] font-[500] text-base leading-[19px] my-2 font-font-albert-sans">
             $
             {typeof product?.price === "string"
               ? parseFloat(product.price).toFixed(2)
               : product?.price}
           </h3>
 
-          {/* Dynamic Rating */}
-          {renderStars(avgRating, reviewCount)}
+          <div className="my-1">
+            {/* Dynamic Rating */}
+            {renderStars(avgRating, reviewCount)}
+          </div>
 
           {/* Add to Cart */}
           <div className="mt-1 w-full z-10 max-sm:mt-1">
             <button
               onClick={handleAddToCart}
-              disabled={inCart || loading}
+              disabled={addToCartLoading}
               className={`capitalize 
               bg-primary hover:bg-primary/80 cursor-pointer
-              rounded-[10.51px] text-[13px] leading-[19px] font-[500]  min-h-[32px] w-full text-[#FFFAFA] center max-sm:min-h-7 
-                
-                `}
+              rounded-xl text-base leading-[19px] font-[500] min-h-[40px] w-full text-[#FFFAFA] center`}
             >
-              {inCart ? "Already in Cart" : "Add to Cart"}
+              {addToCartLoading ? 'Adding...' : buttonText}
             </button>
           </div>
         </div>

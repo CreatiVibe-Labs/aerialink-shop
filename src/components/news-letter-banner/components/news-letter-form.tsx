@@ -15,15 +15,13 @@ const NewsLetterForm = () => {
 
   const onSubmit = async (data: NewsletterForm) => {
     console.log("Newsletter data:", data);
-
     await new Promise((res) => setTimeout(res, 1000));
-
     reset();
   };
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="w-full max-w-[60%] space-y-3 max-md:max-w-[90%] max-sm:max-w-full"
+      className="w-full xl:max-w-[60%] lg:max-w-[60%] md:max-w-[70%] space-y-3"
     >
       {/* email input field */}
       <div className="bg-white rounded-full center justify-start px-3 height w-full max-md:min-h-10">

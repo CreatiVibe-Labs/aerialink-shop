@@ -9,8 +9,8 @@ const NewsLetterBanner: React.FC = () => {
       {/* container */}
       <div className="grid grid-cols-2 max-sm:grid-cols-1 max-w-7xl mx-auto">
         {/* left side */}
-        <div className="center max-sm:hidden">
-          <h2 className="text-[3vmax] max-md:text-[2.5vmax] italic font-bold  text-white">
+        <div className="center">
+          <h2 className="xl:text-5xl lg:text-4xl md:text-3xl text-2xl xl:mb-0 lg:mb-0 md:mb-0 mb-5 italic font-extrabold text-white">
             STAY UPTO DATE ABOUT OUR LATEST OFFERS
           </h2>
         </div>

@@ -17,7 +17,7 @@ const LoadButton: FC<LoadButtonProps> = ({
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`border-2 border-primary rounded-xl min-h-14 max-w-[20rem] w-full font-medium text-primary cursor-pointer capitalize max-md:max-w-fit max-md:min-h-9 max-md:px-4 disabled:opacity-50 disabled:cursor-not-allowed ${className}`}
+      className={`border-2 border-primary rounded-xl min-h-14 w-full font-medium text-primary cursor-pointer capitalize max-md:px-4 disabled:opacity-50 disabled:cursor-not-allowed max-w-[260px] ${className}`}
     >
       {children}
     </button>

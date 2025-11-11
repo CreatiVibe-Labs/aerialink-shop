@@ -81,11 +81,11 @@ const SearchbarComponent = () => {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onFocus={handleFocus}
-          className="w-full h-full outline-none border-none md:px-5 min-h-10 text-sm md:text-base rounded-full"
+          className="w-full h-full outline-none border-none md:px-5 px-4 min-h-10 text-sm md:text-base rounded-full"
         />
         <button
           type="submit"
-          className="md:bg-primary max-md:text-primary md:px-10 min-h-10 rounded-full text-white h-full flex items-center justify-center"
+          className="md:bg-primary max-md:text-primary md:px-10 min-h-10 rounded-full xl:mr-0 lg:mr-0 md:mr-0 mr-3 text-white h-full flex items-center justify-center"
         >
           <CiSearch strokeWidth={0.5} className="text-2xl" />
         </button>

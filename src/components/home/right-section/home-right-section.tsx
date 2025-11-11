@@ -7,11 +7,12 @@ import FilterBar from "./components/filterbar";
 import LoadButton from "@/components/common/load-button";
 import GridSection from "../grid-section/grid-section";
 import { useCategory } from "@/contexts/category-context";
+import { useState } from "react";
 import ProductsSkeletonSections from "./components/products-skeleton-sections";
 
 const HomeRightSection = () => {
   const { state, loadMore } = useCategory();
-  const { 
+  const {
     allProducts,
     allLoading,
     filteredProducts,
@@ -19,8 +20,16 @@ const HomeRightSection = () => {
     filteredMeta,
   } = state;
 
+  const [visibleCount, setVisibleCount] = useState(8); // initially 8 products
+
+  const handleLoadMore = () => {
+    setVisibleCount((prev) => prev + 8); // show 8 more each click
+  };
+
+  const visibleProducts = filteredProducts.slice(0, visibleCount);
+
   return (
-    <div className="col-span-4 px-3 max-sm:px-0 space-y-10 max-md:space-y-5 max-2xl:pr-0 max-xl:col-span-4 max-sm:col-span-1">
+    <div className="flex flex-col gap-10">
       <TopBanner />
 
       {/* All Products */}
@@ -28,8 +37,8 @@ const HomeRightSection = () => {
         {allLoading ? (
           <ProductsSkeletonSections />
         ) : allProducts.length > 0 ? (
-          allProducts.map((product) => (
-            <ProductCard key={product.id} product={product} onHeartOnClick={() => {}} />
+          allProducts.slice(0, 4).map((product) => (
+            <ProductCard key={product.id} product={product} onHeartOnClick={() => { }} />
           ))
         ) : (
           <p className="col-span-full text-center text-gray-500 py-8">No products</p>
@@ -42,11 +51,15 @@ const HomeRightSection = () => {
 
       {/* Filtered Products */}
       <div className="grid grid-cols-4 gap-4 max-sm:gap-3 max-2xl:grid-cols-3 max-xl:grid-cols-2 max-md:grid-cols-1 max-sm:grid-cols-2">
-        {filterLoading  ? (
+        {filterLoading ? (
           <ProductsSkeletonSections />
         ) : filteredProducts.length > 0 ? (
-          filteredProducts.map((product) => (
-            <ProductCard key={product.id} product={product} onHeartOnClick={() => {}} />
+          visibleProducts.map((product) => (
+            <ProductCard
+              key={product.id}
+              product={product}
+              onHeartOnClick={() => { }}
+            />
           ))
         ) : (
           <p className="col-span-full text-center text-gray-500 py-8">
@@ -56,10 +69,10 @@ const HomeRightSection = () => {
       </div>
 
       {/* Load More */}
-      {filteredMeta && filteredMeta.current_page < filteredMeta.last_page && (
+      {!filterLoading && visibleCount < filteredProducts.length && (
         <div className="center">
-          <LoadButton onClick={loadMore} disabled={allLoading}>
-            {allLoading ? "Loading..." : "Load More"}
+          <LoadButton onClick={handleLoadMore}>
+            Load More
           </LoadButton>
         </div>
       )}
