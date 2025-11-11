@@ -44,7 +44,7 @@ const CartTable: React.FC<CartTableProps> = ({
               <td className="py-3 pl-6 flex items-center gap-3">
                 <div className="relative w-16 h-16 p-0.5 border-2 border-primary rounded-xl">
                   <img
-                    src={item.images[0].url}
+                    src={item?.images[0]?.url}
                     alt={item.translations.en.name}
                     className="rounded-md w-full h-full object-cover"
                   />

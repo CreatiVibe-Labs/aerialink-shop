@@ -108,7 +108,7 @@ const Dropdown: FC<DropdownI> = ({
       >
         {prefixIcon ?? ""}
         <span
-          className={`${hideLabelOnMobile ? "max-md:hidden" : ""} ${labelClassName} uppercase`}
+          className={`${hideLabelOnMobile ? "" : ""} ${labelClassName} uppercase`}
         >
           {label}
         </span>

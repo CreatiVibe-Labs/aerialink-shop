@@ -20,11 +20,11 @@ const HomeBottomChipsSection = () => {
   },
   {
    icon : <ImStatsBars />,
-   label : "Fast and easy returns"
+   label : "Best Quality"
   },
  ]
   return (
-    <div className='max-w-7xl mx-auto grid grid-cols-4 gap-4 mb-5 max-xl:px-5 max-md:px-3 max-lg:grid-cols-2 max-sm:grid-cols-2 max-sm:gap-2'>
+    <div className='grid grid-cols-4 gap-4 my-5 max-lg:grid-cols-2 max-sm:grid-cols-2 max-sm:gap-2'>
       {cardData.map((item,index)=> <HomeBottomChipCard key={index} icon={item.icon} lable={item.label}/>)}
     </div>
   );

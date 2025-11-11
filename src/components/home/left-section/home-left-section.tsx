@@ -4,12 +4,12 @@ import SidebarPoints from "./components/sidebar-points";
 import SidebarPoster from "./components/sidebar-poster";
 
 const HomeLeftSection = () => {
-  
+
   return (
-    <div className="bg-[#EBECF0] rounded-xl max-w-[280px] p-2 space-y-3 max-xl:col-span-2 max-sm: col-span-1 max-xl:max-w-full max-md:mt-2">
+    <div className="bg-[#EBECF0] rounded-xl p-2 space-y-3 flex flex-col w-full">
       {/* iframe youtube video */}
       <iframe
-        className="aspect-video rounded-xl"
+        className="aspect-video rounded-xl w-full"
         src="https://www.youtube.com/embed/UV0mhY2Dxr0?si=5WU1KEIaRCILY_RV"
         title="YouTube video player"
         frameBorder="0"
@@ -17,11 +17,10 @@ const HomeLeftSection = () => {
         referrerPolicy="strict-origin-when-cross-origin"
         allowFullScreen
       ></iframe>
-      {/* posters */}
-     <SidebarPoster/>
-     <LinksShortcuts/>
-     <OfficeTimingComponent/>
-     <SidebarPoints/>
+      <SidebarPoster />
+      <LinksShortcuts />
+      <OfficeTimingComponent />
+      <SidebarPoints />
     </div>
   );
 };

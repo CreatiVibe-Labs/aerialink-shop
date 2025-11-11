@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { FaFacebook, FaGithub, FaInstagram, FaTwitter } from "react-icons/fa";
 
@@ -43,21 +44,21 @@ const Footer = () => {
     },
   ];
   return (
-    <footer className="w-full bg-white border-t border-gray-200 py-10">
+    <footer className="w-full bg-white py-10">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         {/* Top Section */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 items-start text-center md:text-left">
           {/* Logo + Description */}
           <div>
-            <h2 className="text-2xl font-bold italic">@erialink</h2>
-            <p className="mt-2 text-sm text-gray-500 max-w-xs mx-auto md:mx-0">
+            <Image src={'/assets/common/ecommerce-logo.png'} width={100} height={100} alt="Aerialink" className="xl:w-18 xl:h-18 xl:mr-auto lg:w-12 lg:h-12 md:w-10 md:h-10 h-12 w-12 object-contain text-center" />
+            <p className="mt-2 text-base text-[#AFB1AE] max-w-[70%]">
               We have clothes that suits your style and which you’re proud to
               wear. From women to men.
             </p>
           </div>
 
           {/* Links */}
-          <div className="flex flex-col gap-2 items-center md:items-start">
+          <div className="flex flex-col gap-4 items-center md:items-start">
             <a href="#" className="text-gray-700 hover:text-primary">
               Terms of service
             </a>

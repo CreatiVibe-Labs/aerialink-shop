@@ -7,17 +7,26 @@ import React from "react";
 const HomePage = () => {
   return (
     <>
-      <div className="grid grid-cols-5 max-xl:grid-cols-6 max-sm:flex max-sm:flex-col-reverse mb-10 max-2xl:px-5 gap-x-1 min-h-screen max-w-7xl w-full mx-auto max-md:px-5 max-sm:px-3 mt-5 ">
+      <div className="flex xl:flex-row lg:flex-row md:flex-row flex-col-reverse gap-5 items-stretch">
         {/* left */}
-        <HomeLeftSection />
+        <div className="xl:w-[20%] lg:w-[20%] md:w-[30%] flex">
+          <HomeLeftSection />
+        </div>
+
         {/* right */}
-        <HomeRightSection />
+        <div className="xl:w-[80%] lg:w-[80%] md:w-[70%] flex">
+          <div className="w-full flex flex-col">
+            <HomeRightSection />
+          </div>
+        </div>
       </div>
+
       {/* home bottom section */}
-      <GridSection className="max-md:hidden " />
-      {/*  bottom chips card */}
+      <GridSection className="max-md:hidden" />
+      {/* bottom chips card */}
       <HomeBottomChipsSection />
     </>
+
   );
 };
 
