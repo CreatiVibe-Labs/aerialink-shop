@@ -12,7 +12,8 @@ import api from "@/lib/api";
 
 interface Category {
   id: number;
-  translations: { en: { name: string }; jp: { name: string } };
+  name_en: string,
+  name_jp: string,
 }
 
 interface State {

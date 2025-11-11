@@ -135,14 +135,13 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
 
   // ---- SINGLE ----
   // Inside ProductProvider component
-  const fetchProduct = useCallback(async (id: number) => {
+  const fetchProduct = useCallback(async (id: string) => {
     dispatch({ type: "FETCH_PRODUCT_START" });
     try {
       const res = await api.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/products?id=${id}`
+        `${process.env.NEXT_PUBLIC_API_URL}/products?slug=${id}`
       );
       if (res.status !== 200) throw new Error(`HTTP error ${res.status}`);
-
       const product: Product = res.data.data.product;
 
       dispatch({ type: "FETCH_PRODUCT_SUCCESS", payload: product });

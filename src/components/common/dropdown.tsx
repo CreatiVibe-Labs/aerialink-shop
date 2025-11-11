@@ -19,6 +19,8 @@ interface DropdownI {
   DropDownclassName?: string;
   hideLabelOnMobile?: boolean;
   labelClassName?: string;
+  forceClose?: boolean;
+  onOpen?: () => void;
 }
 
 const Dropdown: FC<DropdownI> = ({
@@ -31,6 +33,8 @@ const Dropdown: FC<DropdownI> = ({
   DropDownclassName = "",
   mainParentClass = "",
   labelClassName = "",
+  forceClose = false,
+  onOpen,
 }) => {
   const [openDropdown, setOpenDropdown] = useState(false);
   const [coords, setCoords] = useState({ top: 0, left: 0, width: 0 });
@@ -46,6 +50,13 @@ const Dropdown: FC<DropdownI> = ({
       });
     }
   }, [openDropdown]);
+
+  // Force close effect
+  useEffect(() => {
+    if (forceClose && openDropdown) {
+      setOpenDropdown(false);
+    }
+  }, [forceClose]);
 
   const handleItemClick = async (item: DropdownItem, e: React.MouseEvent) => {
     e.stopPropagation();
@@ -102,9 +113,12 @@ const Dropdown: FC<DropdownI> = ({
       <div
         onClick={() => {
           console.log("Dropdown toggled");
+          if (!openDropdown && onOpen) {
+            onOpen(); // Call parent to close other dropdowns
+          }
           setOpenDropdown((prev) => !prev);
         }}
-        className={`bg-primary rounded-2xl w-full p-2 flex items-center justify-center space-x-2 cursor-pointer text-white select-none ${className}`}
+        className={`bg-primary rounded-2xl w-full p-2 flex items-center justify-between space-x-2 cursor-pointer text-white select-none ${className}`}
       >
         {prefixIcon ?? ""}
         <span

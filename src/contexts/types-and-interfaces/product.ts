@@ -67,13 +67,10 @@ export interface CategoryResponse {
 }
 export interface Product {
   id: number;
-  sku: string;
-  price: string;
-  stock: number;
   status: boolean;
-  free_delivery: boolean;
-  return_delivery: boolean;
-  translations: Translations;
+  slug: string;
+  title_en: boolean;
+  title_jp: boolean;
   average_rating: number;
   reviews: Reviews[];
   images: ProductImage[];

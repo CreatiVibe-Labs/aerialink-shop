@@ -5,6 +5,7 @@ import ProductCard from "@/components/common/product-card";
 import { useWishlist } from "@/contexts/wishlist-context";
 import { useEffect, useState } from "react";
 import { useLanguage } from "@/contexts/language-context";
+import Cookies from "js-cookie";
 
 const WishListPage = () => {
   const { wishlist, loading, error } = useWishlist();
@@ -12,7 +13,7 @@ const WishListPage = () => {
   const { language } = useLanguage();
 
   const token =
-    typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    typeof window !== "undefined" ? Cookies.get("token") : null;
 
   useEffect(() => {
     if (!token) return;
@@ -28,14 +29,14 @@ const WishListPage = () => {
               : "/assets/home/product/product.png",
             alt:
               language === "EN"
-                ? product?.translations?.en?.name
-                : product?.translations?.jp?.name,
+                ? product?.title_en
+                : product?.title_jp,
           },
           rating: 4,
           title:
             language === "EN"
-              ? product?.translations?.en?.name
-              : product?.translations?.jp?.name,
+              ? product?.title_en
+              : product?.title_jp,
           price: parseFloat(product.price),
           product: product,
           onHeartOnClick: () => {},

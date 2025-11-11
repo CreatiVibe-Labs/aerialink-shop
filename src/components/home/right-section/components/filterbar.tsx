@@ -41,8 +41,8 @@ const FilterBar: React.FC = () => {
               }`}
             >
               {language === "EN"
-                ? cat.translations.en.name
-                : cat.translations.jp.name}
+                ? cat.name_en
+                : cat.name_jp}
             </button>
           ))}
         </div>
