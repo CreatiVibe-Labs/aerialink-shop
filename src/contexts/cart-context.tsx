@@ -3,17 +3,27 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { Product } from './types-and-interfaces/product';
 
-export interface CartItem extends Product {
+export interface CartItem {
+  id: number;
   quantity: number;
   size: string;
+  price: string;
+  room_type: string;
+  slug: string;
 }
 
 interface CartContextType {
   cartItems: CartItem[];
-  addToCart: (product: Product) => void;
+  addToCart: (id: number, quantity: number, size: string, price: string, room_type: string, slug: string) => void;
   removeFromCart: (id: number) => void;
+  removeFromCartByIndex: (index: number) => void;
   updateQuantity: (id: number, qty: number) => void;
+  updateQuantityByIndex: (index: number, qty: number) => void;
   updateSize: (id: number, size: string) => void;
+  updateSizeByIndex: (index: number, size: string) => void;
+  updateRoomType: (id: number, room_type: string) => void;
+  updateRoomTypeByIndex: (index: number, room_type: string) => void;
+  updatePriceByIndex: (index: number, price: string) => void;
   isInCart: (productId: number) => boolean;
   getTotal: () => number;
 }
@@ -24,7 +34,7 @@ const CART_KEY = 'cart_items';
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
-
+  console.log({ cartItems });
   // Load from localStorage on mount
   useEffect(() => {
     const saved = localStorage.getItem(CART_KEY);
@@ -47,17 +57,42 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [cartItems]);
 
-  const addToCart = (product: Product) => {
-    // Check if product already exists
-    const exists = cartItems.some(item => item.id === product.id);
-    if (!exists) {
-      const newItem: CartItem = { ...product, quantity: 1, size: 'small' };
-      setCartItems(prev => [...prev, newItem]);
-    }
+  const addToCart = (id: number, quantity: number, size: string, price: string, room_type: string, slug: string) => {
+    console.log('Adding to cart:', { id, quantity, size, price, room_type, slug });
+    setCartItems(prevItems => {
+      const existingItem = prevItems.find(item => item.id === id && item.size === size && item.room_type === room_type);
+
+      if (existingItem) {
+        // Increase quantity and update price accordingly
+        return prevItems.map(item =>
+          item.id === id && item.size === size && item.room_type === room_type
+            ? {
+              ...item,
+              quantity: item.quantity + quantity,
+            }
+            : item
+        );
+      } else {
+        // Add new product with base price
+        const newItem: CartItem = {
+          id,
+          size,
+          quantity,
+          price: (parseFloat(price) * quantity).toFixed(2),
+          room_type,
+          slug,
+        };
+        return [...prevItems, newItem];
+      }
+    });
   };
 
   const removeFromCart = (id: number) => {
     setCartItems(prev => prev.filter(item => item.id !== id));
+  };
+
+  const removeFromCartByIndex = (index: number) => {
+    setCartItems(prev => prev.filter((_, i) => i !== index));
   };
 
   const updateQuantity = (id: number, qty: number) => {
@@ -70,10 +105,52 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const updateQuantityByIndex = (index: number, qty: number) => {
+    if (qty >= 1) {
+      setCartItems(prev =>
+        prev.map((item, i) =>
+          i === index ? { ...item, quantity: qty } : item
+        )
+      );
+    }
+  };
+
   const updateSize = (id: number, size: string) => {
     setCartItems(prev =>
       prev.map(item =>
         item.id === id ? { ...item, size } : item
+      )
+    );
+  };
+
+  const updateSizeByIndex = (index: number, size: string) => {
+    setCartItems(prev =>
+      prev.map((item, i) =>
+        i === index ? { ...item, size } : item
+      )
+    );
+  };
+
+  const updateRoomType = (id: number, room_type: string) => {
+    setCartItems(prev =>
+      prev.map(item =>
+        item.id === id ? { ...item, room_type } : item
+      )
+    );
+  };
+
+  const updateRoomTypeByIndex = (index: number, room_type: string) => {
+    setCartItems(prev =>
+      prev.map((item, i) =>
+        i === index ? { ...item, room_type } : item
+      )
+    );
+  };
+
+  const updatePriceByIndex = (index: number, price: string) => {
+    setCartItems(prev =>
+      prev.map((item, i) =>
+        i === index ? { ...item, price } : item
       )
     );
   };
@@ -92,8 +169,14 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         cartItems,
         addToCart,
         removeFromCart,
+        removeFromCartByIndex,
         updateQuantity,
+        updateQuantityByIndex,
         updateSize,
+        updateSizeByIndex,
+        updateRoomType,
+        updateRoomTypeByIndex,
+        updatePriceByIndex,
         isInCart,
         getTotal,
       }}

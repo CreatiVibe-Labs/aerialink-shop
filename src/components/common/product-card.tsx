@@ -54,8 +54,18 @@ interface ProductCardI {
 }
 
 const ProductCard: FC<ProductCardI> = ({ product, onHeartOnClick }) => {
-  const productInnerLink = `/product/${product?.id}`;
+  const productInnerLink = `/product/${product?.slug}`;
   const { language } = useLanguage();
+  const [selectedSize, setSelectedSize] = useState('');
+
+  const prices = product?.variants?.map(v => parseFloat(v.price)) || [];
+
+  const minPrice = Math.min(...prices);
+  const maxPrice = Math.max(...prices);
+
+  const finalPrice = minPrice === maxPrice ? `¥${minPrice.toFixed(2)}` : `¥${minPrice.toFixed(2)} - ¥${maxPrice.toFixed(2)}`;
+  const finalPriceForCart = minPrice === maxPrice ? minPrice.toFixed(2) : maxPrice.toFixed(2);
+
   const { addToCart, isInCart } = useCart();
   const { isInWishlist, toggleWishlist, loading } = useWishlist();
   const { user } = useProfile();
@@ -69,16 +79,33 @@ const ProductCard: FC<ProductCardI> = ({ product, onHeartOnClick }) => {
 
   const handleAddToCart = () => {
     setAddToCartLoading(true);
-    addToCart(product);
+
+    const edomaSizes = product?.variants?.[0]?.sizes?.Edoma || [];
+    const danchimaSizes = product?.variants?.[0]?.sizes?.Danchima || [];
+
+    // Decide size directly
+    const chosenSize =
+      danchimaSizes.length > 0
+        ? danchimaSizes[0].size_value
+        : edomaSizes[0]?.size_value;
+
+    const roomType =
+      danchimaSizes.length > 0
+        ? 'Danchima'
+        : 'Edoma';
+
+    setSelectedSize(chosenSize); // optional, for UI tracking
+
     setTimeout(() => {
+      addToCart(product.id, 1, chosenSize, finalPriceForCart, roomType, product.slug);
       toast.success("Product added to cart");
       setButtonText("Added");
-      setTimeout(() => {
-        setButtonText("Add to Cart");
-      }, 1000);
+
+      setTimeout(() => setButtonText("Add to Cart"), 1000);
       setAddToCartLoading(false);
-    }, 1000);
+    }, 500);
   };
+
 
   const handleHeartClick = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -123,10 +150,7 @@ const ProductCard: FC<ProductCardI> = ({ product, onHeartOnClick }) => {
           <div className="w-full h-full xl:min-h-[200px] lg:min-h-[200px] md:min-h-[200px] min-h-[150px] xl:max-h-[200px] lg:max-h-[200px] md:max-h-[200px] max-h-[150px] relative">
             <Image
               src={product?.images?.[0]?.url || "/fallback-image.png"}
-              alt={
-                product?.translations?.[language === "EN" ? "en" : "jp"]
-                  ?.name || "Product"
-              }
+              alt={language === 'EN' ? product.title_en : product.title_jp}
               fill
               className="object-cover w-56 h-56 rounded-md"
             />
@@ -137,17 +161,12 @@ const ProductCard: FC<ProductCardI> = ({ product, onHeartOnClick }) => {
         <div className="center-col items-start max-sm:text-xs gap-[6.23px]">
           <Link href={productInnerLink}>
             <h2 className="text-[#666664] font-[500] text-base leading-[19px] my-1 font-font-albert-sans line-clamp-1">
-              {language === "EN"
-                ? product?.translations?.en?.name
-                : product?.translations?.jp?.name}
+              {language === 'EN' ? product.title_en : product.title_jp}
             </h2>
           </Link>
 
           <h3 className="text-[#DB4444] font-[500] text-base leading-[19px] my-2 font-font-albert-sans">
-            $
-            {typeof product?.price === "string"
-              ? parseFloat(product.price).toFixed(2)
-              : product?.price}
+            {finalPrice}
           </h3>
 
           <div className="my-1">
@@ -157,15 +176,27 @@ const ProductCard: FC<ProductCardI> = ({ product, onHeartOnClick }) => {
 
           {/* Add to Cart */}
           <div className="mt-1 w-full z-10 max-sm:mt-1">
-            <button
-              onClick={handleAddToCart}
-              disabled={addToCartLoading}
-              className={`capitalize 
+            {
+              product.variants.length == 1 ? (
+                <button
+                  onClick={handleAddToCart}
+                  disabled={addToCartLoading}
+                  className={`capitalize 
               bg-primary hover:bg-primary/80 cursor-pointer
               rounded-xl text-base leading-[19px] font-[500] min-h-[40px] w-full text-[#FFFAFA] center`}
-            >
-              {addToCartLoading ? 'Adding...' : buttonText}
-            </button>
+                >
+                  {addToCartLoading ? 'Adding...' : buttonText}
+                </button>) : (
+                <Link
+                  className={`capitalize 
+              bg-primary hover:bg-primary/80 cursor-pointer
+              rounded-xl text-base leading-[19px] font-[500] min-h-[40px] w-full text-[#FFFAFA] center`}
+                  href={productInnerLink}
+                >
+                  Select Options
+                </Link>
+              )
+            }
           </div>
         </div>
       </div>

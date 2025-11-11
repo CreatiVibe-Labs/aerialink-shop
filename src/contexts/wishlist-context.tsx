@@ -10,6 +10,7 @@ import {
 import api from "@/lib/api";
 import { Product } from "./types-and-interfaces/product";
 import { toast } from "react-toastify";
+import Cookies from "js-cookie";
 
 interface WishlistItem {
   id: number;
@@ -36,14 +37,17 @@ const WishlistContext = createContext<WishlistContextType | undefined>(
 export const WishlistProvider = ({ children }: { children: ReactNode }) => {
   const [wishlist, setWishlist] = useState<WishlistItem[]>([]);
   const [wishlistProductIds, setWishlistProductIds] = useState<number[]>([]);
+
+  console.log({ wishlistProductIds })
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   // Fetch wishlist on mount
-   const token =
-    typeof window !== "undefined" ? localStorage.getItem("token") : null;
+  const token =
+    typeof window !== "undefined" ? Cookies.get("token") : null;
   useEffect(() => {
-      if (!token) return;
+    if (!token) return;
     fetchWishlist();
   }, []);
 
@@ -52,6 +56,7 @@ export const WishlistProvider = ({ children }: { children: ReactNode }) => {
       setLoading(true);
       const response = await api.get("/wishlist");
       if (response.data.success) {
+        console.log({ response })
         setWishlist(response.data.data);
         setWishlistProductIds(
           response.data.data.map((item: WishlistItem) => item.product.id)

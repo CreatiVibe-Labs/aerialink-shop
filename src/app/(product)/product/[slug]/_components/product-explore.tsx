@@ -10,8 +10,8 @@ export default function ProductExplore() {
   const { slug } = useParams();
 
   useEffect(() => {
-    const id = Number(slug);
-    if (!isNaN(id)) {
+    const id = String(slug);
+    if (id) {
       fetchProduct(id);
     }
   }, [slug, fetchProduct]);

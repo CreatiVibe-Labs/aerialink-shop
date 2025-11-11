@@ -10,10 +10,14 @@ interface MobileCartCardProps {
   price: number | string;
   quantity: number;
   size: string;
+  roomType: string;
   index: number;
-  onRemove: (id: number) => void;
-  onQuantityChange: (id: number, action: "inc" | "dec") => void;
-  onSizeChange: (id: number, size: string) => void;
+  onRemove: (index: number) => void;
+  onQuantityChange: (index: number, action: "inc" | "dec") => void;
+  onSizeChange: (index: number, size: string) => void;
+  onRoomTypeChange: (index: number, roomType: string) => void;
+  openDropdown?: string | null;
+  onDropdownToggle?: (dropdownId: string) => void;
 }
 
 const MobileCartCard: React.FC<MobileCartCardProps> = ({
@@ -23,10 +27,14 @@ const MobileCartCard: React.FC<MobileCartCardProps> = ({
   price,
   quantity,
   size,
+  roomType,
   index,
   onRemove,
   onQuantityChange,
   onSizeChange,
+  onRoomTypeChange,
+  openDropdown,
+  onDropdownToggle,
 }) => {
   return (
     <div className="w-full rounded-xl border border-gray-200 p-3 flex flex-col gap-1 shadow-xs">
@@ -39,7 +47,7 @@ const MobileCartCard: React.FC<MobileCartCardProps> = ({
             className="rounded-md w-full h-full object-cover"
           />
           <button
-            onClick={() => onRemove(id)}
+            onClick={() => onRemove(index)}
             className="absolute -top-1.5 -left-2 bg-red-600 text-white rounded-full p-1 text-xs"
           >
             <RxCross1 strokeWidth={1.5} size={9} />
@@ -60,14 +68,14 @@ const MobileCartCard: React.FC<MobileCartCardProps> = ({
         <div className="flex flex-col gap-2 items-end">
           <div className="flex items-center gap-3 ">
             <button
-              onClick={() => onQuantityChange(id, "dec")}
+              onClick={() => onQuantityChange(index, "dec")}
               className="text-min-gray text-lg cursor-pointer"
             >
               –
             </button>
             <span className="text-sm w-3 text-center">{quantity}</span>
             <button
-              onClick={() => onQuantityChange(id, "inc")}
+              onClick={() => onQuantityChange(index, "inc")}
               className="text-min-gray text-lg cursor-pointer"
             >
               +
@@ -84,7 +92,7 @@ const MobileCartCard: React.FC<MobileCartCardProps> = ({
               { key: "medium", val: "Medium" },
               { key: "large", val: "Large" },
             ]}
-            onChange={(val) => onSizeChange(id, val)}
+            onChange={(val) => onSizeChange(index, val)}
           />
         </div>
       </div>

@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import PrimaryButton from "@/components/common/primary-button";
+import Link from "next/link";
 
 interface CartSummaryProps {
   subtotal: number;
@@ -51,10 +52,11 @@ const CartSummary: React.FC<CartSummaryProps> = ({
 
         <div className="flex justify-center items-center mt-3">
           <PrimaryButton
-            onClick={onCheckout}
             className="max-md:min-h-10 max-md:max-w-fit px-3 text-sm"
           >
-            Proceed to checkout
+            <Link href="/checkout">
+              Proceed to checkout
+            </Link>
           </PrimaryButton>
         </div>
 
