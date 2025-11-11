@@ -50,7 +50,7 @@ const CommunityProductGrid: React.FC<CommunityProductGridProps> = ({
     <div>
       {/* Product Grid */}
       <div className="grid xl:grid-cols-5 grid-cols-2  gap-4">
-        {currentProducts.length > 0 &&
+        {currentProducts?.length > 0 &&
           currentProducts.map((product) => (
             <div
               key={product.id}
@@ -60,14 +60,14 @@ const CommunityProductGrid: React.FC<CommunityProductGridProps> = ({
               onClick={() => selectProduct(product.id)}
             >
               {/* Example extra info */}
-              {product.images[0].url && (
+              {product?.images[0]?.url && (
                 <div className="relative h-40 center ">
                   <Image
-                    src={product.images[0].url}
+                    src={product?.images[0]?.url}
                     alt={
                       language == "EN"
-                        ? product.translations.en.name
-                        : product.translations.jp.name
+                        ? product?.translations?.en?.name
+                        : product?.translations?.jp?.name
                     }
                     fill
                     className="mx-auto w-50 object-cover rounded"
@@ -76,14 +76,14 @@ const CommunityProductGrid: React.FC<CommunityProductGridProps> = ({
               )}
               <p className="text-[#666664] text-sm line-clamp-1">
                 {language == "EN"
-                  ? product.translations.en.name
-                  : product.translations.jp.name}
+                  ? product?.translations?.en?.name
+                  : product?.translations?.jp?.name}
               </p>
             </div>
           ))}
       </div>
 
-      {currentProducts.length == 0 && (
+      {currentProducts?.length == 0 && (
         <div className="text-center w-full">
           <p className="capitalize text-[#666664] text-xl">
             No Products Found!
