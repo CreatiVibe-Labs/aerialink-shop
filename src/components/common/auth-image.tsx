@@ -3,7 +3,7 @@ import React from 'react'
 
 const AuthImage = ({imageUrl,imageAlt} : {imageUrl : string,imageAlt : string}) => {
   return (
-       <div className="relative w-full h-full max-md:hidden"> 
+       <div className="relative w-full h-full max-md:hidden mt-10"> 
          <Image
            src={imageUrl}
            alt={imageAlt}

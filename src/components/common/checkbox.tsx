@@ -13,26 +13,25 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
   ({ label, error, className = "", ...rest }, ref) => {
     return (
       <div className="flex flex-col">
-        <label className="inline-flex items-center cursor-pointer select-none">
+        <label className="inline-flex items-center justify-center cursor-pointer select-none">
           {/* Hidden native checkbox - RHF ke liye register hoga */}
-          <input
-            type="checkbox"
-            ref={ref}
-            className="sr-only peer"
-            {...rest}
-          />
+          <input type="checkbox" ref={ref} className="sr-only peer" {...rest} />
 
           {/* Custom box */}
           <div
-            className={`w-5 h-5 flex items-center justify-center rounded-md border border-light-gray bg-white transition-colors
+            className={`lg:w-5 lg:h-5 w-[17px] h-[17px] flex items-center justify-center rounded-[3.42px] border-[0.77px] border-[#98C1A9] bg-white transition-colors
               peer-checked:border-primary 
               peer-checked:[&>svg]:opacity-100
               ${className}`}
           >
-            <IoMdCheckmark className="text-primary w-4 h-4 opacity-0 transition-opacity" />
+            <IoMdCheckmark className="text-primary lg:w-4 lg:h-4 w-[17px] h-[17px]  opacity-0 transition-opacity" />
           </div>
 
-          {label && <span className="ml-2 text-gray-700">{label}</span>}
+          {label && (
+            <span className="ml-2 lg:mt-1 mt-0 text-[#313131] font-albert-sans font-[500] text-[12px] lg:text-[14px] leading-[100%]">
+              {label}
+            </span>
+          )}
         </label>
 
         {error && <span className="mt-1 text-sm text-red-500">{error}</span>}

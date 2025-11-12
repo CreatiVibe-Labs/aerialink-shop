@@ -25,7 +25,7 @@ const LoginForm = () => {
   } = useForm<LoginFormValues>();
   const router = useRouter();
 
-  const { login } = useProfile(); 
+  const { login } = useProfile();
 
   const onSubmit = async (data: LoginFormValues) => {
     try {
@@ -33,7 +33,7 @@ const LoginForm = () => {
       await login(data.email, data.password);
 
       toast.success("Login successful!");
-      router.replace("/"); 
+      router.replace("/");
       reset();
     } catch (error: any) {
       const message =
@@ -48,21 +48,26 @@ const LoginForm = () => {
   return (
     <div className="center-col items-start w-full">
       {/* Header */}
-      <div className="center-col items-start space-y-3">
-        <h1 className="text-4xl font-medium">Login</h1>
-        <p className="text-light-gray">Login to access your account</p>
+      <div className="center-col items-start space-y-[16px]">
+        <h1 className="font-albert-sans font-semibold lg:text-[40px] text-[28px] leading-[100%] tracking-[0] text-[#313131]">
+          Login
+        </h1>
+        <p className="font-albert-sans opacity-75 font-[400] lg:text-[16px] text-[12px] leading-[100%] tracking-[0] text-[#313131]">
+          Login to access your account
+        </p>
       </div>
       {/* Form */}
       <form
-      method="post"
+        method="post"
         onSubmit={handleSubmit(onSubmit)}
-        className="w-full max-w-[80%] max-md:max-w-full space-y-5 mt-10"
+        className="w-full max-w-[80%] max-md:max-w-full space-y-[24px] mt-10"
       >
         {/* Email */}
         <div className="space-y-0.5">
           <Input
+            label="email"
             type="email"
-            placeholder="Enter your email"
+            placeholder="Example@gmail.com"
             {...register("email", {
               required: "Email is required",
               pattern: {
@@ -80,7 +85,8 @@ const LoginForm = () => {
         <div className="space-y-0.5">
           <Input
             type="password"
-            placeholder="Password"
+            label="password"
+            placeholder="•••••••••••••••••••••••••"
             {...register("password", {
               required: "Password is required",
               minLength: {
@@ -90,7 +96,9 @@ const LoginForm = () => {
             })}
           />
           {errors.password && (
-            <span className="text-sm text-red-500">{errors.password.message}</span>
+            <span className="text-sm text-red-500">
+              {errors.password.message}
+            </span>
           )}
         </div>
 
@@ -99,20 +107,24 @@ const LoginForm = () => {
           <Checkbox label="Remember me" {...register("remember")} />
           <Link
             href="/forgot-password"
-            className="text-primary font-medium hover:underline capitalize"
+            className="text-primary font-medium hover:underline capitalize lg:text-[14px] text-[12px] leading-[100%]"
           >
             Forgot password
           </Link>
         </div>
 
         {/* Submit */}
-        <div className="center-col space-y-2">
-          <PrimaryButton type="submit" loading={isSubmitting} disabled={isSubmitting}>
+        <div className="center-col space-y-[16px]">
+          <PrimaryButton
+            type="submit"
+            loading={isSubmitting}
+            disabled={isSubmitting}
+          >
             {isSubmitting ? "Logging in..." : "Login"}
           </PrimaryButton>
 
-          <p className="text-sm">
-            Don’t have an account?{" "}
+          <p className="text-sm text-[#313131] font-[500] ">
+            Don&apos;t have an account?{" "}
             <Link
               href="/register"
               className="text-primary hover:underline font-medium"

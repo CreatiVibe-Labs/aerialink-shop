@@ -7,7 +7,7 @@ export default function Page() {
   const router = useRouter();
   return (
     <main
-      className="flex flex-col lg:mt-[10px] mt-[5px] lg:mb-[10px] mb-[5px] px-[18px] py-[21px] items-center w-full m-auto bg-[FFFFFF] opacity-500 
+      className="flex flex-col lg:mt-[40px] mt-[20px] lg:mb-[10px] mb-[5px] px-[18px] py-[21px] items-center w-full m-auto bg-[FFFFFF] opacity-500 
       max-w-7xl"
     >
       <div className="w-full lg:h-[450px] h-[220px]">

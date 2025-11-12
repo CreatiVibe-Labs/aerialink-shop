@@ -225,3 +225,12 @@ input[type="range"]::-ms-thumb {
     @apply bg-background text-foreground;
   }
 }
+
+
+.font-poppins {
+  font-family: var(--font-poppins), sans-serif;
+}
+
+.font-albert-sans {
+  font-family: var(--font-albert-sans), sans-serif;
+}
