@@ -52,7 +52,7 @@ const initialState: State = {
 interface ProductContextValue {
   state: State;
   fetchProducts: (page?: number) => Promise<void>;
-  fetchProduct: (id: number) => Promise<void>;
+  fetchProduct: (id: string) => Promise<void>;
 }
 
 const ProductContext = createContext<ProductContextValue>({
