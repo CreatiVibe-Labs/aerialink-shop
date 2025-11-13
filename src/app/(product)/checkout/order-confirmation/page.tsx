@@ -11,6 +11,8 @@ const OrderConfirmationPage = () => {
   const pdfRef = useRef<HTMLDivElement>(null);
   const params = useSearchParams();
   const paymentStatus = params.get("payment_status");
+  const session = params.get("session") ? JSON.parse(decodeURIComponent(params.get("session") || "{}")) : null;
+  console.log({session});
   console.log(paymentStatus);
 
   const handleDownloadPDF = async () => {
@@ -91,7 +93,7 @@ const OrderConfirmationPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 max-sm:p-2 pb-0 relative">
+    <div className="py-10 pb-20 flex flex-col items-center justify-center p-4 max-sm:p-2 relative">
       {/* PDF div (hidden, with custom PDF styling) */}
       <PDFReceipt
         ref={pdfRef}
@@ -146,20 +148,6 @@ const OrderConfirmationPage = () => {
               <p>Antonio Roberto</p>
             </div>
           </div>
-
-          <button
-            onClick={handleDownloadPDF}
-            className="mt-8 cursor-pointer download-button flex items-center justify-center w-full text-gray-700 hover:text-gray-900"
-          >
-            <span className="mr-2">
-              <img
-                src="/assets/icons/download.svg"
-                alt="download"
-                className="size-6"
-              />
-            </span>
-            Get PDF Receipt
-          </button>
         </div>
       </div>
 
