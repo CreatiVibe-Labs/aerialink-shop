@@ -53,7 +53,7 @@ const RegisterForm = () => {
         error?.response?.data?.error?.email?.[0] || // Extract email-specific error
         error?.response?.data?.message || // Fallback to general message
         "Registration failed. Please try again.";
-        toast.error(message);
+      toast.error(message);
       // setErrorMessage(message);
     }
   };
@@ -62,29 +62,39 @@ const RegisterForm = () => {
     <div className="center-col items-start w-full">
       {/* header */}
       <div className="center-col items-start space-y-3">
-        <h1 className="text-4xl font-medium">Register</h1>
-        <p className="text-light-gray">Create your new account</p>
+        <h1 className="font-albert-sans font-semibold text-[28px] lg:text-[40px] leading-[100%] tracking-[0] text-[#313131]">
+          Register
+        </h1>
+        {/* <p className="text-light-gray">Create your new account</p> */}
       </div>
       {/* form */}
       <form
-      method="post"
+        method="post"
         onSubmit={handleSubmit(onSubmit)}
-        className="w-full max-w-[80%] max-xl:max-w-full space-y-5 mt-10"
+        className="w-full max-w-[80%] max-xl:max-w-full space-y-5 mt-10 "
       >
         {/* First and Last name */}
         <div className="grid grid-cols-2 gap-3 max-md:grid-cols-1">
           <div className="space-y-0.5">
             <Input
               type="text"
-              placeholder="First Name"
+              label="first name"
+              placeholder=""
               {...register("firstName", { required: "First name is required" })}
             />
             {errors.firstName && (
-              <span className="text-sm text-red-500">{errors.firstName.message}</span>
+              <span className="text-sm text-red-500">
+                {errors.firstName.message}
+              </span>
             )}
           </div>
           <div className="space-y-0.5">
-            <Input type="text" placeholder="Last Name" {...register("lastName")} />
+            <Input
+              type="text"
+              label="Last Name"
+              placeholder=""
+              {...register("lastName")}
+            />
           </div>
         </div>
 
@@ -93,7 +103,8 @@ const RegisterForm = () => {
           <div className="space-y-0.5">
             <Input
               type="email"
-              placeholder="Email"
+              label="email"
+              placeholder=""
               {...register("email", {
                 required: "Email is required",
                 pattern: {
@@ -103,13 +114,16 @@ const RegisterForm = () => {
               })}
             />
             {errors.email && (
-              <span className="text-sm text-red-500">{errors.email.message}</span>
+              <span className="text-sm text-red-500">
+                {errors.email.message}
+              </span>
             )}
           </div>
           <div className="space-y-0.5">
             <Input
               type="tel"
-              placeholder="Phone Number"
+              label="phone number"
+              placeholder=""
               {...register("phone", {
                 required: "Phone number is required",
                 minLength: {
@@ -119,7 +133,9 @@ const RegisterForm = () => {
               })}
             />
             {errors.phone && (
-              <span className="text-sm text-red-500">{errors.phone.message}</span>
+              <span className="text-sm text-red-500">
+                {errors.phone.message}
+              </span>
             )}
           </div>
         </div>
@@ -128,7 +144,8 @@ const RegisterForm = () => {
         <div className="space-y-0.5">
           <Input
             type="password"
-            placeholder="Password"
+            label="password"
+            placeholder=""
             {...register("password", {
               required: "Password is required",
               minLength: {
@@ -138,7 +155,9 @@ const RegisterForm = () => {
             })}
           />
           {errors.password && (
-            <span className="text-sm text-red-500">{errors.password.message}</span>
+            <span className="text-sm text-red-500">
+              {errors.password.message}
+            </span>
           )}
         </div>
 
@@ -146,10 +165,12 @@ const RegisterForm = () => {
         <div className="space-y-0.5">
           <Input
             type="password"
-            placeholder="Confirm Password"
+            label="confirm password"
+            placeholder=""
             {...register("confirmPassword", {
               required: "Confirm password is required",
-              validate: (value) => value === password || "Passwords do not match",
+              validate: (value) =>
+                value === password || "Passwords do not match",
             })}
           />
           {errors.confirmPassword && (
@@ -166,7 +187,9 @@ const RegisterForm = () => {
               <>
                 I agree to all the{" "}
                 <span className="text-primary cursor-pointer">Terms</span> and{" "}
-                <span className="text-primary cursor-pointer">Privacy Policies</span>
+                <span className="text-primary cursor-pointer">
+                  Privacy Policies
+                </span>
               </>
             }
             {...register("terms", {
@@ -187,14 +210,21 @@ const RegisterForm = () => {
         )}
 
         {/* form bottom */}
-        <div className="center-col space-y-2">
-          <PrimaryButton type="submit" loading={isSubmitting} disabled={isSubmitting}>
+        <div className="center-col space-y-[16px]">
+          <PrimaryButton
+            type="submit"
+            loading={isSubmitting}
+            disabled={isSubmitting}
+          >
             {isSubmitting ? "Creating account..." : "Create account"}
           </PrimaryButton>
 
-          <p className="text-sm">
+          <p className="text-sm text-[#313131]  font-[600] ">
             Already have an account?{" "}
-            <Link href={"/login"} className="text-primary hover:underline font-medium">
+            <Link
+              href={"/login"}
+              className="text-primary hover:underline font-[600]"
+            >
               Login
             </Link>
           </p>
