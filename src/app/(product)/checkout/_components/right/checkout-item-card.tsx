@@ -62,10 +62,10 @@ const CheckoutItemCard: FC<CheckoutItemCardProps> = ({
               {size && `Size: ${size}`}
             </span>
           )}
-          <span className="text-xs text-gray-600">${price}</span>
+          <span className="text-xs text-gray-600">¥{Number(price).toFixed(2)}</span>
         </div>
       </div>
-      <p className=" text-light-gray ">${price}</p>
+      <p className=" text-light-gray ">¥{Number(price).toFixed(2)}</p>
     </div>
   );
 };
