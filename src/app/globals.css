@@ -234,3 +234,23 @@ input[type="range"]::-ms-thumb {
 .font-albert-sans {
   font-family: var(--font-albert-sans), sans-serif;
 }
+
+/* Custom scrollbar for order history table */
+.scrollbar-green {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: #98c1a9 transparent; /* Firefox */
+}
+
+.scrollbar-green::-webkit-scrollbar {
+  height: 18px !important;
+  width: 96px !important;
+}
+
+.scrollbar-green::-webkit-scrollbar-thumb {
+  background-color: #98c1a9;
+  border-radius: 10px !important;
+}
+
+.scrollbar-green::-webkit-scrollbar-track {
+  background: transparent;
+}

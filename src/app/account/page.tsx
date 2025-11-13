@@ -5,6 +5,7 @@ import Profile from "../../components/account/profileData";
 import OrderHistory from "../../components/account/order-history";
 import DeliveryAddress from "@/components/account/address";
 import BreadCrumbs from "@/components/common/bread-crumbs";
+import ProfileCardsSection from "@/components/account/ProfileCardsSection";
 
 const AccountPage: React.FC = () => {
   const [activeSection, setActiveSection] = useState<string>("profile");
@@ -14,7 +15,7 @@ const AccountPage: React.FC = () => {
       <BreadCrumbs />
       <div className="min-h-screen py-2 ">
         {/* Header */}
-        <h1 className="lg:text-[36px] text-[21.05px] font-[500] lg:font-semibold mb-3 text-[#686868] ">
+        <h1 className="lg:text-[36px] text-[21.05px] font-[500] lg:font-semibold mb-5 text-[#686868] ">
           Hello username
         </h1>
 
@@ -53,7 +54,8 @@ const AccountPage: React.FC = () => {
         </div>
 
         {/* Section Placeholder */}
-        <div className="mx-auto max-w-[1013px] w-full ">
+        {/* <div className="mx-auto max-w-[1013px] w-full "> */}
+        <div className="w-full max-w-6xl mx-auto lg:mt-15 mt-0">
           {activeSection === "profile" && (
             <div>
               <Profile />
@@ -61,19 +63,22 @@ const AccountPage: React.FC = () => {
           )}
 
           {activeSection === "orders" && (
-            <div
-              className="mx-auto w-full h-[660]"
-              style={{ maxWidth: "1013px" }}
-            >
+            <div className="w-full ">
               <OrderHistory />
             </div>
           )}
 
           {activeSection === "address" && (
-            <div className="bg-white rounded-xl ">
+            <div className="bg-white rounded-xl">
               <DeliveryAddress />
             </div>
           )}
+        </div>
+
+        {/* cards sections */}
+        <div className="w-full max-w-6xl mx-auto">
+          {" "}
+          <ProfileCardsSection />
         </div>
       </div>
     </>
@@ -104,12 +109,12 @@ const Box: React.FC<BoxProps> = ({
     <div
       onClick={onClick}
       className={`rounded-[10px] lg:rounded-[14px] px-2 lg:px-[17px] lg:py-[20px] py-[10px] flex flex-col lg:gap-2 
-        lg:w-[497px] w-full
+        lg:w-[497px] w-full lg:h-[147px] h-auto
         gap-[10px] cursor-pointer transition-all duration-200 group 
         ${
           isActive
             ? "bg-[#98C1A9] shadow-[0_0_6.1px_0_#00000040]"
-            : "bg-[#FFFDFA]  border-gray-200"
+            : "bg-[#FFFDFA]  border-gray-200 shadow-lg"
         }`}
     >
       <div className="flex gap-3 lg:items-start items-center">
