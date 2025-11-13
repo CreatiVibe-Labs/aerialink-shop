@@ -39,16 +39,16 @@ export async function GET(req: Request) {
           process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
         }/checkout/order-confirmation?status=success&payment_status=${
           session.payment?.status || "completed"
-        }`
+        }&session=${encodeURIComponent(JSON.stringify(session))}`
       );
     } else {
       console.log("payment error");
 
-      // return NextResponse.redirect(
-      //   `${
-      //     process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
-      //   }/order-failed?status=failed`
-      // );
+      return NextResponse.redirect(
+        `${
+          process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
+        }/order-failed?status=failed`
+      );
     }
   } catch (error) {
     console.error("Error verifying Komoju session:", error);

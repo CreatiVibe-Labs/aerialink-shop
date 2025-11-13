@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import Checkbox from "@/components/common/checkbox";
 import Input from "@/components/common/input";
@@ -12,6 +12,9 @@ import CouponSection from "./right/coupon-section";
 import TotalSection from "./right/total-section";
 import { GoChevronLeft } from "react-icons/go";
 import { useCart } from "@/contexts/cart-context";
+import Cookies from "js-cookie";
+import { useShippingState } from "@/hooks/use-shipping-state";
+import { useConsumerTax } from "@/hooks/use-consumer-tax";
 
 interface FormData {
   fullName: string;
@@ -28,10 +31,20 @@ const CheckoutLeft = () => {
   const [mobileFormData, setMobileFormData] = useState<FormData | null>(null);
   const { getTotal } = useCart();
   const subtotal = getTotal();
+  const { postalCode, shippingRate } = useShippingState();
+  const { consumerTax } = useConsumerTax();
+
+  // Calculate total amount for payment (subtotal + shipping + consumer tax)
+  const validShippingRate = shippingRate && shippingRate > 0 ? shippingRate : 0;
+  const validConsumerTax = consumerTax && consumerTax > 0 ? consumerTax : 0;
+  const totalAmount = subtotal + validShippingRate + (subtotal + validShippingRate) * (validConsumerTax / 100);
+
+  // Determine if there's a shipping error
+  const hasShippingError = !postalCode || shippingRate === null;
 
   // Desktop Form (Independent)
   const desktopForm = useForm<FormData>({
-    defaultValues: { payment: "komoju", saveInfo: false },
+    defaultValues: { payment: "komoju", saveInfo: false, postalCode },
     mode: "onTouched",
   });
 
@@ -40,6 +53,71 @@ const CheckoutLeft = () => {
     defaultValues: { payment: "komoju", saveInfo: false },
     mode: "onTouched",
   });
+
+  const desktopPostalCode = desktopForm.watch("postalCode");
+
+  // Mobile Postal Code watcher
+  const mobilePostalCode = mobileForm.watch("postalCode");
+
+  useEffect(() => {
+    if (!desktopPostalCode || desktopPostalCode.length < 4) return;
+
+    const timeout = setTimeout(async () => {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shipping-rate`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ postal_code: desktopPostalCode }),
+        });
+
+        const data = await res.json();
+        console.log("Desktop Postal API Response:", data);
+
+        // Store postal code and shipping_rate in cookie
+        Cookies.set(
+          "checkout_shipping",
+          JSON.stringify({
+            postalCode: desktopPostalCode,
+            shippingRate: data.shipping_rate,
+          })
+        );
+      } catch (err) {
+        console.error("Desktop Postal API Error:", err);
+      }
+    }, 500);
+
+    return () => clearTimeout(timeout);
+  }, [desktopPostalCode]);
+
+  useEffect(() => {
+    if (!mobilePostalCode || mobilePostalCode.length < 4) return;
+
+    const timeout = setTimeout(async () => {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shipping-rate`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ postal_code: mobilePostalCode }),
+        });
+
+        const data = await res.json();
+        console.log("Mobile Postal API Response:", data);
+
+        // Store postal code and shipping_rate in cookie
+        Cookies.set(
+          "checkout_shipping",
+          JSON.stringify({
+            postalCode: mobilePostalCode,
+            shippingRate: data.shipping_rate,
+          })
+        );
+      } catch (err) {
+        console.error("Mobile Postal API Error:", err);
+      }
+    }, 500);
+
+    return () => clearTimeout(timeout);
+  }, [mobilePostalCode]);
 
   const {
     register: regDesktop,
@@ -64,7 +142,7 @@ const CheckoutLeft = () => {
       const response = await fetch("/api/payments/create-session", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: subtotal, ...data }),
+        body: JSON.stringify({ amount: totalAmount, ...data }),
       });
 
       const resData = await response.json();
@@ -81,6 +159,10 @@ const CheckoutLeft = () => {
     }
   };
 
+  const handlePostCode = async () => {
+    const postalCode = getValues("postalCode");
+    console.log("Postal Code Entered:", postalCode);
+  };
   // Desktop Submit
   const onDesktopSubmit: SubmitHandler<FormData> = (data) => {
     processPayment(data);
@@ -107,9 +189,7 @@ const CheckoutLeft = () => {
     <div>
       {/* ================== DESKTOP VIEW ================== */}
       <div className="hidden md:block">
-        <h2 className="text-3xl font-medium text-min-gray mb-6">
-          Billing Details
-        </h2>
+        <h2 className="text-3xl font-medium text-min-gray mb-6">Billing Details</h2>
 
         <form onSubmit={handleDesktop(onDesktopSubmit)} className="space-y-5">
           {/* Full Name */}
@@ -123,9 +203,7 @@ const CheckoutLeft = () => {
               {...regDesktop("fullName", { required: "Full name is required" })}
             />
             {errDesktop.fullName && (
-              <p className="text-red-500 text-sm mt-1">
-                {errDesktop.fullName.message}
-              </p>
+              <p className="text-red-500 text-sm mt-1">{errDesktop.fullName.message}</p>
             )}
           </div>
 
@@ -136,8 +214,7 @@ const CheckoutLeft = () => {
               control={ctrlDesktop}
               rules={{
                 required: "Phone number is required",
-                validate: (val) =>
-                  val.replace(/\D/g, "").length >= 8 || "Enter a valid phone number",
+                validate: (val) => val.replace(/\D/g, "").length >= 8 || "Enter a valid phone number",
               }}
               render={({ field }) => (
                 <PhoneInput
@@ -161,9 +238,7 @@ const CheckoutLeft = () => {
               {...regDesktop("address", { required: "Address is required" })}
             />
             {errDesktop.address && (
-              <p className="text-red-500 text-sm mt-1">
-                {errDesktop.address.message}
-              </p>
+              <p className="text-red-500 text-sm mt-1">{errDesktop.address.message}</p>
             )}
           </div>
 
@@ -184,9 +259,7 @@ const CheckoutLeft = () => {
               })}
             />
             {errDesktop.postalCode && (
-              <p className="text-red-500 text-sm mt-1">
-                {errDesktop.postalCode.message}
-              </p>
+              <p className="text-red-500 text-sm mt-1">{errDesktop.postalCode.message}</p>
             )}
           </div>
 
@@ -215,7 +288,7 @@ const CheckoutLeft = () => {
           <PrimaryButton
             type="submit"
             className="md:max-w-fit px-10"
-            disabled={loading}
+            disabled={loading || hasShippingError}
           >
             {loading ? "Processing..." : "Place Order"}
           </PrimaryButton>
@@ -344,7 +417,7 @@ const CheckoutLeft = () => {
             <PrimaryButton
               onClick={onMobilePlaceOrder}
               className="w-full py-3"
-              disabled={loading}
+              disabled={loading || hasShippingError}
             >
               {loading ? "Processing..." : "Place Order"}
             </PrimaryButton>
