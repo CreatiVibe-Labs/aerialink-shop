@@ -40,10 +40,10 @@ const ProductItemsSection = () => {
                 const product = cartItem.slug ? res.data.data : res.data.data.product;
                 return {
                   ...cartItem,
-                  productData: product,
-                  images: product?.images || [],
-                  title_en: product?.title_en || 'Product Name',
-                  title_jp: product?.title_jp || 'Product Name'
+                  productData: product?.product,
+                  images: product?.product?.images || [],
+                  title_en: product?.product?.title_en || 'Product Name',
+                  title_jp: product?.product?.title_jp || 'Product Name'
                 };
               }
               return cartItem;
@@ -98,7 +98,6 @@ const ProductItemsSection = () => {
           (loading ? cartItems : enrichedCartItems).map((item, index) => {
             const displayItem = loading ? item : (item as EnrichedCartItem);
             const enrichedItem = displayItem as EnrichedCartItem;
-            console.log({P: enrichedItem})
             const productTitle = loading 
               ? "Loading..."
               : language === "EN"

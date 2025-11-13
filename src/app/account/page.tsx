@@ -64,10 +64,10 @@ const AccountPage: React.FC = () => {
 
         {activeSection === "address" && (
           <div className="bg-white rounded-xl ">
-           
-           
-              <DeliveryAddress />
-            
+
+
+            <DeliveryAddress />
+
           </div>
         )}
       </div>
@@ -97,10 +97,9 @@ const Box: React.FC<BoxProps> = ({
     <div
       onClick={onClick}
       className={`rounded-lg border p-6 flex flex-col gap-2 cursor-pointer transition-all duration-200 group
-        ${
-          isActive
-            ? "bg-[#98C1A9] border-[#98C1A9] shadow-md"
-            : "bg-white border-gray-200 "
+        ${isActive
+          ? "bg-[#98C1A9] border-[#98C1A9] shadow-md"
+          : "bg-white border-gray-200 "
         }`}
     >
       <div className="flex items-center gap-3">
