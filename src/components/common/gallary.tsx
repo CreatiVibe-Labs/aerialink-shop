@@ -14,10 +14,16 @@ const Gallery = () => {
   ];
 
   return (
-    <section className="w-full max-w-7xl pb-10 m-auto">
-      <h2 className="text-lg md:text-2xl font-semibold mb-5 text-center">
-        Our Gallery
-      </h2>
+    <section className="w-full max-w-7xl pb-10 m-auto px-5 lg:px-5">
+      <div className="flex flex-row items-center gap-[17.78px] mb-[31px]">
+        {/* Vertical Bar */}
+        <div className="w-[22.22px] h-[44.44px] rounded-[4.44px] bg-[#98C1A9]"></div>
+
+        {/* Heading */}
+        <h2 className="text-[24px] font-semibold leading-[22.22px] text-[#666664] font-poppins">
+          Our Gallery
+        </h2>
+      </div>
 
       {/* Masonry layout using Tailwind columns */}
       <div className="flex flex-wrap justify-center gap-3">

@@ -97,7 +97,7 @@ export default function CommunityForumComponent() {
               <div className="productImage">
                 {activeProduct?.images?.[0]?.url && (
                   <Image
-                    src={activeProduct.images[0].url}
+                    src={activeProduct?.images[0]?.url}
                     width={500}
                     height={500}
                     alt={
