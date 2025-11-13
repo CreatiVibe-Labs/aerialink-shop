@@ -96,4 +96,4 @@ const ProductDetailTab3 = () => {
   );
 };
 
-export default ProductDetailTab3;
+// export default ProductDetailTab3;

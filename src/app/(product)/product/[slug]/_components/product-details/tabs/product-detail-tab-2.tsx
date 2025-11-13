@@ -51,4 +51,4 @@ const ProductDetailTab2 = () => {
   );
 };
 
-export default ProductDetailTab2;
+// export default ProductDetailTab2;
