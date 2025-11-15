@@ -1,47 +1,82 @@
 "use client";
 
 import { CiSearch } from "react-icons/ci";
-import { useState, useEffect, useMemo, useRef } from "react";
-import { useProducts } from "@/contexts/product-context";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useLanguage } from "@/contexts/language-context";
 
+interface Product {
+  id: number;
+  name: string;
+  slug: string;
+  price: string;
+  main_image: string;
+  images?: Array<{ url: string }>;
+  variants?: Array<{ price: string }>;
+  title_en?: string;
+  title_jp?: string;
+}
+
 const SearchbarComponent = () => {
   const [query, setQuery] = useState("");
   const [showResults, setShowResults] = useState(false);
+  const [searchResults, setSearchResults] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-  const { state } = useProducts();
-  const { products = [], loading } = state;
   const { language } = useLanguage();
+  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Force re-render when products change (even if reference same)
-  const productsKey = products.map(p => p.id).join(",") + products.length;
+  // Debounced API search
+  useEffect(() => {
+    // Clear previous timer
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current);
+    }
 
-  // Instant search with proper dependency
-  const searchResults = useMemo(() => {
-    if (!query.trim()) return [];
+    // Don't search if query is empty
+    if (!query.trim()) {
+      setSearchResults([]);
+      setShowResults(false);
+      return;
+    }
 
-    const lowerQuery = query.toLowerCase();
+    // Set new timer for debounced search
+    debounceTimerRef.current = setTimeout(async () => {
+      setLoading(true);
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/products?search=${encodeURIComponent(query)}`
+        );
 
-    return products
-      .filter((product) => {
-        const name =
-          (language === "EN"
-            ? product.translations?.en?.name
-            : product.translations?.jp?.name
-          )?.toLowerCase() || "";
+        if (response.ok) {
+          const data = await response.json();
+          // Handle both data.products and data.data.products structure
+          const products = data.data?.products || data.products || [];
+          setSearchResults(products);
+          setShowResults(true);
+        }
+      } catch (error) {
+        // Silent error handling
+        setSearchResults([]);
+      } finally {
+        setLoading(false);
+      }
+    }, 500); // 500ms debounce
 
-        const price = String(product.price);
-
-        return name.includes(lowerQuery) || price.includes(lowerQuery);
-      })
-      .slice(0, 5);
-  }, [query, products, language, productsKey]); // productsKey forces update
+    // Cleanup
+    return () => {
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+    };
+  }, [query]);
 
   // Open results on focus
   const handleFocus = () => {
-    if (query.trim()) setShowResults(true);
+    if (query.trim() && searchResults.length > 0) {
+      setShowResults(true);
+    }
   };
 
   // Close on outside click
@@ -94,7 +129,7 @@ const SearchbarComponent = () => {
       {/* Instant Results */}
       {showResults && query.trim() && (
         <div
-          className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-lg border border-gray-100 z-50 max-h-96 overflow-y-auto"
+          className="absolute top-full mt-2 bg-white rounded-xl shadow-lg border border-gray-100 z-[9] max-h-96 overflow-y-auto left-0 right-0 max-md:left-[-6.5rem] max-md:right-[-1rem] max-md:w-screen max-md:max-w-[calc(100vw-2rem)]"
           onMouseDown={(e) => e.preventDefault()}
         >
           {loading ? (
@@ -106,45 +141,44 @@ const SearchbarComponent = () => {
               {searchResults.map((item) => {
                 const title =
                   language === "EN"
-                    ? item.translations?.en?.name || "No name"
-                    : item.translations?.jp?.name || "No name";
-
-                const desc =
-                  language === "EN"
-                    ? item.translations?.en?.description
-                    : item.translations?.jp?.description;
+                    ? item.title_en || "No name"
+                    : item.title_jp || "No name";
 
                 const imageUrl = item.images?.[0]?.url || "/placeholder.png";
+                const prices = item?.variants?.map(v => parseFloat(v.price)) || [];
+
+                const minPrice = Math.min(...prices);
+                const maxPrice = Math.max(...prices);
+
+                const finalPrice = `¥${minPrice.toLocaleString()}`;
 
                 return (
                   <Link
                     key={item.id}
-                    href={`/product/${item.id}`}
-                    className="search-result-item flex items-center gap-3 p-3 hover:bg-gray-50 rounded-lg transition block"
+                    href={`/product/${item.slug}`}
+                    className="search-result-item flex items-center gap-3 p-3 hover:bg-gray-50 rounded-lg transition"
                     onClick={handleResultClick}
                   >
                     <div className="w-12 h-12 flex-shrink-0">
                       <Image
                         src={imageUrl}
                         alt={title}
-                        width={48}
-                        height={48}
+                        width={500}
+                        height={500}
                         className="w-full h-full object-cover rounded"
                       />
                     </div>
                     <div className="flex-1 min-w-0">
                       <h4 className="font-medium text-sm truncate">{title}</h4>
-                      {desc && (
-                        <p
-                          className="text-xs text-gray-500 line-clamp-1"
-                          dangerouslySetInnerHTML={{
-                            __html: desc.replace(/<[^>]*>/g, ""),
-                          }}
-                        />
-                      )}
                       <p className="text-sm font-semibold text-primary mt-1">
-                        ${item.price}
+
+                        {finalPrice}
                       </p>
+                    </div>
+                    <div className="flex-shrink-0">
+                      <button className="cursor-pointer text-xs bg-primary text-white px-3 py-1.5 rounded-full hover:bg-primary/90 transition">
+                        View Details
+                      </button>
                     </div>
                   </Link>
                 );

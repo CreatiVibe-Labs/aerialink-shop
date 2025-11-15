@@ -14,6 +14,7 @@ import SkeletonGrid from "./SkeletonGrid";
 import SkeletonProductDetail from "./SkeletonProductDetail";
 import SkeletonTabContent from "./SkeletonTabContent";
 import { useRouter } from "next/navigation";
+import parse from "html-react-parser";
 
 export default function CommunityForumComponent() {
   // ✅ Hooks must always be on top, unconditionally
@@ -27,8 +28,26 @@ export default function CommunityForumComponent() {
 
   const { allProducts, allLoading, filteredProducts, filterLoading } = state;
 
+  // Filter products based on search term
+  const displayedProducts = searchTerm.trim()
+    ? allProducts.filter((product) => {
+        const titleEN = typeof product.title_en === 'string' ? product.title_en.toLowerCase() : "";
+        const titleJP = typeof product.title_jp === 'string' ? product.title_jp.toLowerCase() : "";
+        const search = searchTerm.toLowerCase();
+        return titleEN.includes(search) || titleJP.includes(search);
+      })
+    : allProducts;
+
   // ✅ Avoid unsafe non-null assertions (!.) in optional chains
   const activeProduct = allProducts.find((p) => p.id === selectedProduct);
+
+  const reviews = (activeProduct as any)?.reviews || [];
+  const prices = activeProduct?.variants?.map(v => parseFloat(v.price)) || [];
+
+  const minPrice = Math.min(...prices);
+  const maxPrice = Math.max(...prices);
+
+  const finalPrice = `¥${minPrice.toLocaleString()}`;
 
   useEffect(() => {
     if (!allLoading && allProducts.length > 0 && selectedProduct === null) {
@@ -77,12 +96,16 @@ export default function CommunityForumComponent() {
         <div className="mt-7">
           {allLoading ? (
             <SkeletonGrid count={10} />
-          ) : (
+          ) : displayedProducts.length > 0 ? (
             <CommunityProductGrid
-              products={allProducts}
+              products={displayedProducts}
               selectProduct={setSelectedProduct}
               selectedProduct={selectedProduct}
             />
+          ) : (
+            <div className="text-center py-10 text-[#666664]">
+              No products found matching "{searchTerm}"
+            </div>
           )}
         </div>
       </div>
@@ -102,18 +125,18 @@ export default function CommunityForumComponent() {
                     height={500}
                     alt={
                       language === "EN"
-                        ? activeProduct?.translations?.en?.name ?? ""
-                        : activeProduct?.translations?.jp?.name ?? ""
+                        ? activeProduct?.title_en ?? ""
+                        : activeProduct?.title_jp ?? ""
                     }
-                    className="w-28 h-auto object-cover rounded-xl bg-[#FFFDFA] shadow-[0px_1px_2px_0px_rgba(60,64,67,0.3),0px_2px_6px_2px_rgba(60,64,67,0.15)]"
+                    className="w-28 h-28 object-cover rounded-xl bg-[#FFFDFA] shadow-[0px_1px_2px_0px_rgba(60,64,67,0.3),0px_2px_6px_2px_rgba(60,64,67,0.15)]"
                   />
                 )}
               </div>
               <div className="productMeta flex flex-col gap-2">
                 <span className="productTitle font-medium text-[#666664] text-lg line-clamp-1 xl:pr-5">
                   {language === "EN"
-                    ? activeProduct?.translations?.en?.name
-                    : activeProduct?.translations?.jp?.name}
+                    ? activeProduct?.title_en
+                    : activeProduct?.title_jp}
                 </span>
                 <span className="productRating">
                   <div className="flex items-center">
@@ -124,21 +147,8 @@ export default function CommunityForumComponent() {
                     ))}
                   </div>
                 </span>
-                <span className="productPrice">
-                  {activeProduct?.price && Number(activeProduct.price) !== 0 ? (
-                    <>
-                      <span className="text-[#DB4444] font-medium text-xl">
-                        ${Number(activeProduct.price).toFixed(2)}
-                      </span>
-                      <span className="ml-3 line-through text-[#666664] original-price font-medium text-xl">
-                        ${Number(activeProduct.price).toFixed(2)}
-                      </span>
-                    </>
-                  ) : (
-                    <span className="text-[#666664] original-price font-medium text-xl">
-                      ${Number(activeProduct?.price || 0).toFixed(2)}
-                    </span>
-                  )}
+                <span className="productPrice text-lg font-medium text-[#db4444]">
+                  {finalPrice}
                 </span>
               </div>
             </div>
@@ -147,11 +157,11 @@ export default function CommunityForumComponent() {
               <span className="font-medium text-sm text-[#666664]">Description</span>
               <span className="font-medium text-sm text-[#666664] line-clamp-2">
                 {language === "EN"
-                  ? activeProduct?.translations?.en?.description
-                  : activeProduct?.translations?.jp?.description}
+                  ? parse(activeProduct?.detailed_description_en)
+                  : parse(activeProduct?.detailed_description_jp)}
               </span>
               <Link
-                href={`/product/${activeProduct.id}`}
+                href={`/product/${activeProduct.slug}`}
                 className="text-[#98C1A9] font-medium text-lg capitalize flex gap-2 items-center"
               >
                 read more about this product
@@ -193,21 +203,19 @@ export default function CommunityForumComponent() {
           <div className="tabsButtons flex justify-center xl:gap-10 min-[360px]:gap-2 mt-10">
             <div
               onClick={() => setActiveTabs("questions")}
-              className={`${
-                activeTabs === "questions"
-                  ? "bg-[#98C1A9] text-white"
-                  : "text-[#98C1A9]"
-              } tab border-2 border-[#98C1A9] rounded-xl py-4 xl:min-w-[266px] xl:max-w-[266px] lg:min-w-[266px] lg:max-w-[266px] md:min-w-[266px] md:max-w-[266px] min-[360px]:px-5 text-center font-medium text-md cursor-pointer transition-all hover:bg-[#98C1A9] hover:text-white capitalize`}
+              className={`${activeTabs === "questions"
+                ? "bg-[#98C1A9] text-white"
+                : "text-[#98C1A9]"
+                } tab border-2 border-[#98C1A9] rounded-xl py-4 xl:min-w-[266px] xl:max-w-[266px] lg:min-w-[266px] lg:max-w-[266px] md:min-w-[266px] md:max-w-[266px] min-[360px]:px-5 text-center font-medium text-md cursor-pointer transition-all hover:bg-[#98C1A9] hover:text-white capitalize`}
             >
               <span>Questions & Answers</span>
             </div>
             <div
               onClick={() => setActiveTabs("reviews")}
-              className={`${
-                activeTabs === "reviews"
-                  ? "bg-[#98C1A9] text-white"
-                  : "text-[#98C1A9]"
-              } tab border-2 border-[#98C1A9] rounded-xl py-4 xl:min-w-[266px] xl:max-w-[266px] lg:min-w-[266px] lg:max-w-[266px] md:min-w-[266px] md:max-w-[266px] min-[360px]:px-5 text-center font-medium text-md cursor-pointer transition-all hover:bg-[#98C1A9] hover:text-white capitalize`}
+              className={`${activeTabs === "reviews"
+                ? "bg-[#98C1A9] text-white"
+                : "text-[#98C1A9]"
+                } tab border-2 border-[#98C1A9] rounded-xl py-4 xl:min-w-[266px] xl:max-w-[266px] lg:min-w-[266px] lg:max-w-[266px] md:min-w-[266px] md:max-w-[266px] min-[360px]:px-5 text-center font-medium text-md cursor-pointer transition-all hover:bg-[#98C1A9] hover:text-white capitalize`}
             >
               <span>reviews</span>
             </div>
@@ -225,7 +233,7 @@ export default function CommunityForumComponent() {
             ) : filterLoading ? (
               <SkeletonTabContent />
             ) : (
-              <CommunityReviews />
+              <CommunityReviews reviews={reviews} product_id={selectedProduct} />
             )}
           </div>
         </>

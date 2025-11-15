@@ -42,7 +42,7 @@ const cardsData = [
 
 export default function ProfileCardsSection() {
   return (
-    <section className="w-full max-w-7xl mx-auto px-2 lg:px-4 lg:py-10 py-2">
+    <section className="w-full max-w-7xl mx-auto lg:py-10 py-2">
       <div
         className="
           grid 

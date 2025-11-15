@@ -63,7 +63,7 @@ const ProductCard: FC<ProductCardI> = ({ product, onHeartOnClick }) => {
   const minPrice = Math.min(...prices);
   const maxPrice = Math.max(...prices);
 
-  const finalPrice = minPrice === maxPrice ? `¥${minPrice.toFixed(2)}` : `¥${minPrice.toFixed(2)} - ¥${maxPrice.toFixed(2)}`;
+  const finalPrice = `¥${minPrice.toLocaleString()}`;
   const finalPriceForCart = minPrice === maxPrice ? minPrice.toFixed(2) : maxPrice.toFixed(2);
 
   const { addToCart, isInCart } = useCart();
@@ -96,8 +96,11 @@ const ProductCard: FC<ProductCardI> = ({ product, onHeartOnClick }) => {
 
     setSelectedSize(chosenSize); // optional, for UI tracking
 
+    // Get variant ID if available
+    const variantId = product?.variants?.[0]?.id;
+
     setTimeout(() => {
-      addToCart(product.id, 1, chosenSize, finalPriceForCart, roomType, product.slug);
+      addToCart(product.id, 1, chosenSize, finalPriceForCart, roomType, product.slug, variantId);
       toast.success("Product added to cart");
       setButtonText("Added");
 

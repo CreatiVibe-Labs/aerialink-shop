@@ -6,7 +6,7 @@ import Input from "@/components/common/input";
 import PrimaryButton from "@/components/common/primary-button";
 import Cookies from "js-cookie";
 import { useProfile } from "@/contexts/profile-context";
-import { toast } from "react-toastify";
+import toast, {Toaster} from "react-hot-toast";
 
 interface NewPasswordValues {
   newPassword: string;
@@ -42,6 +42,7 @@ const NewPasswordForm = () => {
 
   return (
     <div className="center-col items-start w-full relative">
+      <Toaster position="top-right" />
       {/* <BackButton
         href="/login"
         label="back to login"

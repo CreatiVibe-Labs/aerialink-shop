@@ -15,9 +15,14 @@ import { useCart } from "@/contexts/cart-context";
 import Cookies from "js-cookie";
 import { useShippingState } from "@/hooks/use-shipping-state";
 import { useConsumerTax } from "@/hooks/use-consumer-tax";
+import { useAddresses } from "@/hooks/use-addresses";
+import { useProfile } from "@/contexts/profile-context";
+import AddressSelector from "./address-selector";
+import OrderConfirmationModal from "./order-confirmation-modal";
 
 interface FormData {
   fullName: string;
+  email: string;
   phone: string;
   address: string;
   postalCode: string;
@@ -29,10 +34,29 @@ const CheckoutLeft = () => {
   const [mobileStep, setMobileStep] = useState(1); // 1 = form, 2 = review
   const [loading, setLoading] = useState(false);
   const [mobileFormData, setMobileFormData] = useState<FormData | null>(null);
-  const { getTotal } = useCart();
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [pendingOrderData, setPendingOrderData] = useState<FormData | null>(null);
+  const { getTotal, cartItems } = useCart();
   const subtotal = getTotal();
   const { postalCode, shippingRate } = useShippingState();
   const { consumerTax } = useConsumerTax();
+  const { user } = useProfile();
+
+  // Saved addresses for logged-in users
+  const {
+    addresses,
+    selectedAddress,
+    setSelectedAddress,
+    loading: addressesLoading,
+    addAddress,
+    updateAddress,
+  } = useAddresses();
+
+  // Check if user is logged in
+  const isLoggedIn = !!Cookies.get("token");
+  const token = Cookies.get("token");
+  console.log({ isLoggedIn, token })
+  const hasAddresses = addresses.length > 0;
 
   // Calculate total amount for payment (subtotal + shipping + consumer tax)
   const validShippingRate = shippingRate && shippingRate > 0 ? shippingRate : 0;
@@ -53,6 +77,59 @@ const CheckoutLeft = () => {
     defaultValues: { payment: "komoju", saveInfo: false },
     mode: "onTouched",
   });
+
+  // Autofill email when logged in (always for logged-in users)
+  useEffect(() => {
+    if (isLoggedIn && user?.email) {
+      desktopForm.setValue("email", user.email);
+      mobileForm.setValue("email", user.email);
+    }
+  }, [isLoggedIn, user]);
+
+  // Autofill form when selected address changes (logged-in users)
+  useEffect(() => {
+    if (selectedAddress) {
+      // Autofill desktop form
+      desktopForm.setValue("fullName", selectedAddress.name);
+      desktopForm.setValue("phone", selectedAddress.phone_number);
+      desktopForm.setValue("address", selectedAddress.address1);
+      desktopForm.setValue("postalCode", selectedAddress.postal_code);
+
+      // Autofill mobile form
+      mobileForm.setValue("fullName", selectedAddress.name);
+      mobileForm.setValue("phone", selectedAddress.phone_number);
+      mobileForm.setValue("address", selectedAddress.address1);
+      mobileForm.setValue("postalCode", selectedAddress.postal_code);
+
+      // Fetch shipping rate for this address
+      if (selectedAddress.postal_code) {
+        const fetchShippingForAddress = async () => {
+          try {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shipping-rate`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ postal_code: selectedAddress.postal_code }),
+            });
+
+            const data = await res.json();
+            console.log("Address Shipping Rate API Response:", data);
+
+            Cookies.set(
+              "checkout_shipping",
+              JSON.stringify({
+                postalCode: selectedAddress.postal_code,
+                shippingRate: data.shipping_rate,
+              })
+            );
+          } catch (err) {
+            console.error("Address Shipping Rate API Error:", err);
+          }
+        };
+
+        fetchShippingForAddress();
+      }
+    }
+  }, [selectedAddress]);
 
   const desktopPostalCode = desktopForm.watch("postalCode");
 
@@ -138,11 +215,25 @@ const CheckoutLeft = () => {
   const processPayment = async (data: FormData) => {
     console.log("Payment Data:", data);
     setLoading(true);
+
+    // Calculate tax amount
+    const taxAmount = (subtotal + validShippingRate) * (validConsumerTax / 100);
+
+    // Use form data directly (already autofilled for logged-in users if they selected an address)
+    const paymentData = {
+      amount: totalAmount,
+      cartItems: cartItems,
+      shippingAmount: validShippingRate,
+      taxAmount: taxAmount,
+      subtotal: subtotal,
+      ...data,
+    };
+
     try {
       const response = await fetch("/api/payments/create-session", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: totalAmount, ...data }),
+        body: JSON.stringify(paymentData),
       });
 
       const resData = await response.json();
@@ -163,113 +254,189 @@ const CheckoutLeft = () => {
     const postalCode = getValues("postalCode");
     console.log("Postal Code Entered:", postalCode);
   };
-  // Desktop Submit
+
+  // Desktop Submit - Show confirmation modal first
   const onDesktopSubmit: SubmitHandler<FormData> = (data) => {
-    processPayment(data);
+    setPendingOrderData(data);
+    setShowConfirmation(true);
+  };
+
+  // Confirmation handler
+  const handleConfirmOrder = () => {
+    setShowConfirmation(false);
+    if (pendingOrderData) {
+      processPayment(pendingOrderData);
+    }
   };
 
   // Mobile: Go to Step 2
   const goToReview = async () => {
+    // Validate form for all users
     const isValid = await trigger();
-    if (isValid) {
-      const values = getValues();
-      setMobileFormData(values);
-      setMobileStep(2);
-    }
+    if (!isValid) return;
+
+    // Use form values directly (already autofilled for logged-in users)
+    const values = getValues();
+    setMobileFormData(values);
+    setMobileStep(2);
   };
 
-  // Mobile: Final Submit
+  // Mobile: Final Submit - Show confirmation modal first
   const onMobilePlaceOrder = () => {
     if (mobileFormData) {
-      processPayment(mobileFormData);
+      setPendingOrderData(mobileFormData);
+      setShowConfirmation(true);
     }
   };
 
   return (
     <div>
+      {/* Order Confirmation Modal */}
+      {pendingOrderData && (
+        <OrderConfirmationModal
+          isOpen={showConfirmation}
+          onClose={() => {
+            setShowConfirmation(false);
+            setPendingOrderData(null);
+          }}
+          onConfirm={handleConfirmOrder}
+          shippingDetails={{
+            fullName: pendingOrderData.fullName,
+            email: pendingOrderData.email,
+            phone: pendingOrderData.phone,
+            address: pendingOrderData.address,
+            postalCode: pendingOrderData.postalCode,
+          }}
+          cartItems={cartItems}
+          subtotal={subtotal}
+          shippingRate={validShippingRate}
+          consumerTax={validConsumerTax}
+          total={totalAmount}
+        />
+      )}
       {/* ================== DESKTOP VIEW ================== */}
       <div className="hidden md:block">
-        <h2 className="text-3xl font-medium text-min-gray mb-6">Billing Details</h2>
+        <h2 className="text-3xl font-medium text-min-gray mb-6">Shipping Details</h2>
 
-        <form onSubmit={handleDesktop(onDesktopSubmit)} className="space-y-5">
-          {/* Full Name */}
-          <div>
-            <label className="block text-sm text-gray-600 mb-1">
-              Full Name<span className="text-red-500">*</span>
-            </label>
-            <Input
-              type="text"
-              placeholder="Enter your full name"
-              {...regDesktop("fullName", { required: "Full name is required" })}
+        {/* Show saved addresses for logged-in users */}
+        {isLoggedIn && (
+          <div className="mb-5">
+            <AddressSelector
+              addresses={addresses}
+              selectedAddress={selectedAddress}
+              onSelectAddress={setSelectedAddress}
+              onAddAddress={addAddress}
+              onUpdateAddress={updateAddress}
+              loading={addressesLoading}
             />
-            {errDesktop.fullName && (
-              <p className="text-red-500 text-sm mt-1">{errDesktop.fullName.message}</p>
-            )}
           </div>
+        )}
 
-          {/* Phone */}
-          <div>
-            <Controller
-              name="phone"
-              control={ctrlDesktop}
-              rules={{
-                required: "Phone number is required",
-                validate: (val) => val.replace(/\D/g, "").length >= 8 || "Enter a valid phone number",
-              }}
-              render={({ field }) => (
-                <PhoneInput
-                  label="Phone Number *"
-                  value={field.value}
-                  onChange={field.onChange}
-                  error={errDesktop.phone?.message}
-                />
+        {/* Always show the form (autofilled for logged-in users) */}
+        <form onSubmit={handleDesktop(onDesktopSubmit)} className={``}>
+
+          <div className={`${isLoggedIn ? 'hidden' : 'space-y-5'}`}>
+            {/* Full Name */}
+            <div>
+              <label className="block text-sm text-gray-600 mb-1">
+                Full Name<span className="text-red-500">*</span>
+              </label>
+              <Input
+                type="text"
+                placeholder="Enter your full name"
+                {...regDesktop("fullName", { required: "Full name is required" })}
+              />
+              {errDesktop.fullName && (
+                <p className="text-red-500 text-sm mt-1">{errDesktop.fullName.message}</p>
               )}
-            />
-          </div>
+            </div>
 
-          {/* Address */}
-          <div>
-            <label className="block text-sm text-gray-600 mb-1">
-              Street Address<span className="text-red-500">*</span>
-            </label>
-            <Input
-              type="text"
-              placeholder="Enter your address"
-              {...regDesktop("address", { required: "Address is required" })}
-            />
-            {errDesktop.address && (
-              <p className="text-red-500 text-sm mt-1">{errDesktop.address.message}</p>
-            )}
-          </div>
+            {/* Email */}
+            <div>
+              <label className="block text-sm text-gray-600 mb-1">
+                Email<span className="text-red-500">*</span>
+              </label>
+              <Input
+                type="email"
+                placeholder="Enter your email"
+                {...regDesktop("email", {
+                  required: "Email is required",
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: "Invalid email address"
+                  }
+                })}
+              />
+              {errDesktop.email && (
+                <p className="text-red-500 text-sm mt-1">{errDesktop.email.message}</p>
+              )}
+            </div>
 
-          {/* Postal Code */}
-          <div>
-            <label className="block text-sm text-gray-600 mb-1">
-              Postal Code<span className="text-red-500">*</span>
-            </label>
-            <Input
-              type="text"
-              placeholder="Postal Code"
-              {...regDesktop("postalCode", {
-                required: "Postal code is required",
-                pattern: {
-                  value: /^[0-9]{4,10}$/,
-                  message: "Enter a valid postal code",
-                },
-              })}
-            />
-            {errDesktop.postalCode && (
-              <p className="text-red-500 text-sm mt-1">{errDesktop.postalCode.message}</p>
-            )}
-          </div>
+            {/* Phone */}
+            <div>
+              <Controller
+                name="phone"
+                control={ctrlDesktop}
+                rules={{
+                  required: "Phone number is required",
+                  validate: (val) => val.replace(/\D/g, "").length >= 8 || "Enter a valid phone number",
+                }}
+                render={({ field }) => (
+                  <PhoneInput
+                    label="Phone Number *"
+                    value={field.value}
+                    onChange={field.onChange}
+                    error={errDesktop.phone?.message}
+                  />
+                )}
+              />
+            </div>
 
-          {/* Save Info */}
-          <div className="flex items-center gap-2 pt-2">
-            <Checkbox
-              label="Save this information for faster check-out next time"
-              {...regDesktop("saveInfo")}
-            />
+            {/* Address */}
+            <div>
+              <label className="block text-sm text-gray-600 mb-1">
+                Street Address<span className="text-red-500">*</span>
+              </label>
+              <Input
+                type="text"
+                placeholder="Enter your address"
+                {...regDesktop("address", { required: "Address is required" })}
+              />
+              {errDesktop.address && (
+                <p className="text-red-500 text-sm mt-1">{errDesktop.address.message}</p>
+              )}
+            </div>
+
+            {/* Postal Code */}
+            <div>
+              <label className="block text-sm text-gray-600 mb-1">
+                Postal Code<span className="text-red-500">*</span>
+              </label>
+              <Input
+                type="text"
+                placeholder="Postal Code"
+                {...regDesktop("postalCode", {
+                  required: "Postal code is required",
+                  pattern: {
+                    value: /^[0-9]{4,10}$/,
+                    message: "Enter a valid postal code",
+                  },
+                })}
+              />
+              {errDesktop.postalCode && (
+                <p className="text-red-500 text-sm mt-1">{errDesktop.postalCode.message}</p>
+              )}
+            </div>
           </div>
+          {/* Save Info - Only show for guests */}
+          {!isLoggedIn && (
+            <div className="flex items-center gap-2 pt-2">
+              <Checkbox
+                label="Save this information for faster check-out next time"
+                {...regDesktop("saveInfo")}
+              />
+            </div>
+          )}
 
           {/* Payment */}
           <div className="pt-6">
@@ -287,7 +454,7 @@ const CheckoutLeft = () => {
 
           <PrimaryButton
             type="submit"
-            className="md:max-w-fit px-10"
+            className="md:max-w-fit px-10 mt-5"
             disabled={loading || hasShippingError}
           >
             {loading ? "Processing..." : "Place Order"}
@@ -312,90 +479,132 @@ const CheckoutLeft = () => {
         </div>
 
         {mobileStep === 1 ? (
-          <form className="space-y-4">
-            {/* Full Name */}
-            <div>
-              <Input
-                type="text"
-                placeholder="Full Name"
-                {...regMobile("fullName", { required: "Full name is required" })}
-              />
-              {errMobile.fullName && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errMobile.fullName.message}
-                </p>
-              )}
-            </div>
+          <div className="space-y-4">
+            {/* Show saved addresses for logged-in users */}
+            {isLoggedIn && (
+              <div className="mb-4">
+                <AddressSelector
+                  addresses={addresses}
+                  selectedAddress={selectedAddress}
+                  onSelectAddress={setSelectedAddress}
+                  onAddAddress={addAddress}
+                  onUpdateAddress={updateAddress}
+                  loading={addressesLoading}
+                />
+              </div>
+            )}
 
-            {/* Phone */}
-            <div>
-              <Controller
-                name="phone"
-                control={ctrlMobile}
-                rules={{
-                  required: "Phone number is required",
-                  validate: (val) =>
-                    val.replace(/\D/g, "").length >= 8 || "Enter a valid phone number",
-                }}
-                render={({ field }) => (
-                  <PhoneInput
-                    value={field.value}
-                    onChange={field.onChange}
-                    error={errMobile.phone?.message}
+            {/* Always show the form (autofilled for logged-in users) */}
+            <form className="space-y-4">
+              <div className={`${isLoggedIn ? 'hidden' : 'space-y-4 '}`}>
+                {/* Full Name */}
+                <div>
+                  <Input
+                    type="text"
+                    placeholder="Full Name"
+                    {...regMobile("fullName", { required: "Full name is required" })}
                   />
-                )}
-              />
-            </div>
+                  {errMobile.fullName && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errMobile.fullName.message}
+                    </p>
+                  )}
+                </div>
 
-            {/* Address */}
-            <div>
-              <Input
-                type="text"
-                placeholder="Street Address"
-                {...regMobile("address", { required: "Address is required" })}
-              />
-              {errMobile.address && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errMobile.address.message}
-                </p>
+                {/* Email */}
+                <div>
+                  <Input
+                    type="email"
+                    placeholder="Email"
+                    {...regMobile("email", {
+                      required: "Email is required",
+                      pattern: {
+                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                        message: "Invalid email address"
+                      }
+                    })}
+                  />
+                  {errMobile.email && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errMobile.email.message}
+                    </p>
+                  )}
+                </div>
+
+                {/* Phone */}
+                <div>
+                  <Controller
+                    name="phone"
+                    control={ctrlMobile}
+                    rules={{
+                      required: "Phone number is required",
+                      validate: (val) =>
+                        val.replace(/\D/g, "").length >= 8 || "Enter a valid phone number",
+                    }}
+                    render={({ field }) => (
+                      <PhoneInput
+                        value={field.value}
+                        onChange={field.onChange}
+                        error={errMobile.phone?.message}
+                      />
+                    )}
+                  />
+                </div>
+
+                {/* Address */}
+                <div>
+                  <Input
+                    type="text"
+                    placeholder="Street Address"
+                    {...regMobile("address", { required: "Address is required" })}
+                  />
+                  {errMobile.address && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errMobile.address.message}
+                    </p>
+                  )}
+                </div>
+
+                {/* Postal Code */}
+                <div>
+                  <Input
+                    type="text"
+                    placeholder="Postal Code"
+                    {...regMobile("postalCode", {
+                      required: "Postal code is required",
+                      pattern: {
+                        value: /^[0-9]{4,10}$/,
+                        message: "Enter a valid postal code",
+                      },
+                    })}
+                  />
+                  {errMobile.postalCode && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errMobile.postalCode.message}
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              {/* Save Info - Only show for guests */}
+              {!isLoggedIn && (
+                <div className="flex items-center gap-2">
+                  <Checkbox
+                    label="Save this information for faster check-out next time"
+                    {...regMobile("saveInfo")}
+                  />
+                </div>
               )}
-            </div>
 
-            {/* Postal Code */}
-            <div>
-              <Input
-                type="text"
-                placeholder="Postal Code"
-                {...regMobile("postalCode", {
-                  required: "Postal code is required",
-                  pattern: {
-                    value: /^[0-9]{4,10}$/,
-                    message: "Enter a valid postal code",
-                  },
-                })}
-              />
-              {errMobile.postalCode && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errMobile.postalCode.message}
-                </p>
-              )}
-            </div>
-
-            <div className="flex items-center gap-2">
-              <Checkbox
-                label="Save this information for faster check-out next time"
-                {...regMobile("saveInfo")}
-              />
-            </div>
-
-            <PrimaryButton
-              type="button"
-              onClick={goToReview}
-              className="w-full py-3"
-            >
-              Continue to Payment
-            </PrimaryButton>
-          </form>
+              <PrimaryButton
+                type="button"
+                onClick={goToReview}
+                className="w-full py-3 mt-4"
+              >
+                Continue to Payment
+              </PrimaryButton>
+            </form>
+          </div>
         ) : (
           <div className="space-y-4">
             <div className="flex items-center gap-2 border border-min-gray px-3 py-3 rounded-xl">

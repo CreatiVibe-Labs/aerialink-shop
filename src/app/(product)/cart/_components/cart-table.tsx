@@ -378,7 +378,7 @@ const CartTable: React.FC<CartTableProps> = ({
                       const availableSizes = getSizesForRoomType(enrichedItem.productData, item.room_type);
                       return availableSizes.map((size: Size) => ({
                         key: size.size_value,
-                        val: language === "EN" ? size.size_name : (size.size_value_jp || size.size_name)
+                        val: size.size_value // Use size_value directly (e.g., "175 * 260cm")
                       }));
                     })()}
                     onChange={(val) => {
