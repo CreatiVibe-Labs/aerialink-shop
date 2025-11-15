@@ -37,7 +37,6 @@ const WishListPage = () => {
             language === "EN"
               ? product?.title_en
               : product?.title_jp,
-          price: parseFloat(product.price),
           product: product,
           onHeartOnClick: () => {},
           addToCardOnClick: () => {},

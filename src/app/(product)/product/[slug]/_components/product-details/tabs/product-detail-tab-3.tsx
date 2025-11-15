@@ -1,99 +1,89 @@
-// "use client";
-// import { useLanguage } from "@/contexts/language-context";
-// import { useProducts } from "@/contexts/product-context";
-// import React from "react";
+"use client";
+import { useLanguage } from "@/contexts/language-context";
+import { useProducts } from "@/contexts/product-context";
+import React from "react";
+import parse from 'html-react-parser';
 
-// // Skeleton for Variants Tab
-// const VariantsSkeleton = () => (
-//   <div className="rounded-xl border border-gray-200 overflow-hidden max-w-2xl animate-pulse">
-//     {/* Header */}
-//     <div className="bg-gray-50 grid grid-cols-4 text-sm font-medium text-gray-700 border-b border-gray-200">
-//       <div className="p-3">Variant</div>
-//       <div className="p-3">Color</div>
-//       <div className="p-3">Price</div>
-//       <div className="p-3">Stock</div>
-//     </div>
-//     {/* Rows */}
-//     {[...Array(2)].map((_, i) => (
-//       <div key={i} className="grid grid-cols-4 border-b border-gray-200">
-//         <div className="p-3">
-//           <div className="h-4 bg-gray-200 rounded w-20"></div>
-//         </div>
-//         <div className="p-3">
-//           <div className="h-4 bg-gray-200 rounded w-24"></div>
-//         </div>
-//         <div className="p-3">
-//           <div className="h-4 bg-gray-200 rounded w-16"></div>
-//         </div>
-//         <div className="p-3">
-//           <div className="h-4 bg-gray-200 rounded w-12"></div>
-//         </div>
-//       </div>
-//     ))}
-//   </div>
-// );
+// Skeleton for Variants Tab
+const VariantsSkeleton = () => (
+  <div className="rounded-xl border border-gray-200 overflow-hidden max-w-2xl animate-pulse">
+    {/* Header */}
+    <div className="bg-gray-50 grid grid-cols-4 text-sm font-medium text-gray-700 border-b border-gray-200">
+      <div className="p-3">Variant</div>
+      <div className="p-3">Color</div>
+      <div className="p-3">Price</div>
+      <div className="p-3">Stock</div>
+    </div>
+    {/* Rows */}
+    {[...Array(2)].map((_, i) => (
+      <div key={i} className="grid grid-cols-4 border-b border-gray-200">
+        <div className="p-3">
+          <div className="h-4 bg-gray-200 rounded w-20"></div>
+        </div>
+        <div className="p-3">
+          <div className="h-4 bg-gray-200 rounded w-24"></div>
+        </div>
+        <div className="p-3">
+          <div className="h-4 bg-gray-200 rounded w-16"></div>
+        </div>
+        <div className="p-3">
+          <div className="h-4 bg-gray-200 rounded w-12"></div>
+        </div>
+      </div>
+    ))}
+  </div>
+);
 
-// const ProductDetailTab3 = () => {
-//   const { state } = useProducts();
-//   const { product, productLoading } = state;
+const ProductDetailTab3 = () => {
+  const { state } = useProducts();
+  const { product, productLoading } = state;
+  const { language } = useLanguage();
 
-//   // Show skeleton while loading
-//   if (productLoading) return <VariantsSkeleton />;
+  // Show skeleton while loading
+  if (productLoading) return <VariantsSkeleton />;
 
-//   // No product
-//   if (!product) return <p className="text-gray-500">No product data.</p>;
+  // No product
+  if (!product) return <p className="text-gray-500">No product data.</p>;
 
-//   // No variants
-//   if (!product.variants || product.variants.length === 0) {
-//     return <p className="text-gray-500">No variants available.</p>;
-//   }
+  // Parse colors, sizes, weight from specifications
+  const color = language === 'EN' ? product.color.name_en : product.color.name_jp || "N/A";
+  const NetWeight = language === 'EN' ? parse(product.net_weight_en) : parse(product.net_weight_jp) || "N/A";
+  const packing = language === 'EN' ? parse(product.packing_en) : parse(product.packing_jp) || "N/A";
+  const packingRemarks = language === 'EN' ? parse(product.packing_remarks_en) : parse(product.packing_remarks_jp) || "N/A";
+  const Harmfull = language === 'EN' ? parse(product.harmful_content_en) : parse(product.harmful_content_jp) || "N/A";
 
-//   return (
-//     <div className="rounded-xl border border-min-gray overflow-hidden max-w-2xl">
-//       {/* Table Header */}
-//       <div className="bg-gray-50 grid grid-cols-4 text-sm font-medium text-min-gray border-b border-min-gray">
-//         <div className="p-3">Variant</div>
-//         <div className="p-3">Color</div>
-//         <div className="p-3">Price</div>
-//         <div className="p-3">Stock</div>
-//       </div>
+  return (
+    <div className="rounded-2xl border border-[#666664] overflow-hidden max-w-2xl">
+      {/* Colors Row */}
+      <div className="grid grid-cols-[200px_1fr] border-b border-[#666664]">
+        <div className="px-4 py-3 bg-white font-medium text-gray-700 border-r border-[#666664]">Color</div>
+        <div className="px-4 py-3 bg-white text-gray-600">{color}</div>
+      </div>
 
-//       {/* Table Rows */}
-//       {product.variants.map((variant) => {
-//         const colorAttr = variant.attributes.find(
-//           (attr) => attr.attribute_name.toLowerCase() === "color"
-//         );
-//         const color = colorAttr?.attribute_value || "—";
+      {/* Sizes Row */}
+      <div className="grid grid-cols-[200px_1fr] border-b border-[#666664]">
+        <div className="px-4 py-3 bg-white font-medium text-gray-700 border-r border-[#666664]">New Weight</div>
+        <div className="px-4 py-3 bg-white text-gray-600">{NetWeight}</div>
+      </div>
 
-//         return (
-//           <div
-//             key={variant.id}
-//             className="grid grid-cols-4 text-sm text-min-gray border-b border-min-gray last:border-b-0"
-//           >
-//             {/* SKU */}
-//             <div className="p-3 font-medium">{variant.sku}</div>
+      <div className="grid grid-cols-[200px_1fr] border-b border-[#666664]">
+        <div className="px-4 py-3 bg-white font-medium text-gray-700 border-r border-[#666664]">Packing</div>
+        <div className="px-4 py-3 bg-white text-gray-600">
+          <div>{packing}</div>
+          <div>{packingRemarks}</div>
+        </div>
+      </div>
 
-//             {/* Color */}
-//             <div className="p-3">
-//               <span className="inline-flex items-center gap-1">{color}</span>
-//             </div>
 
-//             {/* Price */}
-//             <div className="p-3 font-semibold">${variant.price}</div>
+      {/* Weight Row */}
+      <div className="grid grid-cols-[200px_1fr]">
+        <div className="px-4 py-3 bg-white font-medium text-gray-700 border-r border-[#666664]">Harmfull Content</div>
+        <div className="px-4 py-3 bg-white text-gray-600">{Harmfull}</div>
+      </div>
 
-//             {/* Stock */}
-//             <div className="p-3">
-//               {variant.stock > 0 ? (
-//                 <span className="text-green-600">{variant.stock} in stock</span>
-//               ) : (
-//                 <span className="text-red-600">Out of stock</span>
-//               )}
-//             </div>
-//           </div>
-//         );
-//       })}
-//     </div>
-//   );
-// };
 
-// export default ProductDetailTab3;
+    </div>
+  );
+};
+
+export default ProductDetailTab3;

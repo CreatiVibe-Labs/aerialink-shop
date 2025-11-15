@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { useProfile } from "@/contexts/profile-context";
-import { toast, ToastContainer } from "react-toastify";
+import toast, {Toaster} from "react-hot-toast";
 
 interface RegisterFormValues {
   firstName: string;
@@ -49,8 +49,9 @@ const RegisterForm = () => {
       reset();
     } catch (error: any) {
       // Handle Laravel validation errors (422) or other errors
+      console.log({error})
       const message =
-        error?.response?.data?.error?.email?.[0] || // Extract email-specific error
+        error?.error?.email?.[0] || // Extract email-specific error
         error?.response?.data?.message || // Fallback to general message
         "Registration failed. Please try again.";
       toast.error(message);
@@ -60,6 +61,7 @@ const RegisterForm = () => {
 
   return (
     <div className="center-col items-start w-full">
+      <Toaster position="top-right" />
       {/* header */}
       <div className="center-col items-start space-y-3">
         <h1 className="font-albert-sans font-semibold text-[28px] lg:text-[40px] leading-[100%] tracking-[0] text-[#313131]">

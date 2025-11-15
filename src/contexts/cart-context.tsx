@@ -7,6 +7,7 @@ export interface CartItem {
   id: number;
   quantity: number;
   size: string;
+  size_id?: number; // Variant ID for the selected size
   price: string;
   room_type: string;
   slug: string;
@@ -14,7 +15,7 @@ export interface CartItem {
 
 interface CartContextType {
   cartItems: CartItem[];
-  addToCart: (id: number, quantity: number, size: string, price: string, room_type: string, slug: string) => void;
+  addToCart: (id: number, quantity: number, size: string, price: string, room_type: string, slug: string, size_id?: number) => void;
   removeFromCart: (id: number) => void;
   removeFromCartByIndex: (index: number) => void;
   updateQuantity: (id: number, qty: number) => void;
@@ -57,8 +58,8 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [cartItems]);
 
-  const addToCart = (id: number, quantity: number, size: string, price: string, room_type: string, slug: string) => {
-    console.log('Adding to cart:', { id, quantity, size, price, room_type, slug });
+  const addToCart = (id: number, quantity: number, size: string, price: string, room_type: string, slug: string, size_id?: number) => {
+    console.log('Adding to cart:', { id, quantity, size, price, room_type, slug, size_id });
     setCartItems(prevItems => {
       const existingItem = prevItems.find(item => item.id === id && item.size === size && item.room_type === room_type);
 
@@ -77,6 +78,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         const newItem: CartItem = {
           id,
           size,
+          size_id,
           quantity,
           price: (parseFloat(price) * quantity).toFixed(2),
           room_type,

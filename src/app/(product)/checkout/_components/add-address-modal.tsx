@@ -1,21 +1,24 @@
 "use client";
+
+import React, { useState, useEffect } from "react";
+import { useForm, Controller } from "react-hook-form";
+import Input from "@/components/common/input";
+import PhoneInput from "@/components/common/phone-input";
+import PrimaryButton from "@/components/common/primary-button";
+import Image from "next/image";
+import { Address } from "@/hooks/use-addresses";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogFooter,
 } from "@/components/ui/dialog";
-import Image from "next/image";
-import { useForm, Controller } from "react-hook-form";
-import Input from "@/components/common/input";
-import PhoneInput from "@/components/common/phone-input";
-import PrimaryButton from "@/components/common/primary-button";
 
-interface ModalProps {
-  open: boolean;
+interface AddAddressModalProps {
+  isOpen: boolean;
   onClose: () => void;
-  onSave?: (data: AddressFormData) => Promise<void>;
+  onSave: (address: Omit<Address, "id">) => Promise<{ success: boolean; error?: string }>;
+  editAddress?: Address | null;
 }
 
 interface AddressFormData {
@@ -26,7 +29,15 @@ interface AddressFormData {
   default: boolean;
 }
 
-export default function AddressModal({ open, onClose, onSave }: ModalProps) {
+const AddAddressModal: React.FC<AddAddressModalProps> = ({ 
+  isOpen, 
+  onClose, 
+  onSave,
+  editAddress = null 
+}) => {
+  const [loading, setLoading] = useState(false);
+  const [apiError, setApiError] = useState<string | null>(null);
+
   const {
     register,
     handleSubmit,
@@ -43,20 +54,51 @@ export default function AddressModal({ open, onClose, onSave }: ModalProps) {
     },
   });
 
-  const onSubmit = async (data: AddressFormData) => {
-    if (onSave) {
-      await onSave(data);
+  // Populate form when editing
+  useEffect(() => {
+    if (editAddress) {
+      reset({
+        name: editAddress.name,
+        phone_number: editAddress.phone_number,
+        address1: editAddress.address1,
+        postal_code: editAddress.postal_code,
+        default: editAddress.default || false,
+      });
+    } else {
+      reset({
+        name: "",
+        phone_number: "",
+        address1: "",
+        postal_code: "",
+        default: false,
+      });
     }
-    reset();
-    onClose();
+  }, [editAddress, reset]);
+
+  const onSubmit = async (data: AddressFormData) => {
+    setLoading(true);
+    setApiError(null);
+
+    const result = await onSave(data);
+
+    if (result.success) {
+      reset();
+      onClose();
+    } else {
+      setApiError(result.error || "Failed to save address");
+    }
+
+    setLoading(false);
   };
 
   const handleClose = () => {
     reset();
+    setApiError(null);
     onClose();
   };
+
   return (
-    <Dialog open={open} onOpenChange={onClose}>
+    <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent
         className="rounded-2xl
    w-full         
@@ -72,7 +114,7 @@ export default function AddressModal({ open, onClose, onSave }: ModalProps) {
         <DialogHeader>
           <DialogTitle className="flex justify-between items-center ">
             <h3 className="text-[18.86px] leading-[15.72px] font-albert-sans tracking-[4%] lg:text-[36px] font-[500] text-[#666664]">
-              Add Address
+              {editAddress ? "Edit Address" : "Add Address"}
             </h3>
             <button
               onClick={handleClose}
@@ -90,6 +132,12 @@ export default function AddressModal({ open, onClose, onSave }: ModalProps) {
         </DialogHeader>
 
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-[10.96px] lg:gap-[20px] w-full ">
+          {apiError && (
+            <div className="bg-red-50 text-red-600 text-sm p-3 rounded-lg">
+              {apiError}
+            </div>
+          )}
+
           {/* Full Name */}
           <div className="flex flex-col">
             <label className="text-[#666664]/40 text-[17px] font-medium mb-1 hidden lg:block">
@@ -186,18 +234,19 @@ export default function AddressModal({ open, onClose, onSave }: ModalProps) {
           <div className="flex justify-center gap-5">
             <button
               type="submit"
+              disabled={loading}
               className="bg-[#98C1A9] w-full lg:w-[541px] h-[41.21437454223633px] lg:h-[53px] 
                 hover:bg-[#82ab94] hover:text-white  text-white px-8 lg:py-2 py-[7.17px] rounded-[14px]
                 text-[15.15px] uppercase
-                lg:text-[24px]  cursor-pointer "
+                lg:text-[24px]  cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Save
+              {loading ? "Saving..." : "Save"}
             </button>
           </div>
         </form>
-
-        {/* <DialogFooter className="flex justify-center gap-3 pt-4"></DialogFooter> */}
       </DialogContent>
     </Dialog>
   );
-}
+};
+
+export default AddAddressModal;

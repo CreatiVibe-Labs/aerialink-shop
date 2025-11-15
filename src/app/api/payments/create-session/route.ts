@@ -27,7 +27,28 @@ export async function POST(req: Request) {
       );
     }
 
-    const { amount } = bodyData;
+    const { 
+      amount, 
+      fullName, 
+      email, 
+      phone, 
+      address, 
+      postalCode, 
+      saveInfo,
+      cartItems,
+      shippingAmount,
+      taxAmount,
+      subtotal
+    } = bodyData;
+    
+    console.log("=== CREATE PAYMENT SESSION ===");
+    console.log("Amount:", amount);
+    console.log("Shipping:", shippingAmount);
+    console.log("Tax:", taxAmount);
+    console.log("Subtotal:", subtotal);
+    console.log("Cart Items:", JSON.stringify(cartItems, null, 2));
+    console.log("Customer:", { fullName, email, phone, address, postalCode, saveInfo });
+    
     if (!amount || isNaN(amount)) {
       return NextResponse.json(
         { error: "Valid amount is required" },
@@ -39,6 +60,22 @@ export async function POST(req: Request) {
     const proto = req.headers.get("x-forwarded-proto") || "http";
     const host = req.headers.get("host");
     const returnUrl = `${proto}://${host}/api/payments/payment-successfull`;
+
+    // Store order details in session metadata
+    const metadata = {
+      customer_name: fullName,
+      customer_email: email,
+      customer_phone: phone,
+      customer_address: address,
+      customer_postal_code: postalCode,
+      save_info: saveInfo ? "true" : "false",
+      cart_items: JSON.stringify(cartItems || []),
+      shipping_amount: String(shippingAmount || 0),
+      tax_amount: String(taxAmount || 0),
+      subtotal: String(subtotal || 0),
+    };
+
+    console.log("Session Metadata:", JSON.stringify(metadata, null, 2));
 
     // Call Komoju API
     const response = await fetch("https://komoju.com/api/v1/sessions", {
@@ -53,6 +90,7 @@ export async function POST(req: Request) {
         amount,
         currency: "JPY",
         return_url: returnUrl,
+        metadata,
       }),
     });
 

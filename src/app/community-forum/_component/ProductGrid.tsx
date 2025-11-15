@@ -66,18 +66,18 @@ const CommunityProductGrid: React.FC<CommunityProductGridProps> = ({
                     src={product?.images[0]?.url}
                     alt={
                       language == "EN"
-                        ? product?.translations?.en?.name
-                        : product?.translations?.jp?.name
+                        ? product.title_en
+                        : product.title_jp
                     }
                     fill
                     className="mx-auto w-50 object-cover rounded"
                   />
                 </div>
               )}
-              <p className="text-[#666664] text-sm line-clamp-1">
+              <p className="text-[#666664] text-sm font-medium mt-3 line-clamp-1">
                 {language == "EN"
-                  ? product?.translations?.en?.name
-                  : product?.translations?.jp?.name}
+                  ? product.title_en
+                  : product.title_jp}
               </p>
             </div>
           ))}
