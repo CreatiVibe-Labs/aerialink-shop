@@ -7,6 +7,7 @@ import { Albert_Sans, Poppins } from "next/font/google";
 import Navbar from "../components/layouts/navbar";
 import "./globals.css";
 import { ToastContainer } from "react-toastify";
+import ConditionalSecondaryNav from "@/components/layouts/conditional-secondary-nav";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -37,7 +38,8 @@ export default function RootLayout({
       >
         <AppProvider>
           <Navbar />
-          <SecondaryNavbar />
+          {/* <SecondaryNavbar /> */}
+          <ConditionalSecondaryNav />
           <div className="app max-w-7xl w-full mx-auto xl:px-0 lg:px-4 md:px-4 px-4">
             {children}
           </div>

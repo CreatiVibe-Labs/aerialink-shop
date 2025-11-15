@@ -42,21 +42,20 @@ const NewPasswordForm = () => {
 
   return (
     <div className="center-col items-start w-full relative">
-<<<<<<< Updated upstream
-      <BackButton
-=======
       <Toaster position="top-right" />
       {/* <BackButton
->>>>>>> Stashed changes
         href="/login"
         label="back to login"
         className="absolute top-5 max-md:static max-md:mb-5 max-md:-ml-2"
-      />
+      /> */}
 
-      <div className="center-col items-start space-y-3">
-        <h1 className="text-4xl font-medium">Set New Password</h1>
-        <p className="text-light-gray">
-          Please enter your new password and confirm it below.
+      <div className="center-col items-start space-y-[16px]">
+        <h1 className="font-albert-sans font-semibold lg:text-[40px] text-[28px] leading-[100%] tracking-[0] text-[#313131]">
+          Set New Password
+        </h1>
+        <p className="w-full lg:max-w-[512px] font-albert-sans opacity-75 font-[400] lg:text-[16px] text-[12px] leading-[120%] tracking-[0%] text-[#313131]">
+          Your previous password has been reseted. Please set a new password for
+          your account.
         </p>
       </div>
 
@@ -67,7 +66,8 @@ const NewPasswordForm = () => {
         <div className="space-y-0.5">
           <Input
             type="password"
-            placeholder="Enter new password"
+            label="Create Password"
+            placeholder=""
             {...register("newPassword", {
               required: "New password is required",
               minLength: {
@@ -86,7 +86,8 @@ const NewPasswordForm = () => {
         <div className="space-y-0.5">
           <Input
             type="password"
-            placeholder="Confirm new password"
+            label="Re-enter Password"
+            placeholder=""
             {...register("confirmPassword", {
               required: "Please confirm your password",
               validate: (value) =>
@@ -101,7 +102,7 @@ const NewPasswordForm = () => {
         </div>
 
         <PrimaryButton type="submit" loading={loading} disabled={loading}>
-          {loading ? "Updating..." : "Update Password"}
+          {loading ? "Submitting..." : "Set password"}
         </PrimaryButton>
       </form>
     </div>

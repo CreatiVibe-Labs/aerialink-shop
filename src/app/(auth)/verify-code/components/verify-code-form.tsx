@@ -41,13 +41,15 @@ const VerifyCodeForm = () => {
       <Toaster position="top-right" />
       <BackButton
         href="/login"
-        label="back to login"
-        className="mb-5 max-md:static max-md:mb-5 max-md:-ml-2"
+        label="Change Email Address"
+        className="mb-5 max-md:static max-md:mb-5 max-md:-ml-2 font-albert-sans font-[500] text-[12px] lg:text-[14px] leading-[100%] tracking-[0%] text-[#313131]"
       />
 
       <div className="center-col items-start space-y-3">
-        <h1 className="text-4xl font-medium">Verify Code</h1>
-        <p className="text-light-gray">
+        <h1 className="font-albert-sans font-semibold lg:text-[40px] text-[28px]  leading-[100%] tracking-[0] text-[#313131]">
+          Verify Code
+        </h1>
+        <p className="font-albert-sans opacity-75 font-[400]  lg:text-[16px] text-[12px] leading-[100%] tracking-[0] text-[#313131]">
           An authentication code has been sent to your email.
         </p>
       </div>
@@ -59,7 +61,8 @@ const VerifyCodeForm = () => {
         <div className="space-y-0.5">
           <Input
             type="text"
-            placeholder="Enter verification code"
+            label="Enter Code"
+            placeholder="7789BM6X"
             maxLength={6}
             {...register("code", {
               required: "Verification code is required",
@@ -74,12 +77,8 @@ const VerifyCodeForm = () => {
           )}
         </div>
 
-        <PrimaryButton type="submit" loading={loading} disabled={loading}>
-          {loading ? "Verifying..." : "Verify"}
-        </PrimaryButton>
-
-        <p className="text-sm text-gray-600">
-          Didn’t get a code?{" "}
+        <p className="text-sm text-[#313131]  font-[500] ">
+          Didn&apos;t get a code?{" "}
           <button
             type="button"
             className="text-primary font-medium hover:underline cursor-pointer"
@@ -88,6 +87,10 @@ const VerifyCodeForm = () => {
             Resend
           </button>
         </p>
+
+        <PrimaryButton type="submit" loading={loading} disabled={loading}>
+          {loading ? "Verifying..." : "Verify"}
+        </PrimaryButton>
       </form>
     </div>
   );

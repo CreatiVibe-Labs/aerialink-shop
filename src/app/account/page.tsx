@@ -4,36 +4,15 @@ import Image from "next/image";
 import Profile from "../../components/account/profileData";
 import OrderHistory from "../../components/account/order-history";
 import DeliveryAddress from "@/components/account/address";
-<<<<<<< Updated upstream
-=======
 import BreadCrumbs from "@/components/common/bread-crumbs";
 import ProfileCardsSection from "@/components/account/ProfileCardsSection";
 import { useProfile } from "@/contexts/profile-context";
->>>>>>> Stashed changes
 
 const AccountPage: React.FC = () => {
   const [activeSection, setActiveSection] = useState<string>("profile");
   const { user } = useProfile();
 
   return (
-<<<<<<< Updated upstream
-    <div className="min-h-screen py-12 px-4">
-      {/* Header */}
-      <h1 className="text-[36px] font-semibold mb-3 text-gray-600 ">
-        Hello username
-      </h1>
-
-      {/* 3 Boxes in One Line */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl m-auto ">
-        {/* Profile */}
-        <Box
-          title="Profile"
-          description="Manage your personal information"
-          icon="/assets/account/interface-user-circle.png"
-          isActive={activeSection === "profile"}
-          onClick={() => setActiveSection("profile")}
-        />
-=======
     <>
       <BreadCrumbs />
       <div className="min-h-screen py-2 ">
@@ -50,58 +29,57 @@ const AccountPage: React.FC = () => {
             title="Profile"
             description="Manage your personal information"
             icon="/assets/account/interface-user-circle.png"
-            iconActive="/assets/account/active-user.png"
             isActive={activeSection === "profile"}
             onClick={() => setActiveSection("profile")}
           />
->>>>>>> Stashed changes
 
-        {/* Order History */}
-        <Box
-          title="Order History"
-          description="View your past orders and invoices"
-          icon="/assets/account/interface-time.png"
-          isActive={activeSection === "orders"}
-          onClick={() => setActiveSection("orders")}
-        />
+          {/* Order History */}
+          <Box
+            title="Order History"
+            description="View your past orders and invoices"
+            icon="/assets/account/interface-time.png"
+            isActive={activeSection === "orders"}
+            onClick={() => setActiveSection("orders")}
+          />
 
-        {/* Delivery Address */}
-        <Box
-          title="Delivery Address"
-          description="Manage your saved addresses"
-          icon="/assets/account/travel-map-location-pin.png"
-          isActive={activeSection === "address"}
-          onClick={() => setActiveSection("address")}
-        />
+          {/* Delivery Address */}
+          <Box
+            title="Delivery Address"
+            description="Manage your saved addresses"
+            icon="/assets/account/travel-map-location-pin.png"
+            isActive={activeSection === "address"}
+            onClick={() => setActiveSection("address")}
+          />
+        </div>
+
+        {/* Section Placeholder */}
+        <div className="mx-auto max-w-[1013px] w-full ">
+          {activeSection === "profile" && (
+            <div>
+              <Profile />
+            </div>
+          )}
+
+          {activeSection === "orders" && (
+            <div
+              className="mx-auto w-full h-[660]"
+              style={{ maxWidth: "1013px" }}
+            >
+              <OrderHistory />
+            </div>
+          )}
+
+          {activeSection === "address" && (
+            <div className="bg-white rounded-xl ">
+
+
+              <DeliveryAddress />
+
+            </div>
+          )}
+        </div>
       </div>
-
-      {/* Section Placeholder */}
-      <div className="mx-auto max-w-[1013px] w-full ">
-        {activeSection === "profile" && (
-          <div>
-            <Profile />
-          </div>
-        )}
-
-        {activeSection === "orders" && (
-          <div
-            className="mx-auto w-full h-[660]"
-            style={{ maxWidth: "1013px" }}
-          >
-            <OrderHistory />
-          </div>
-        )}
-
-        {activeSection === "address" && (
-          <div className="bg-white rounded-xl ">
-
-
-            <DeliveryAddress />
-
-          </div>
-        )}
-      </div>
-    </div>
+    </>
   );
 };
 
@@ -126,20 +104,12 @@ const Box: React.FC<BoxProps> = ({
   return (
     <div
       onClick={onClick}
-<<<<<<< Updated upstream
-      className={`rounded-lg border p-6 flex flex-col gap-2 cursor-pointer transition-all duration-200 group
-        ${isActive
-          ? "bg-[#98C1A9] border-[#98C1A9] shadow-md"
-          : "bg-white border-gray-200 "
-=======
       className={`rounded-[10px] lg:rounded-[14px] px-2 lg:px-[17px] lg:py-[20px] py-[10px] flex flex-col lg:gap-2 
         lg:w-[368px] w-full lg:h-[147px] h-auto
         gap-[10px] cursor-pointer transition-all duration-200 group 
-        ${
-          isActive
-            ? "bg-[#98C1A9] shadow-[0_0_6.1px_0_#00000040]"
-            : "bg-[#FFFDFA]  border-gray-200 shadow-lg"
->>>>>>> Stashed changes
+        ${isActive
+          ? "bg-[#98C1A9] shadow-[0_0_6.1px_0_#00000040]"
+          : "bg-[#FFFDFA]  border-gray-200 shadow-lg"
         }`}
     >
       <div className="flex items-center gap-3">
