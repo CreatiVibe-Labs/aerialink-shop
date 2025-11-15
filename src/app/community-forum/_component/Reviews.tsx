@@ -1,45 +1,34 @@
 'use client';
 
 import { FaStarHalfAlt, FaStar } from "react-icons/fa";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { StarRating } from "@/components/common/star-rating";
 import Image from "next/image";
 import { BiStar, BiSolidStar } from "react-icons/bi";
 import ReCAPTCHA from "react-google-recaptcha";
+import { useProfile } from "@/contexts/profile-context";
+import api from "@/lib/api";
+import toast, { Toaster } from "react-hot-toast";
+import LoginAlertModal from "@/components/home/right-section/components/loginAlert";
 
-export default function CommunityReviews() {
+export default function CommunityReviews({ reviews: initialReviews, product_id }: { reviews: any[], product_id: any }) {
+    const { user } = useProfile();
     const [captchaToken, setCaptchaToken] = useState(null);
+    const [reviews, setReviews] = useState(initialReviews);
+    const [showLoginModal, setShowLoginModal] = useState(false);
 
-    const handleCaptchaChange = (token : any) => {
+    // Update reviews when product_id or initialReviews changes
+    useEffect(() => {
+        setReviews(initialReviews);
+    }, [product_id, initialReviews]);
+
+    const handleCaptchaChange = (token: any) => {
         setCaptchaToken(token);
     };
 
     const total = 5;
     const [selected, setSelected] = useState(0);
     const [hovered, setHovered] = useState<null | number>(null);
-
-    const reviews = [
-        { id: 1, avatar: '/assets/icons/user-avatar.png', name: 'John Doe', publish_date: '2 weeks ago', rating: 5, review: 'Lorem ipsum dolor sit amet, consectetur adi elit. Praesent?Lorem ipsum dolor sit amet, consectetur adi elit. Praesent?Lorem ipsum dolor sit amet, consectetur adi elit. Praesent?Lorem ipsum dolor sit amet, consectetur adi elit. Praesent?Lorem ipsum dolor sit amet, consectetur adi elit. Praesent? ' },
-        { id: 2, avatar: '/assets/icons/user-avatar.png', name: 'John Doe', publish_date: '2 weeks ago', rating: 5, review: 'Lorem ipsum dolor sit amet, consectetur adi elit. Praesent? ' },
-        { id: 3, avatar: '/assets/icons/user-avatar.png', name: 'John Doe', publish_date: '2 weeks ago', rating: 4, review: 'Lorem ipsum dolor sit amet, consectetur adi elit. Praesent? ' },
-        { id: 4, avatar: '/assets/icons/user-avatar.png', name: 'John Doe', publish_date: '2 weeks ago', rating: 3.5, review: 'Lorem ipsum dolor sit amet, consectetur adi elit. Praesent? ' },
-        { id: 5, avatar: '/assets/icons/user-avatar.png', name: 'John Doe', publish_date: '2 weeks ago', rating: 5, review: 'Lorem ipsum dolor sit amet, consectetur adi elit. Praesent? ' },
-        { id: 6, avatar: '/assets/icons/user-avatar.png', name: 'John Doe', publish_date: '2 weeks ago', rating: 5, review: 'Lorem ipsum dolor sit amet, consectetur adi elit. Praesent? ' },
-        { id: 7, avatar: '/assets/icons/user-avatar.png', name: 'John Doe', publish_date: '2 weeks ago', rating: 5, review: 'Lorem ipsum dolor sit amet, consectetur adi elit. Praesent? ' },
-        { id: 8, avatar: '/assets/icons/user-avatar.png', name: 'John Doe', publish_date: '2 weeks ago', rating: 2, review: 'Lorem ipsum dolor sit amet, consectetur adi elit. Praesent? ' },
-        { id: 9, avatar: '/assets/icons/user-avatar.png', name: 'John Doe', publish_date: '2 weeks ago', rating: 5, review: 'Lorem ipsum dolor sit amet, consectetur adi elit. Praesent? ' },
-        { id: 10, avatar: '/assets/icons/user-avatar.png', name: 'John Doe', publish_date: '2 weeks ago', rating: 5, review: 'Lorem ipsum dolor sit amet, consectetur adi elit. Praesent? ' },
-        { id: 11, avatar: '/assets/icons/user-avatar.png', name: 'John Doe', publish_date: '2 weeks ago', rating: 4.7, review: 'Lorem ipsum dolor sit amet, consectetur adi elit. Praesent? ' },
-        { id: 12, avatar: '/assets/icons/user-avatar.png', name: 'John Doe', publish_date: '2 weeks ago', rating: 5, review: 'Lorem ipsum dolor sit amet, consectetur adi elit. Praesent? ' },
-        { id: 13, avatar: '/assets/icons/user-avatar.png', name: 'John Doe', publish_date: '2 weeks ago', rating: 5, review: 'Lorem ipsum dolor sit amet, consectetur adi elit. Praesent? ' },
-        { id: 14, avatar: '/assets/icons/user-avatar.png', name: 'John Doe', publish_date: '2 weeks ago', rating: 4.9, review: 'Lorem ipsum dolor sit amet, consectetur adi elit. Praesent? ' },
-        { id: 15, avatar: '/assets/icons/user-avatar.png', name: 'John Doe', publish_date: '2 weeks ago', rating: 5, review: 'Lorem ipsum dolor sit amet, consectetur adi elit. Praesent? ' },
-        { id: 16, avatar: '/assets/icons/user-avatar.png', name: 'John Doe', publish_date: '2 weeks ago', rating: 5, review: 'Lorem ipsum dolor sit amet, consectetur adi elit. Praesent? ' },
-        { id: 17, avatar: '/assets/icons/user-avatar.png', name: 'John Doe', publish_date: '2 weeks ago', rating: 4, review: 'Lorem ipsum dolor sit amet, consectetur adi elit. Praesent? ' },
-        { id: 18, avatar: '/assets/icons/user-avatar.png', name: 'John Doe', publish_date: '2 weeks ago', rating: 5, review: 'Lorem ipsum dolor sit amet, consectetur adi elit. Praesent? ' },
-        { id: 19, avatar: '/assets/icons/user-avatar.png', name: 'John Doe', publish_date: '2 weeks ago', rating: 5, review: 'Lorem ipsum dolor sit amet, consectetur adi elit. Praesent? ' },
-        { id: 20, avatar: '/assets/icons/user-avatar.png', name: 'John Doe', publish_date: '2 weeks ago', rating: 4.9, review: 'Lorem ipsum dolor sit amet, consectetur adi elit. Praesent? ' },
-    ];
 
     const [openPopup, setOpenPopup] = useState(false);
 
@@ -74,7 +63,18 @@ export default function CommunityReviews() {
 
     const [isLoading, setIsLoading] = useState(false);
 
-    const handleChange = (e : any) => {
+    // Auto-fill form data if user is logged in
+    useEffect(() => {
+        if (user) {
+            setFormData((prev) => ({
+                ...prev,
+                full_name: user.name || "",
+                email_address: user.email || "",
+            }));
+        }
+    }, [user]);
+
+    const handleChange = (e: any) => {
         const { name, value } = e.target;
         setFormData((prev) => ({
             ...prev,
@@ -82,32 +82,81 @@ export default function CommunityReviews() {
         }));
     };
 
-    const handleSubmit = (e : any) => {
+    const handleSubmit = async (e: any) => {
         e.preventDefault();
+
+        if (!captchaToken) {
+            toast.error("Please complete the reCAPTCHA");
+            return;
+        }
+
         setIsLoading(true);
-        setFormData((prev) => ({
-            ...prev,
 
-        }));
-        console.log("Form Data:", formData);
+        const payload = {
+            first_name: formData.full_name,
+            email: formData.email_address,
+            comment: formData.review,
+            rating: selected,
+        };
 
-        setTimeout(() => {
-            console.log("Form Data:", formData);
+        try {
+            const response = await api.post(`/products/${product_id}/reviews`, payload);
+
+            console.log({ response });
+
+            if (response.data.success) {
+                toast.success("Review submitted successfully!");
+                setFormData({
+                    full_name: user ? user.name : "",
+                    email_address: user ? user.email : "",
+                    review: "",
+                    rating: 0,
+                });
+                setSelected(0);
+                setCaptchaToken(null);
+                setOpenPopup(false);
+
+                // Fetch updated reviews
+                const reviewsResponse = await api.get(`/products/${product_id}/reviews`);
+                if (reviewsResponse.data.success) {
+                    setReviews(reviewsResponse.data.data);
+                }
+            } else {
+                const errorData = await response.data.json();
+                toast.error(errorData.message || "Failed to submit review");
+            }
+        } catch (error) {
+            toast.error("Something went wrong. Please try again later.");
+        } finally {
             setIsLoading(false);
-        }, 1500);
+        }
     };
-
     return (
         <section className="mt-10">
-            <div className="flex items-start justify-between xl:flex-row lg:flex-row md:flex-row flex-col gap-5">
+            <Toaster position="top-right" />
+            <div className={`flex ${reviews.length === 0 ? "items-center" : "items-start"} justify-between xl:flex-row lg:flex-row md:flex-row flex-col gap-5`}>
                 <div>
-                    <p className="text-[#666664] text-xl font-medium">Based on {count} reviews</p>
-                    <div className="flex items-center gap-3">
-                        <div className="flex items-center gap-2"><StarRating rating={Number(displayRating)} totalStars={5} size={23} /></div> <span className="text-[#666664] text-xl font-medium">({displayRating})</span>
-                    </div>
+                    {reviews.length > 0 &&
+                        <>
+                            <p className="text-[#666664] text-xl font-medium">Based on {count} reviews</p>
+                            <div className="flex items-center gap-3">
+                                <div className="flex items-center gap-2"><StarRating rating={Number(displayRating)} totalStars={5} size={23} /></div> <span className="text-[#666664] text-xl font-medium">({displayRating})</span>
+                            </div>
+                        </>
+                    }
+                    {
+                        reviews.length === 0 &&
+                        <p className="text-[#666664] text-xl font-medium">Be the first to review this product!</p>
+                    }
                 </div>
                 <div>
-                    <div onClick={() => setOpenPopup(true)} className={`bg-[#98C1A9] text-white border-2 border-[#98C1A9] rounded-xl py-4 min-w-[266px] max-w-[266px] text-center font-medium text-md cursor-pointer transition-all hover:bg-white hover:text-[#98C1A9] capitalize`}>
+                    <div onClick={() => {
+                        if (!user) {
+                            setShowLoginModal(true);
+                            return;
+                        }
+                        setOpenPopup(true)
+                    }} className={`bg-[#98C1A9] text-white border-2 border-[#98C1A9] rounded-xl py-4 min-w-[266px] max-w-[266px] text-center font-medium text-md cursor-pointer transition-all hover:bg-white hover:text-[#98C1A9] capitalize`}>
                         <span>leave a review</span>
                     </div>
                 </div>
@@ -119,22 +168,38 @@ export default function CommunityReviews() {
                         key={review.id}
                         className="bg-[#FFFDFA] rounded-lg p-4 shadow-[0px_1px_2px_0px_rgba(60,64,67,0.3),0px_2px_6px_2px_rgba(60,64,67,0.15)] flex flex-col gap-2"
                     >
-                        <div className="flex items-center gap-3 mb-2">
-                            <Image src={review.avatar} width={100} height={100} alt={review.name} className="rounded-full w-12 h-auto object-cover" />
+                        <div className="flex items-center gap-3 mb-2 relative">
+                            <div className="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 font-semibold flex-shrink-0">
+                                {review.user?.name?.charAt(0)?.toUpperCase() || "U"}
+                            </div>
+
                             <div className="flex flex-col">
                                 <span className="font-medium text-[#666664] flex justify-center items-center gap-2 text-md">
-                                    {review.name}
-                                    <svg width="7" height="7" viewBox="0 0 7 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    {review.user.name}
+                                    <svg
+                                        width="7"
+                                        height="7"
+                                        viewBox="0 0 7 7"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
                                         <circle cx="3.46332" cy="3.43402" r="2.75238" fill="#666664" />
                                     </svg>
                                 </span>
-                                <span className="text-xs text-[#666664]">{review.publish_date}</span>
+                                <p className="text-xs text-[#666664]">
+                                    {new Date(review.created_at).toLocaleDateString("en-US", {
+                                        month: "short",
+                                        day: "numeric",
+                                        year: "numeric",
+                                    })}
+                                </p>
                             </div>
                         </div>
+
                         <div className="flex items-center gap-1 mb-2">
                             <StarRating rating={review.rating} totalStars={5} size={23} /> <span className="text-[#666664] text-xl font-medium">({review.rating}/5)</span>
                         </div>
-                        <p className="text-gray-700">{review.review}</p>
+                        <p className="text-gray-700">{review.comment}</p>
                     </div>
                 ))}
             </div>
@@ -201,11 +266,29 @@ export default function CommunityReviews() {
                                     <div className="flex gap-10 xl:flex-row lg:flex-row flex-col">
                                         <div className="flex flex-col gap-2">
                                             <label htmlFor="full_name" className="text-black/40">Full Name</label>
-                                            <input type="text" onChange={handleChange} className="bg-[#F5F5F5] rounded-lg py-4 px-2 outline-0 xl:min-w-[460px] lg:min-w-[460px] md:min-w-[460px] min-[360px]:min-w-auto w-full" name="full_name" id="full_name" required />
+                                            <input
+                                                type="text"
+                                                onChange={handleChange}
+                                                value={formData.full_name}
+                                                disabled={!!user}
+                                                className="bg-[#F5F5F5] rounded-lg py-4 px-2 outline-0 xl:min-w-[460px] lg:min-w-[460px] md:min-w-[460px] min-[360px]:min-w-auto w-full disabled:cursor-not-allowed disabled:opacity-75"
+                                                name="full_name"
+                                                id="full_name"
+                                                required
+                                            />
                                         </div>
                                         <div className="flex flex-col gap-2">
-                                            <label htmlFor="email_address" onChange={handleChange} className="text-black/40">Email Address</label>
-                                            <input type="email_address" className="bg-[#F5F5F5] rounded-lg py-4 px-2 outline-0 xl:min-w-[460px] lg:min-w-[460px] md:min-w-[460px] min-[360px]:min-w-auto w-full" name="email_address" id="email_address" required />
+                                            <label htmlFor="email_address" className="text-black/40">Email Address</label>
+                                            <input
+                                                type="email"
+                                                onChange={handleChange}
+                                                value={formData.email_address}
+                                                disabled={!!user}
+                                                className="bg-[#F5F5F5] rounded-lg py-4 px-2 outline-0 xl:min-w-[460px] lg:min-w-[460px] md:min-w-[460px] min-[360px]:min-w-auto w-full disabled:cursor-not-allowed disabled:opacity-75"
+                                                name="email_address"
+                                                id="email_address"
+                                                required
+                                            />
                                         </div>
                                     </div>
                                     <div>
@@ -279,7 +362,7 @@ export default function CommunityReviews() {
                                                         ></path>
                                                     </svg>
                                                 ) : (
-                                                    "Post Comment"
+                                                    "Post Review"
                                                 )}
                                             </button>
                                         </div>
@@ -291,7 +374,10 @@ export default function CommunityReviews() {
                 </>
             }
 
-
+            <LoginAlertModal
+                open={showLoginModal}
+                onClose={() => setShowLoginModal(false)}
+            />
         </section>
     );
 }

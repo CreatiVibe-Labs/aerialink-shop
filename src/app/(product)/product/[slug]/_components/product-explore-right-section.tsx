@@ -85,9 +85,10 @@ const ProductExploreRightSection: React.FC<Props> = ({ variants, onSizeSelect })
   const { product, productLoading } = state;
 
   const [quantity, setQuantity] = useState(1);
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState('Edoma');
   const [sizes, setSizes] = useState<Size[]>([]);
   const [selectedSize, setSelectedSize] = useState<string>("");
+  const [selectedVariantId, setSelectedVariantId] = useState<number | undefined>(undefined);
 
   const [addToCartLoading, setAddToCartLoading] = useState(false);
   const [buttonText, setButtonText] = useState(!category || !selectedSize ? "Select Category & Size" : "Add to Cart");
@@ -204,6 +205,7 @@ const ProductExploreRightSection: React.FC<Props> = ({ variants, onSizeSelect })
       const variantPrice = parseFloat(selectedVariant.price);
       setPriceToShow(`¥${variantPrice.toFixed(2)}`);
       setFinalPriceForCart(variantPrice.toFixed(2));
+      setSelectedVariantId(selectedVariant.id); // Store variant ID
     }
   }, [category, selectedSize, product?.variants]);
 
@@ -215,7 +217,7 @@ const ProductExploreRightSection: React.FC<Props> = ({ variants, onSizeSelect })
     setAddToCartLoading(true);
 
     setTimeout(() => {
-      addToCart(product.id, quantity, selectedSize, finalPriceForCart, category, product.slug);
+      addToCart(product.id, quantity, selectedSize, finalPriceForCart, category, product.slug, selectedVariantId);
       toast.success("Product added to cart");
       setButtonText("Added");
 
@@ -319,7 +321,7 @@ const ProductExploreRightSection: React.FC<Props> = ({ variants, onSizeSelect })
               className="bg-transparent border border-light-gray text-min-gray! max-md:py-1.5 text-sm px-5 rounded-xl min-w-[150px]"
               DropDownclassName="bg-white text-min-gray!"
               hideLabelOnMobile={false}
-              label={category || "Select Category"}
+              label={category || "Select Room Type"}
               list={[
                 { key: "Edoma", val: "Edoma" },
                 { key: "Danchima", val: "Danchima" },
@@ -329,7 +331,7 @@ const ProductExploreRightSection: React.FC<Props> = ({ variants, onSizeSelect })
           </div>
 
           {/* Sizes Dropdown - Only show if category is selected */}
-          {category && (
+          {category && sizes.length > 0 && (
             <div className="flex flex-col gap-1 w-[50%]">
               <label className="text-sm font-medium text-min-gray">Size:</label>
               <Dropdown
@@ -340,14 +342,16 @@ const ProductExploreRightSection: React.FC<Props> = ({ variants, onSizeSelect })
                 label={selectedSize || "Select Size"}
                 list={sizes.map((s) => ({
                   key: s.size_value,
-                  val: language === "EN" ? s.size_name : (s.size_value_jp || s.size_name)
+                  val: s.size_value // Use size_value directly (e.g., "175 * 260cm")
                 }))}
                 onChange={handleSizeChange}
-
               />
-              {sizes.length === 0 && (
-                <p className="text-xs text-gray-500">No sizes available for {category}</p>
-              )}
+            </div>
+          )}
+          {category && sizes.length === 0 && (
+            <div className="flex flex-col gap-1 w-[50%]">
+              <label className="text-sm font-medium text-min-gray">Size:</label>
+              <p className="text-xs text-gray-500">No sizes available for {category}</p>
             </div>
           )}
         </div>

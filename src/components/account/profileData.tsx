@@ -1,23 +1,43 @@
 "use client";
-import React, { useState, ChangeEvent, FormEvent } from "react";
+import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import Image from "next/image";
+import { Eye, EyeOff } from "lucide-react";
+import { useProfile } from "@/contexts/profile-context";
+import PhoneInput from "../about/PhoneInput";
 
 interface FormData {
-  username: string;
   fullname: string;
   phone: string;
   email: string;
   password: string;
+  password_confirmation: string;
 }
 
 const Profile: React.FC = () => {
+  const { user } = useProfile();
+  
   const [formData, setFormData] = useState<FormData>({
-    username: "",
     fullname: "",
     phone: "",
     email: "",
     password: "",
+    password_confirmation: "",
   });
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  // Auto-fill form with user data
+  useEffect(() => {
+    if (user) {
+      setFormData(prev => ({
+        ...prev,
+        fullname: user.name || "",
+        phone: user.phone_number || "",
+        email: user.email || "",
+      }));
+    }
+  }, [user]);  
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -30,15 +50,6 @@ const Profile: React.FC = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("Form Data Submitted:", formData);
-    alert("Data logged in console ✅");
-
-    setFormData({
-      username: "",
-      fullname: "",
-      phone: "",
-      email: "",
-      password: "",
-    });
   };
 
   return (
@@ -48,6 +59,7 @@ const Profile: React.FC = () => {
         onSubmit={handleSubmit}
         className=" rounded-2xl space-y-7 w-[1013px] "
       >
+<<<<<<< Updated upstream
         
 
         <div>
@@ -65,6 +77,10 @@ const Profile: React.FC = () => {
 
         <div>
           <label className="block text-sm font-medium mb-1 text-[#666664]/40 text-[20px]">
+=======
+        <div className="flex flex-col lg:gap-[15px] gap-[8px]">
+          <label className="block text-[16px] font-medium text-[#666664] lg:text-[20px] opacity-40 leading-[18.86px] lg:leading-[24px] font-albert-sans ">
+>>>>>>> Stashed changes
             Full Name
           </label>
           <input
@@ -76,6 +92,7 @@ const Profile: React.FC = () => {
           />
         </div>
 
+<<<<<<< Updated upstream
         <div>
           <label className="block text-sm font-medium mb-1 text-[#666664]/40 text-[20px]">
             Phone Number
@@ -88,6 +105,9 @@ const Profile: React.FC = () => {
             className="w-full px-4 py-2 rounded-[14px] focus:outline-none bg-[#EBECF0]"
           />
         </div>
+=======
+        <PhoneInput value={formData.phone} onChange={handleChange} />
+>>>>>>> Stashed changes
 
         <div>
           <label className="block text-sm font-medium mb-1 text-[#666664]/40 text-[20px]">
@@ -106,6 +126,7 @@ const Profile: React.FC = () => {
           <label className="block text-sm font-medium mb-1 text-[#666664]/40 text-[20px]">
             Password
           </label>
+<<<<<<< Updated upstream
           <input
             type="password"
             name="password"
@@ -113,6 +134,52 @@ const Profile: React.FC = () => {
             onChange={handleChange}
             className="w-full px-4 py-2 rounded-[14px] focus:outline-none bg-[#EBECF0]"
           />
+=======
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              placeholder="*********"
+              value={formData.password}
+              onChange={handleChange}
+              className="w-full lg:px-4 px-[19px] py-2 border border-[#EBECF0] text-[#666664] font-[500]
+               placeholder:text-[#666664] lg:text-[20px] text-[16px] lg:leading-[24px] leading-[18.86px] font-albert-sans
+                lg:rounded-[14px] rounded-[11px] lg:h-[55px] h-[40px] focus:outline-none bg-[#F5F5F5] pr-12"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="cursor-pointer absolute right-4 top-1/2 -translate-y-1/2 text-[#666664] hover:text-[#98C1A9] transition-colors"
+            >
+              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+            </button>
+          </div>
+        </div>
+
+        <div className="flex flex-col lg:gap-[15px] gap-[8px]">
+          <label className="block text-[16px] font-medium text-[#666664] lg:text-[20px] opacity-40 leading-[18.86px] lg:leading-[24px] font-albert-sans">
+            Confirm Password
+          </label>
+          <div className="relative">
+            <input
+              type={showConfirmPassword ? "text" : "password"}
+              name="password_confirmation"
+              placeholder="*********"
+              value={formData.password_confirmation}
+              onChange={handleChange}
+              className="w-full lg:px-4 px-[19px] py-2 border border-[#EBECF0] text-[#666664] font-[500]
+               placeholder:text-[#666664] lg:text-[20px] text-[16px] lg:leading-[24px] leading-[18.86px] font-albert-sans
+                lg:rounded-[14px] rounded-[11px] lg:h-[55px] h-[40px] focus:outline-none bg-[#F5F5F5] pr-12"
+            />
+            <button
+              type="button"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              className="cursor-pointer absolute right-4 top-1/2 -translate-y-1/2 text-[#666664] hover:text-[#98C1A9] transition-colors"
+            >
+              {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+            </button>
+          </div>
+>>>>>>> Stashed changes
         </div>
 
         <button

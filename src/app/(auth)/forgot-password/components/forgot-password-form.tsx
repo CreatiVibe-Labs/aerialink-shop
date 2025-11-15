@@ -5,7 +5,7 @@ import BackButton from "@/components/common/back-button";
 import Input from "@/components/common/input";
 import PrimaryButton from "@/components/common/primary-button";
 import { useProfile } from "@/contexts/profile-context";
-import { toast } from "react-toastify";
+import toast, {Toaster} from "react-hot-toast";
 
 interface ForgotPasswordValues {
   email: string;
@@ -30,6 +30,7 @@ const ForgotPasswordForm = () => {
 
   return (
     <div className="center-col items-start relative w-full">
+      <Toaster position="top-right" />
       <BackButton
         href="/login"
         label="back to login"

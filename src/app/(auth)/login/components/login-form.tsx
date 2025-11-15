@@ -6,9 +6,9 @@ import PrimaryButton from "@/components/common/primary-button";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { useProfile } from "@/contexts/profile-context";
-import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
+import toast, {Toaster} from "react-hot-toast";
 
 interface LoginFormValues {
   email: string;
@@ -47,6 +47,7 @@ const LoginForm = () => {
 
   return (
     <div className="center-col items-start w-full">
+      <Toaster position="top-right" />
       {/* Header */}
       <div className="center-col items-start space-y-3">
         <h1 className="text-4xl font-medium">Login</h1>

@@ -63,7 +63,7 @@ const SecondaryNavbar = () => {
               val: "My Profile",
               onClick: () => {
                 console.log("Profile clicked"); 
-                router.push("/profile");
+                router.push("/account");
               },
             },
             {

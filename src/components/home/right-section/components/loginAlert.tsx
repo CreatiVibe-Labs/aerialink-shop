@@ -26,7 +26,7 @@ export default function LoginAlertModal({ open, onClose }: LoginAlertModalProps)
         </DialogHeader>
 
         <div className="text-center text-sm text-gray-600 px-4 font-font-albert-sans">
-          You need to login first before adding items to your wishlist.
+          You must be logged in to perform this action.
         </div>
 
         <DialogFooter className="flex justify-center gap-3 pt-4">

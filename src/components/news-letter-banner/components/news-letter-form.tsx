@@ -2,9 +2,12 @@
 import { useForm } from "react-hook-form";
 import { LuMail } from "react-icons/lu";
 import NewsLetterFormButton from "./news-letter-form-button";
+import { toast } from "react-hot-toast";
+
 interface NewsletterForm {
   email: string;
 }
+
 const NewsLetterForm = () => {
   const {
     register,
@@ -14,9 +17,29 @@ const NewsLetterForm = () => {
   } = useForm<NewsletterForm>();
 
   const onSubmit = async (data: NewsletterForm) => {
-    console.log("Newsletter data:", data);
-    await new Promise((res) => setTimeout(res, 1000));
-    reset();
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/news-letter`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email: data.email }),
+        }
+      );
+
+      if (response.ok) {
+        toast.success("Successfully subscribed to newsletter!");
+        reset();
+      } else {
+        const errorData = await response.json();
+        toast.error(errorData.message || "Failed to subscribe. Please try again.");
+        reset();
+      }
+    } catch (error) {
+      toast.error("Something went wrong. Please try again later.");
+    }
   };
   return (
     <form
@@ -45,7 +68,7 @@ const NewsLetterForm = () => {
       )}
 
       {/* news letter submit button */}
-      <NewsLetterFormButton  isSubmitting={isSubmitting} />
+      <NewsLetterFormButton isSubmitting={isSubmitting} />
     </form>
   );
 };

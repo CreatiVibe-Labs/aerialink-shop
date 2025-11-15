@@ -6,7 +6,7 @@ import Input from "@/components/common/input";
 import PrimaryButton from "@/components/common/primary-button";
 import Cookies from "js-cookie";
 import { useProfile } from "@/contexts/profile-context";
-import { toast } from "react-toastify";
+import toast, {Toaster} from "react-hot-toast";
 
 interface NewPasswordValues {
   newPassword: string;
@@ -42,7 +42,12 @@ const NewPasswordForm = () => {
 
   return (
     <div className="center-col items-start w-full relative">
+<<<<<<< Updated upstream
       <BackButton
+=======
+      <Toaster position="top-right" />
+      {/* <BackButton
+>>>>>>> Stashed changes
         href="/login"
         label="back to login"
         className="absolute top-5 max-md:static max-md:mb-5 max-md:-ml-2"
