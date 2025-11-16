@@ -16,17 +16,21 @@ interface ModalProps {
   open: boolean;
   onClose: () => void;
   onSave?: (data: AddressFormData) => Promise<void>;
+  initialData?: any;
 }
 
 interface AddressFormData {
   name: string;
   phone_number: string;
   address1: string;
+  address2?: string;
   postal_code: string;
+  prefecture?: string;
+  delivery_instruction?: string;
   default: boolean;
 }
 
-export default function AddressModal({ open, onClose, onSave }: ModalProps) {
+export default function AddressModal({ open, onClose, onSave, initialData }: ModalProps) {
   const {
     register,
     handleSubmit,
@@ -34,11 +38,14 @@ export default function AddressModal({ open, onClose, onSave }: ModalProps) {
     formState: { errors },
     reset,
   } = useForm<AddressFormData>({
-    defaultValues: {
+    defaultValues: initialData || {
       name: "",
       phone_number: "",
       address1: "",
+      address2: "",
       postal_code: "",
+      prefecture: "",
+      delivery_instruction: "",
       default: false,
     },
   });
@@ -147,6 +154,32 @@ export default function AddressModal({ open, onClose, onSave }: ModalProps) {
             )}
           </div>
 
+          {/* Address 2 (Optional) */}
+          <div className="flex flex-col">
+            <label className="text-[#666664]/40 text-[17px] font-medium mb-1 hidden lg:block">
+              Apartment, suite, etc. (optional)
+            </label>
+            <input
+              type="text"
+              placeholder="Apartment, suite, etc."
+              {...register("address2")}
+              className="border text-[#666664] bg-[#F5F5F5] placeholder:text-gray-400 lg:placeholder-transparent w-full h-[52px] rounded-[14px] px-4 py-2 text-sm focus:outline-none"
+            />
+          </div>
+
+          {/* Prefecture (Optional) */}
+          <div className="flex flex-col">
+            <label className="text-[#666664]/40 text-[17px] font-medium mb-1 hidden lg:block">
+              Prefecture / State (optional)
+            </label>
+            <input
+              type="text"
+              placeholder="Prefecture / State"
+              {...register("prefecture")}
+              className="border text-[#666664] bg-[#F5F5F5] placeholder:text-gray-400 lg:placeholder-transparent w-full h-[52px] rounded-[14px] px-4 py-2 text-sm focus:outline-none"
+            />
+          </div>
+
           {/* Postal Code */}
           <div className="flex flex-col">
             <label className="text-[#666664]/40 text-[17px] font-medium mb-1 hidden lg:block">
@@ -167,6 +200,19 @@ export default function AddressModal({ open, onClose, onSave }: ModalProps) {
             {errors.postal_code && (
               <p className="text-red-500 text-sm mt-1">{errors.postal_code.message}</p>
             )}
+          </div>
+
+          {/* Delivery Instruction (Optional) */}
+          <div className="flex flex-col">
+            <label className="text-[#666664]/40 text-[17px] font-medium mb-1 hidden lg:block">
+              Delivery Instruction (optional)
+            </label>
+            <textarea
+              placeholder="Special delivery instructions..."
+              {...register("delivery_instruction")}
+              rows={3}
+              className="border text-[#666664] bg-[#F5F5F5] placeholder:text-gray-400 lg:placeholder-transparent w-full rounded-[14px] px-4 py-2 text-sm focus:outline-none resize-none"
+            />
           </div>
 
           {/* Set as Default */}

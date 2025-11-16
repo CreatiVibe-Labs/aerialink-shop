@@ -4,6 +4,8 @@ import { LanguageProvider } from "@/contexts/language-context";
 import { ProductProvider } from "@/contexts/product-context";
 import { ProfileProvider } from "@/contexts/profile-context";
 import { WishlistProvider } from "@/contexts/wishlist-context";
+import { OrderProvider } from "@/contexts/order-context";
+import { AddressProvider } from "@/contexts/address-context";
 import React, { FC } from "react";
 
 interface AppProviderProps {
@@ -16,9 +18,13 @@ const AppProvider: FC<AppProviderProps> = ({ children }) => {
       <CartProvider>
         <WishlistProvider>
           <ProfileProvider>
-            <CategoryProvider>
-              <ProductProvider>{children}</ProductProvider>
-            </CategoryProvider>
+            <OrderProvider>
+              <AddressProvider>
+                <CategoryProvider>
+                  <ProductProvider>{children}</ProductProvider>
+                </CategoryProvider>
+              </AddressProvider>
+            </OrderProvider>
           </ProfileProvider>
         </WishlistProvider>
       </CartProvider>

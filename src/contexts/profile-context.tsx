@@ -70,6 +70,17 @@ interface ProfileContextType {
     password: string,
     password_confirmation: string
   ) => Promise<void>;
+  updateProfile: (payload: UpdateProfilePayload) => Promise<void>;
+  logoutAllDevices: () => Promise<void>;
+}
+
+interface UpdateProfilePayload {
+  name?: string;
+  email?: string;
+  phone_number?: string;
+  password?: string;
+  password_confirmation?: string;
+  image?: File | Blob | null;
 }
 
 const ProfileContext = createContext<ProfileContextType | undefined>(undefined);
@@ -165,6 +176,21 @@ export const ProfileProvider = ({ children }: { children: React.ReactNode }) => 
     // router.push("/login");
   };
 
+  const logoutAllDevices = async () => {
+    const token = Cookies.get("token");
+    if (!token) throw { message: "Not authenticated" };
+    setLoading(true);
+    try {
+      const res = await api.post("/logout-all");
+      if (!res.data.success) throw new Error(res.data.message || "Failed to logout devices");
+      await fetchProfile();
+    } catch (err: any) {
+      throw err.response?.data || { message: err.message || "Failed to logout devices" };
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // --- Fetch profile
   const fetchProfile = async () => {
     const token = Cookies.get("token");
@@ -250,6 +276,46 @@ export const ProfileProvider = ({ children }: { children: React.ReactNode }) => 
     }
   };
 
+  // --- Update profile
+  const updateProfile = async (payload: UpdateProfilePayload) => {
+    const token = Cookies.get("token");
+    if (!token) throw { message: "Not authenticated" };
+    setLoading(true);
+    try {
+      let res;
+      // Decide between JSON and multipart
+      if (payload.image) {
+        const formData = new FormData();
+        if (payload.name !== undefined) formData.append("name", payload.name);
+        if (payload.email !== undefined) formData.append("email", payload.email);
+        if (payload.phone_number !== undefined) formData.append("phone_number", payload.phone_number);
+        if (payload.password) formData.append("password", payload.password);
+        if (payload.password_confirmation) formData.append("password_confirmation", payload.password_confirmation);
+        formData.append("image", payload.image);
+        res = await api.put("/profile", formData, { headers: { "Content-Type": "multipart/form-data" } });
+      } else {
+        res = await api.put("/profile", {
+          name: payload.name,
+          email: payload.email,
+          phone_number: payload.phone_number,
+          password: payload.password,
+          password_confirmation: payload.password_confirmation,
+        });
+      }
+
+      if (!res.data.success) throw new Error(res.data.message || "Profile update failed");
+      // API may return updated user either directly or inside data.user
+      const updatedData = res.data.data;
+      const updatedUser: User = updatedData?.user ?? updatedData;
+      setUser(updatedUser);
+      Cookies.set("user", JSON.stringify(updatedUser), { expires: 30 });
+    } catch (err: any) {
+      throw err.response?.data || { message: err.message || "Profile update failed" };
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // --- Auto fetch on mount
   useEffect(() => {
     const token = Cookies.get("token");
@@ -270,6 +336,8 @@ export const ProfileProvider = ({ children }: { children: React.ReactNode }) => 
         forgotPassword,
         verifyOtp,
         resetPassword,
+        updateProfile,
+        logoutAllDevices,
       }}
     >
       {children}
