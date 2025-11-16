@@ -18,10 +18,10 @@ interface ForumMessage {
   parent_id: number | null;
   created_at: string;
   updated_at: string;
-  likes_count?: number;
-  dislikes_count?: number;
   user_liked?: boolean;
   user_disliked?: boolean;
+  likes_count: number;
+  dislikes_count: number;
   user: {
     id: number;
     name: string;
@@ -68,6 +68,17 @@ export default function CommunityQuestionsAnswers({ selectedProduct }: Props) {
     }
   }, [user]);
 
+  // Helper function to normalize message data with server-provided counts
+  const normalizeMessage = (msg: any): ForumMessage => ({
+    ...msg,
+    user_liked: msg.user_liked ?? false,
+    user_disliked: msg.user_disliked ?? false,
+    // Use server-provided counts
+    likes_count: msg.likes_count ?? 0,
+    dislikes_count: msg.dislikes_count ?? 0,
+    replies: msg.replies ? msg.replies.map(normalizeMessage) : [],
+  });
+
   // Fetch questions using axios
   useEffect(() => {
     if (!selectedProduct) return;
@@ -79,7 +90,9 @@ export default function CommunityQuestionsAnswers({ selectedProduct }: Props) {
         if (res.data.success) {
           console.log(res.data);
 
-          setQuestions(res.data.data);
+          // Normalize all messages
+          const normalizedData = res.data.data.map(normalizeMessage);
+          setQuestions(normalizedData);
         } else {
           setError("Failed to load questions");
         }
@@ -253,12 +266,20 @@ export default function CommunityQuestionsAnswers({ selectedProduct }: Props) {
     return messages.map((msg) => {
       
       if (msg.id === id) {
+        const newLikesCount = liked 
+          ? msg.likes_count + 1 
+          : Math.max(msg.likes_count - 1, 0);
+        
+        const newDislikesCount = liked && wasDisliked 
+          ? Math.max(msg.dislikes_count - 1, 0) 
+          : msg.dislikes_count;
+        
         return {
           ...msg,
           user_liked: liked,
           user_disliked: liked && wasDisliked ? false : msg.user_disliked,
-          likes_count: liked ? (msg.likes_count || 0) + 1 : Math.max((msg.likes_count || 0) - 1, 0),
-          dislikes_count: liked && wasDisliked ? Math.max((msg.dislikes_count || 0) - 1, 0) : msg.dislikes_count,
+          likes_count: newLikesCount,
+          dislikes_count: newDislikesCount,
         };
       }
       
@@ -275,12 +296,20 @@ export default function CommunityQuestionsAnswers({ selectedProduct }: Props) {
   ): ForumMessage[] => {
     return messages.map((msg) => {
       if (msg.id === id) {
+        const newDislikesCount = disliked 
+          ? msg.dislikes_count + 1 
+          : Math.max(msg.dislikes_count - 1, 0);
+        
+        const newLikesCount = disliked && wasLiked 
+          ? Math.max(msg.likes_count - 1, 0) 
+          : msg.likes_count;
+        
         return {
           ...msg,
           user_disliked: disliked,
           user_liked: disliked && wasLiked ? false : msg.user_liked,
-          dislikes_count: disliked ? (msg.dislikes_count || 0) + 1 : Math.max((msg.dislikes_count || 0) - 1, 0),
-          likes_count: disliked && wasLiked ? Math.max((msg.likes_count || 0) - 1, 0) : msg.likes_count,
+          dislikes_count: newDislikesCount,
+          likes_count: newLikesCount,
         };
       }
       return { ...msg, replies: updateMessageDislikeStatus(msg.replies, id, disliked, wasLiked) };
@@ -366,7 +395,7 @@ export default function CommunityQuestionsAnswers({ selectedProduct }: Props) {
                   </clipPath>
                 </defs>
               </svg>
-              {reply.likes_count || 0}
+              {reply.likes_count}
             </span>
             <span
               onClick={() => handleDislike(reply.id)}
@@ -405,7 +434,7 @@ export default function CommunityQuestionsAnswers({ selectedProduct }: Props) {
                   </clipPath>
                 </defs>
               </svg>
-              {reply.dislikes_count || 0}
+              {reply.dislikes_count}
             </span>
           </div>
           <span
@@ -557,7 +586,7 @@ export default function CommunityQuestionsAnswers({ selectedProduct }: Props) {
                       </clipPath>
                     </defs>
                   </svg>
-                  {q.likes_count || 0}
+                  {q.likes_count}
                 </span>
                 <span
                   onClick={() => handleDislike(q.id)}
@@ -596,7 +625,7 @@ export default function CommunityQuestionsAnswers({ selectedProduct }: Props) {
                       </clipPath>
                     </defs>
                   </svg>
-                  {q.dislikes_count || 0}
+                  {q.dislikes_count}
                 </span>
               </div>
 
