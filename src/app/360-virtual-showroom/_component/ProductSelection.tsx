@@ -1,17 +1,19 @@
 "use client";
 
-import { useState, ChangeEvent, Suspense } from "react";
+import { useState, ChangeEvent, Suspense, useEffect } from "react";
 import Image from "next/image";
 import VirtualShowroom360 from "./VirtualShowroom";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import imageCompression from "browser-image-compression";
-import { useCart } from "@/contexts/cart-context";
 import { useLanguage } from "@/contexts/language-context";
+import { useProducts } from "@/contexts/product-context";
+import { Product } from "@/contexts/types-and-interfaces/product";
 
 export default function ShowroomProductSelection() {
   const router = useRouter();
-  const { cartItems } = useCart();
+  const searchParams = useSearchParams();
   const { language } = useLanguage();
+  const { state: { products } } = useProducts();
   const [selectedImages, setSelectedImages] = useState<(File | null)[]>([
     null,
     null,
@@ -19,6 +21,14 @@ export default function ShowroomProductSelection() {
   ]);
   const [openPopup, setOpenPopup] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(0);
+
+  // Check for productId in URL query parameters and set it as selected
+  useEffect(() => {
+    const productId = searchParams.get('productId');
+    if (productId) {
+      setSelectedProduct(parseInt(productId, 10));
+    }
+  }, [searchParams]);
 
   const handleFileChange = (
     index: number,
@@ -30,7 +40,10 @@ export default function ShowroomProductSelection() {
     setSelectedImages(updatedImages);
   };
 
-  const activeProduct = cartItems.find((p) => p.id === selectedProduct);
+  // Always use all products
+  const activeProduct = products.find(
+    (p) => p.id === selectedProduct
+  );
 
   const fileToBase64 = (file: File): Promise<string | ArrayBuffer | null> => {
     return new Promise((resolve, reject) => {
@@ -71,15 +84,14 @@ export default function ShowroomProductSelection() {
 
   const productTitle =
     language == "EN"
-      ? activeProduct?.translations.en.name
-      : activeProduct?.translations.jp.name;
+      ? activeProduct?.title_en
+      : activeProduct?.title_jp;
   return (
     <>
       <div className="w-full">
         <div
-          className={`max-w-[500px] flex flex-col items-center mx-auto p-5 ${
-            selectedProduct != 0 ? "" : "pt-15 gap-5"
-          } mt-10 bg-[#FFFDFA] rounded-lg shadow-[0px_1px_2px_0px_rgba(60,64,67,0.3),0px_2px_6px_2px_rgba(60,64,67,0.15)]`}
+          className={`max-w-[500px] flex flex-col items-center mx-auto p-5 ${selectedProduct != 0 ? "" : "pt-15 gap-5"
+            } mt-10 bg-[#FFFDFA] rounded-lg shadow-[0px_1px_2px_0px_rgba(60,64,67,0.3),0px_2px_6px_2px_rgba(60,64,67,0.15)]`}
         >
           {selectedProduct == 0 && (
             <>
@@ -212,19 +224,24 @@ export default function ShowroomProductSelection() {
           selectedImages.length === 3 &&
           selectedImages.every((image) => image !== null) && (
             <div className="flex flex-col items-center gap-2">
-              <Suspense>
-                <VirtualShowroom360
-                  floorImage={
-                    activeProduct?.images[0].url || "/assets/floors/floor1.jpg"
-                  }
-                  height={"350px"}
-                  wallImages={
-                    selectedImages.map((image) =>
-                      URL.createObjectURL(image!)
-                    ) as [string, string, string]
-                  }
-                />
-              </Suspense>
+              {
+                // Debug info or additional UI elements can be added here
+                activeProduct?.floor_image && (
+                  <Suspense>
+                    <VirtualShowroom360
+                      floorImage={
+                        activeProduct?.floor_image || "/assets/floors/floor1.jpg"
+                      }
+                      height={"350px"}
+                      wallImages={
+                        selectedImages.map((image) =>
+                          URL.createObjectURL(image!)
+                        ) as [string, string, string]
+                      }
+                    />
+                  </Suspense>
+                )
+              }
 
               <button
                 onClick={() => handleFullScreen()}
@@ -270,26 +287,29 @@ export default function ShowroomProductSelection() {
                 </svg>
               </div>
               <div className="popupBody mt-20">
-                <div className="grid xl:grid-cols-3 grid-cols-2  gap-4">
-                  {cartItems.length > 0 &&
-                    cartItems.map((product) => (
+                {products.length === 0 ? (
+                  <div className="text-center py-10">
+                    <p className="text-gray-500">No products available</p>
+                  </div>
+                ) : (
+                  <div className="grid xl:grid-cols-3 grid-cols-2  gap-4">
+                    {products.map((product) => (
                       <div
                         key={product.id}
-                        className={`p-4 rounded-xl text-center cursor-pointer bg-[#FFFDFA] shadow-[0px_1px_2px_0px_rgba(60,64,67,0.3),0px_2px_6px_2px_rgba(60,64,67,0.15)] transition-transform duration-300 ease-in-out ${
-                          selectedProduct == product.id ? "scale-105" : ""
-                        }`}
+                        className={`p-4 rounded-xl text-center cursor-pointer bg-[#FFFDFA] shadow-[0px_1px_2px_0px_rgba(60,64,67,0.3),0px_2px_6px_2px_rgba(60,64,67,0.15)] transition-transform duration-300 ease-in-out ${selectedProduct == product.id ? "scale-105" : ""
+                          }`}
                         onClick={() => {
                           setSelectedProduct(product.id);
                           setOpenPopup(false);
                         }}
                       >
-                        {product.images[0].url && (
+                        {product.images[0]?.url && (
                           <Image
                             src={product.images[0].url}
                             alt={
                               language == "EN"
-                                ? product.translations.en.name
-                                : product.translations.jp.name
+                                ? product.title_en
+                                : product.title_jp
                             }
                             width={500}
                             height={500}
@@ -298,12 +318,13 @@ export default function ShowroomProductSelection() {
                         )}
                         <p className="text-[#666664] text-sm line-clamp-1">
                           {language == "EN"
-                            ? product.translations.en.name
-                            : product.translations.jp.name}
+                            ? product.title_en
+                            : product.title_jp}
                         </p>
                       </div>
                     ))}
-                </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>

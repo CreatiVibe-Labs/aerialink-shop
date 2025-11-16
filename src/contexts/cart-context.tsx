@@ -35,7 +35,6 @@ const CART_KEY = 'cart_items';
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  console.log({ cartItems });
   // Load from localStorage on mount
   useEffect(() => {
     const saved = localStorage.getItem(CART_KEY);

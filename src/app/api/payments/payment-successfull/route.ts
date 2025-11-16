@@ -186,7 +186,7 @@ export async function GET(req: Request) {
         return NextResponse.redirect(
           `${
             process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
-          }/checkout/order-confirmation?status=error&error=${encodeURIComponent(errorMessage)}`
+          }/order-failed?status=error&error=${encodeURIComponent(errorMessage)}`
         );
       }
 

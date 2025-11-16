@@ -42,7 +42,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({
 
         <div className="flex justify-between text-sm border-t font-medium border-light-gray pt-3 text-min-gray mb-2">
           <span>Shipping:</span>
-          <span>Free</span>
+          <span>Calculate on checkout</span>
         </div>
 
         <div className="flex justify-between text-sm font-semibold text-min-gray mt-3 border-t border-light-gray pt-2">
