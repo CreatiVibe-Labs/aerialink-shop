@@ -31,7 +31,7 @@ const ProductDetailTab1 = () => {
   const instructions = productFinal.instructions;
 
   return (
-    <div>
+    <div className="!text-[#E56B73]">
       {instructions}
     </div>
   );

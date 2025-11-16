@@ -38,8 +38,6 @@ export const WishlistProvider = ({ children }: { children: ReactNode }) => {
   const [wishlist, setWishlist] = useState<WishlistItem[]>([]);
   const [wishlistProductIds, setWishlistProductIds] = useState<number[]>([]);
 
-  console.log({ wishlistProductIds })
-
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 

@@ -1,10 +1,12 @@
 "use client";
 import Dropdown from "@/components/common/dropdown";
 import PrimaryButton from "@/components/common/primary-button";
+import Input from "@/components/common/input";
 import { useCart } from "@/contexts/cart-context";
 import { useLanguage } from "@/contexts/language-context";
 import { useProducts } from "@/contexts/product-context";
 import { useWishlist } from "@/contexts/wishlist-context";
+import { ProductVariant, Size } from "@/contexts/types-and-interfaces/product";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { GoHeart, GoHeartFill } from "react-icons/go";
@@ -12,27 +14,17 @@ import { PiSpinnerGapBold, PiStarFill, PiStarHalfFill } from "react-icons/pi";
 import { TbTruckDelivery } from "react-icons/tb";
 import { TfiReload } from "react-icons/tfi";
 import toast, { Toaster } from "react-hot-toast";
-
-type Size = {
-  size_name: string;
-  size_value: string;
-  size_value_jp?: string;
-};
-
-type Variant = {
-  id: number;
-  sku: string;
-  price: string;
-  stock: number;
-  sizes: {
-    Edoma: Size[];
-    Danchima: Size[];
-  };
-};
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 
 type Props = {
-  variants?: Variant[];
+  variants?: ProductVariant[];
   onSizeSelect?: (category: string, size: string) => void;
+};
+
+// Helper function to format price without decimals and with thousand separator
+const formatPrice = (price: number): string => {
+  return Math.round(price).toLocaleString('en-US');
 };
 
 // Skeleton Component
@@ -77,6 +69,7 @@ const ProductRightSkeleton = () => (
 );
 
 const ProductExploreRightSection: React.FC<Props> = ({ variants, onSizeSelect }) => {
+  const router = useRouter();
   const { state } = useProducts();
   const { language } = useLanguage();
   const { cartItems, addToCart, updateQuantity, updateSize, isInCart } = useCart();
@@ -92,6 +85,29 @@ const ProductExploreRightSection: React.FC<Props> = ({ variants, onSizeSelect })
 
   const [addToCartLoading, setAddToCartLoading] = useState(false);
   const [buttonText, setButtonText] = useState(!category || !selectedSize ? "Select Category & Size" : "Add to Cart");
+  
+  // Postal Code Modal States
+  const [showPostalModal, setShowPostalModal] = useState(false);
+  const [postalCode, setPostalCode] = useState("");
+  const [shippingRate, setShippingRate] = useState<number | null>(null);
+  const [shippingError, setShippingError] = useState("");
+  const [checkingShipping, setCheckingShipping] = useState(false);
+
+  // Load shipping data from cookie on mount
+  useEffect(() => {
+    const checkoutShipping = Cookies.get("checkout_shipping");
+    if (checkoutShipping) {
+      try {
+        const parsed = JSON.parse(checkoutShipping);
+        if (parsed.postalCode && parsed.shippingRate !== undefined) {
+          setPostalCode(parsed.postalCode);
+          setShippingRate(Number(parsed.shippingRate));
+        }
+      } catch (error) {
+        console.error("Error parsing checkout_shipping cookie:", error);
+      }
+    }
+  }, []);
 
   // Use product variants instead of props variants (for now, since props variants might be empty)
   const actualVariants = product?.variants || variants || [];
@@ -106,10 +122,10 @@ const ProductExploreRightSection: React.FC<Props> = ({ variants, onSizeSelect })
 
   useEffect(() => {
     if (minPrice === maxPrice) {
-      setPriceToShow(`¥${minPrice.toFixed(2)}`);
+      setPriceToShow(`¥${formatPrice(minPrice)}`);
       setFinalPriceForCart(minPrice.toFixed(2));
     } else {
-      setPriceToShow(`¥${minPrice.toFixed(2)} - ¥${maxPrice.toFixed(2)}`);
+      setPriceToShow(`¥${formatPrice(minPrice)} - ¥${formatPrice(maxPrice)}`);
       setFinalPriceForCart(maxPrice.toFixed(2));
     }
   }, [minPrice, maxPrice]);
@@ -203,7 +219,7 @@ const ProductExploreRightSection: React.FC<Props> = ({ variants, onSizeSelect })
 
     if (selectedVariant) {
       const variantPrice = parseFloat(selectedVariant.price);
-      setPriceToShow(`¥${variantPrice.toFixed(2)}`);
+      setPriceToShow(`¥${formatPrice(variantPrice)}`);
       setFinalPriceForCart(variantPrice.toFixed(2));
       setSelectedVariantId(selectedVariant.id); // Store variant ID
     }
@@ -288,6 +304,79 @@ const ProductExploreRightSection: React.FC<Props> = ({ variants, onSizeSelect })
     e.preventDefault();
     e.stopPropagation();
     await toggleWishlist(product.id);
+  };
+
+  const handleCheckShipping = async () => {
+    if (!postalCode || postalCode.length < 4) {
+      setShippingError("Please enter a valid postal code");
+      return;
+    }
+
+    setCheckingShipping(true);
+    setShippingError("");
+    setShippingRate(null);
+
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shipping-rate`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ postal_code: postalCode }),
+      });
+
+      const data = await res.json();
+      
+      console.log({data});
+
+      if (data.shipping_rate !== undefined && data.shipping_rate !== null) {
+        const rate = parseFloat(data.shipping_rate);
+        setShippingRate(rate);
+        
+        // Store in cookie for checkout page
+        Cookies.set(
+          "checkout_shipping",
+          JSON.stringify({
+            postalCode: postalCode,
+            shippingRate: rate,
+          }),
+          { expires: 7 } // Cookie expires in 7 days
+        );
+        
+        if (rate === 0) {
+          toast.success("Free delivery available!");
+        } else {
+          toast.success(`Shipping available for ¥${formatPrice(rate)}`);
+        }
+        
+        // Close modal after successful check
+        setTimeout(() => {
+          handleClosePostalModal();
+        }, 1500);
+      } else {
+        setShippingError("Delivery not available for this postal code");
+        toast.error("Delivery not available for this postal code");
+      }
+    } catch (err) {
+      console.error("Shipping Rate API Error:", err);
+      setShippingError("Failed to check shipping availability");
+      toast.error("Failed to check shipping availability");
+    } finally {
+      setCheckingShipping(false);
+    }
+  };
+
+  const handleClosePostalModal = () => {
+    setShowPostalModal(false);
+    // Don't clear postalCode and shippingRate - keep them for display
+    // setPostalCode("");
+    // setShippingRate(null);
+    setShippingError("");
+  };
+
+  const handleVisitShowroom = () => {
+    if (product?.id) {
+      // Navigate to 360 virtual showroom with product ID as query parameter
+      router.push(`/360-virtual-showroom?productId=${product.id}`);
+    }
   };
 
   return (
@@ -409,18 +498,30 @@ const ProductExploreRightSection: React.FC<Props> = ({ variants, onSizeSelect })
         </div>
       </div>
 
-      <div className="mt-2 p-3 text-white text-center bg-[#CCCCFF] rounded-md">
-        Visit the 360° virtual showroom to see how it fits your room. It’s fun!
-      </div>
+      <button
+        onClick={handleVisitShowroom}
+        className="mt-2 p-3 text-white text-center bg-[#CCCCFF] rounded-md w-full hover:bg-[#b8b8ff] transition-colors cursor-pointer"
+      >
+        Visit the 360° virtual showroom to see how it fits your room. It's fun!
+      </button>
 
       <div className="border border-light-gray rounded-xl mt-2 space-y-3 text-sm text-min-gray">
         <div className="flex items-center gap-3 my-3 border-b p-3 pb-4">
           <TbTruckDelivery className="size-7" strokeWidth={1} />
           <p className="flex flex-col">
-            <strong>Free Delivery</strong>
-            <Link href="/" className="underline text-sm">
+            <strong>
+              {shippingRate !== null ? (
+                shippingRate === 0 ? "Free Delivery" : `Delivery: ¥${formatPrice(shippingRate)}`
+              ) : (
+                "Check Delivery"
+              )}
+            </strong>
+            <button 
+              onClick={() => setShowPostalModal(true)}
+              className="underline text-sm text-left cursor-pointer hover:text-primary transition-colors"
+            >
               Enter postal code for availability.
-            </Link>
+            </button>
           </p>
         </div>
 
@@ -428,12 +529,100 @@ const ProductExploreRightSection: React.FC<Props> = ({ variants, onSizeSelect })
           <TfiReload className="size-6" strokeWidth={0} />
           <p className="flex flex-col">
             <strong>Return Delivery</strong>
-            <Link href="/" className="text-sm">
+            <p className="text-sm">
               Free 30 days returns.
-            </Link>
+            </p>
           </p>
         </div>
       </div>
+
+      {/* Postal Code Modal */}
+      {showPostalModal && (
+        <>
+          <div 
+            className="fixed inset-0 bg-black/60 z-50"
+            onClick={handleClosePostalModal}
+          ></div>
+
+          <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-white rounded-xl p-6 w-full max-w-md mx-4 shadow-2xl">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-semibold text-min-gray">Check Delivery Availability</h3>
+              <button
+                onClick={handleClosePostalModal}
+                className="text-gray-400 hover:text-gray-600 transition-colors cursor-pointer"
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M18 6L6 18M6 6l12 12"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-min-gray mb-2">
+                  Postal Code
+                </label>
+                <Input
+                  type="text"
+                  placeholder="Enter postal code (e.g., 100-0001)"
+                  value={postalCode}
+                  onChange={(e) => setPostalCode(e.target.value)}
+                  className="w-full"
+                />
+              </div>
+
+              {shippingError && (
+                <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg text-sm">
+                  {shippingError}
+                </div>
+              )}
+
+              {shippingRate !== null && !shippingError && (
+                <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg">
+                  <div className="flex items-center gap-2">
+                    <TbTruckDelivery className="size-5" />
+                    <div>
+                      <p className="font-semibold">
+                        {shippingRate === 0 ? "Free Delivery Available!" : `Delivery Available`}
+                      </p>
+                      {shippingRate > 0 && (
+                        <p className="text-sm">Shipping cost: ¥{formatPrice(shippingRate)}</p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              <PrimaryButton
+                onClick={handleCheckShipping}
+                disabled={checkingShipping || !postalCode}
+                className="w-full"
+              >
+                {checkingShipping ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <PiSpinnerGapBold className="animate-spin" />
+                    Checking...
+                  </span>
+                ) : (
+                  "Check Availability"
+                )}
+              </PrimaryButton>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };

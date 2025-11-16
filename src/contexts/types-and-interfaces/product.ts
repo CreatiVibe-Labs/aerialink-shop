@@ -89,8 +89,8 @@ export interface Product {
   id: number;
   status: boolean;
   slug: string;
-  title_en: boolean;
-  title_jp: boolean;
+  title_en: string;
+  title_jp: string;
   net_weight_en: string;
   net_weight_jp: string;
   packing_en: string;
@@ -110,6 +110,7 @@ export interface Product {
   created_at : string;
   detailed_description_en: string;
   detailed_description_jp: string;
+  floor_image: string;
 }
 
 export interface Meta {
