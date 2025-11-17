@@ -30,7 +30,7 @@ const Gallery = () => {
         {images.map((src, i) => (
           <div
             key={i}
-            className={`overflow-hidden rounded-lg ${
+            className={`overflow-hidden rounded-lg sm: ${
               i === 0 || i === 1 || i === 4 || i === 5 || i === 6 || i === 7
                 ? "w-[29%]"
                 : "w-[39%]"

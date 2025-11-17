@@ -267,7 +267,7 @@ export default function AboutPage() {
             </section>
 
             {/* Inquiry Form */}
-            <section className="w-full max-w-7xl lg:p-10 p-5">
+            <section className="w-full max-w-7xl  ">
                 <div className=" flex flex-col gap-[20px] p-[10px] lg:p-[40px] bg-white shadow-[0_0_8px_0_#00000040] rounded-[14px]">
                     <h2 className="lg:text-[32.39px] text-[21.05px] font-poppins leading-[49px] font-[600] text-left lg:text-center text-[#585C5A]">
                         Inquiry Form
@@ -276,8 +276,9 @@ export default function AboutPage() {
                         onSubmit={handleSubmit}
                         className="grid grid-cols-1 md:grid-cols-2 gap-4 "
                     >
+                        {/* Full Name */}
                         <div className="flex flex-col gap-[8.85px]">
-                            <label className="text-sm font-[400] text-[18px] leading-[27px] text-[#666664] opacity-40">
+                            <label className="text-sm font-[400] text-[14px] md:text-[18px] leading-[21px] md:leading-[27px] text-[#666664] opacity-40">
                                 Full name<span className="text-red-500">*</span>
                             </label>
                             <input
@@ -285,14 +286,18 @@ export default function AboutPage() {
                                 type="text"
                                 value={formData.name}
                                 onChange={handleChange}
-                                placeholder=""
-                                className="border border-[#C2C2C1] rounded-[14px] h-[55px] p-2 pl-5  text-sm focus:outline-[#98C1A9]"
+                                placeholder="First Name"
+                                className="border border-[#C2C2C1] rounded-[14px] h-[43px] md:h-[55px] p-2 pl-5 text-sm focus:outline-[#98C1A9]"
                                 required
                             />
                         </div>
 
+                        {/* Phone Number */}
+                        <PhoneInput value={formData.phone} onChange={handleChange} />
+
+                        {/* Email */}
                         <div className="flex flex-col gap-[8.85px]">
-                            <label className="text-sm font-[400] text-[18px] leading-[27px] text-[#666664] opacity-40">
+                            <label className="text-sm font-[400] text-[14px] md:text-[18px] leading-[21px] md:leading-[27px] text-[#666664] opacity-40">
                                 Email address<span className="text-red-500">*</span>
                             </label>
                             <input
@@ -300,29 +305,15 @@ export default function AboutPage() {
                                 type="email"
                                 value={formData.email}
                                 onChange={handleChange}
-                                placeholder=""
-                                className="border border-[#C2C2C1] rounded-[14px] h-[55px] p-2 pl-5  text-sm focus:outline-[#98C1A9]"
+                                placeholder="Email"
+                                className="border border-[#C2C2C1] rounded-[14px] h-[43px] md:h-[55px] p-2 pl-5 text-sm focus:outline-[#98C1A9]"
                                 required
                             />
                         </div>
 
-                        {/* <div className="flex flex-col gap-[8.85px]">
-              <label className="text-sm font-[400] text-[18px] leading-[27px] text-[#666664] opacity-40">
-                Phone number<span className="text-red-500">*</span>
-              </label>
-              <input
-                name="phone"
-                type="tel"
-                value={formData.phone}
-                onChange={handleChange}
-                placeholder="+44      |"
-                className="border border-[#C2C2C1] rounded-[14px] h-[55px] p-2 pl-5  text-sm focus:outline-[#98C1A9]"
-              />
-            </div> */}
-                        <PhoneInput value={formData.phone} onChange={handleChange} />
-
+                        {/* Order Number / Date */}
                         <div className="flex flex-col gap-[8.85px]">
-                            <label className="text-sm font-[400] text-[18px] leading-[27px] text-[#666664] opacity-40">
+                            <label className="text-sm font-[400] text-[14px] md:text-[18px] leading-[21px] md:leading-[27px] text-[#666664] opacity-40">
                                 Order number / date
                             </label>
                             <input
@@ -330,13 +321,14 @@ export default function AboutPage() {
                                 type="text"
                                 value={formData.order}
                                 onChange={handleChange}
-                                placeholder=""
-                                className="border border-[#C2C2C1] rounded-[14px] h-[55px] p-2 pl-5  text-sm focus:outline-[#98C1A9]"
+                                placeholder="Order Number"
+                                className="border border-[#C2C2C1] rounded-[14px] h-[43px] md:h-[55px] p-2 pl-5 text-sm focus:outline-[#98C1A9]"
                             />
                         </div>
 
+                        {/* Message */}
                         <div className="flex flex-col gap-[8.85px] md:col-span-2">
-                            <label className="text-sm font-[400] text-[18px] leading-[27px] text-[#666664] opacity-40">
+                            <label className="text-sm font-[400] text-[14px] md:text-[18px] leading-[21px] md:leading-[27px] text-[#666664] opacity-40">
                                 Message<span className="text-red-500">*</span>
                             </label>
                             <textarea
@@ -344,18 +336,17 @@ export default function AboutPage() {
                                 value={formData.message}
                                 onChange={handleChange}
                                 placeholder="Write your message or Complaint here"
-                                className="border border-[#C2C2C1] rounded-[14px] h-[171px] resize-none p-3 pl-5 text-sm focus:outline-[#98C1A9]"
+                                className="border border-[#C2C2C1] rounded-[14px] h-[140px] md:h-[171px] resize-none p-3 pl-5 text-sm focus:outline-[#98C1A9]"
                                 required
                             />
                         </div>
 
+                        {/* Submit */}
                         <div className="flex justify-center md:col-span-2">
                             <button
                                 type="submit"
                                 disabled={isLoading}
-                                className="bg-[#98C1A9] h-[56px] w-full lg:w-[259px] cursor-pointer
-                 text-white px-6 py-2 rounded-[14px]
-                  text-[16px] md:text-base font-[500] hover:bg-[#8ab49a] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="bg-[#98C1A9] h-[50px] md:h-[56px] w-full md:w-full lg:w-[259px] cursor-pointer text-white px-6 py-2 rounded-[14px] text-[16px] md:text-base font-[500] hover:bg-[#8ab49a] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                             >
                                 {isLoading ? "Sending..." : "Send Inquiry"}
                             </button>
@@ -364,7 +355,7 @@ export default function AboutPage() {
                 </div>
             </section>
 
-            <div className="w-full max-w-7xl min-h-[335px] mt-5 lg:mt-0 px-5 lg:px-5">
+            <div className="w-full max-w-7xl min-h-[335px] mt-5 lg:mt-5 ">
                 <div className="flex flex-row items-center gap-[17.78px]">
                     {/* Vertical Bar */}
                     <div className="w-[22.22px] h-[44.44px] rounded-[4.44px] bg-[#98C1A9]"></div>
@@ -374,25 +365,25 @@ export default function AboutPage() {
                         Our Products Info
                     </h2>
                 </div>
-                <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2  py-10  lg:grid-cols-4 gap-[34px]">
+                <div className="w-full grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 py-10 gap-3 md:gap-6">
                     {cardData.map((card, idx) => (
                         <div
                             key={idx}
-                            className="bg-white rounded-[14px] min-h-[279px] px-[25px] py-[34px]
+                            className="bg-white rounded-[14px] aspect-square px-3 md:px-[25px] py-4 md:py-[34px]
            shadow-[0px_2.25px_11.26px_2.25px_#00000033]
-            border border-[#0000004D] flex flex-col items-center text-center"
+            border border-[#0000004D] flex flex-col items-center text-center justify-between"
                         >
-                            <h1 className="text-[36px] text-[#666664] font-bold leading-[33.79px] mb-[27.04px]">
+                            <h1 className="text-[20px] sm:text-[22px] md:text-[36px] text-[#666664] font-bold leading-[1.1] md:leading-[33.79px] mt-1 md:mt-0">
                                 {card.title}
                             </h1>
-                            <p className="text-[#666664] leading-[19px] text-[16px] font-[400]">
+                            <p className="text-[#666664] text-[8px] leading-[12px] md:text-[16px] md:leading-[19px] font-[400] px-1 md:px-0">
                                 {card.text}
                             </p>
                             <button
                                 type="button"
-                                className="bg-[#98C1A9] text-white px-[51px] py-[13px] 
-              rounded-[14px] text-[17.14px] leading-[25.71px] font-[500] md:text-base cursor-pointer
-              h-[52px] w-[195px] hover:bg-[#8ab49a] transition-all mt-[20px]"
+                                className="bg-[#98C1A9] text-white px-4 md:px-[51px] py-2.5 md:py-[13px]
+              rounded-[14px] text-[14px] md:text-[17.14px] leading-[20px] md:leading-[25.71px] font-[500] cursor-pointer
+              h-[38px] md:h-[52px] w-[70%] md:w-[195px] hover:bg-[#8ab49a] transition-all mb-1 md:mb-0"
                             >
                                 {card.btnText}
                             </button>

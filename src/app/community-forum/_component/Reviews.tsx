@@ -319,8 +319,8 @@ export default function CommunityReviews({ reviews: initialReviews, product_id }
                                     </div>
                                     <div className="flex gap-10 w-full">
                                         <div className="flex flex-col gap-2 w-full">
-                                            <label htmlFor="review" onChange={handleChange} className="text-black/40">Review</label>
-                                            <textarea className="bg-[#F5F5F5] rounded-lg py-4 px-2 outline-0 xl:min-w-[460px] lg:min-w-[460px] md:min-w-[460px] min-[360px]:min-w-[300px] w-full resize-none" name="review" id="review" rows={5}></textarea>
+                                            <label htmlFor="review" className="text-black/40">Review</label>
+                                            <textarea className="bg-[#F5F5F5] rounded-lg py-4 px-2 outline-0 xl:min-w-[460px] lg:min-w-[460px] md:min-w-[460px] min-[360px]:min-w-[300px] w-full resize-none" onChange={handleChange} name="review" id="review" rows={5}></textarea>
                                         </div>
                                     </div>
                                     <div className="flex justify-between items-center xl:flex-row lg:flex-row md:flex-row flex-col gap-5">

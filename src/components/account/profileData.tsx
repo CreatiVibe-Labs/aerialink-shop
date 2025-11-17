@@ -170,12 +170,11 @@ const Profile: React.FC = () => {
       {/* Profile Form */}
       <form
         onSubmit={handleSubmit}
-        className=" rounded-2xl space-y-7 w-[1013px] "
+        className="rounded-2xl w-full space-y-6"
       >
-        <div className="flex flex-col lg:gap-[15px] gap-[8px]">
-          <label className="block text-[16px] font-medium text-[#666664] lg:text-[20px] opacity-40 leading-[18.86px] lg:leading-[24px] font-albert-sans ">
-            Full Name
-          </label>
+        {/* Full Name */}
+        <div className="flex flex-col gap-2">
+          <label className="text-sm font-medium text-[#666664]/40 md:text-xl">Full Name</label>
           <input
             type="text"
             name="fullname"
@@ -185,13 +184,14 @@ const Profile: React.FC = () => {
             className="w-full lg:px-4 px-[19px] py-2 border border-[#EBECF0] text-[#666664] font-[500] placeholder:text-[#666664] lg:text-[20px] text-[16px] lg:leading-[24px] leading-[18.86px] font-albert-sans lg:rounded-[14px] rounded-[11px] lg:h-[55px] h-[40px] focus:outline-none bg-[#F5F5F5] pr-12 disabled:opacity-60"
           />
         </div>
-
-        <PhoneInput value={formData.phone} onChange={handleChange} />
-
-        <div>
-          <label className="block text-sm font-medium mb-1 text-[#666664]/40 text-[20px]">
-            Email Address
-          </label>
+        {/* Phone Number */}
+        <div className="flex flex-col gap-2">
+          <label className="text-sm font-medium text-[#666664]/40 md:text-xl">Phone Number</label>
+          <PhoneInput value={formData.phone} onChange={handleChange} hideLabel />
+        </div>
+        {/* Email Address */}
+        <div className="flex flex-col gap-2">
+          <label className="text-sm font-medium text-[#666664]/40 md:text-xl">Email Address</label>
           <input
             type="email"
             name="email"
@@ -201,11 +201,9 @@ const Profile: React.FC = () => {
             className="w-full lg:px-4 px-[19px] py-2 border border-[#EBECF0] text-[#666664] font-[500] placeholder:text-[#666664] lg:text-[20px] text-[16px] lg:leading-[24px] leading-[18.86px] font-albert-sans lg:rounded-[14px] rounded-[11px] lg:h-[55px] h-[40px] focus:outline-none bg-[#F5F5F5] pr-12 disabled:opacity-60"
           />
         </div>
-
-        <div>
-          <label className="block text-sm font-medium mb-1 text-[#666664]/40 text-[20px]">
-            Password
-          </label>
+        {/* Password */}
+        <div className="flex flex-col gap-2">
+          <label className="text-sm font-medium text-[#666664]/40 md:text-xl">Password</label>
           <div className="relative">
             <input
               type={showPassword ? "text" : "password"}
@@ -218,17 +216,15 @@ const Profile: React.FC = () => {
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="cursor-pointer absolute right-4 top-1/2 -translate-y-1/2 text-[#666664] hover:text-[#98C1A9] transition-colors"
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-[#666664] hover:text-[#98C1A9]"
             >
               {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
             </button>
           </div>
         </div>
-
-        <div className="flex flex-col lg:gap-[15px] gap-[8px]">
-          <label className="block text-[16px] font-medium text-[#666664] lg:text-[20px] opacity-40 leading-[18.86px] lg:leading-[24px] font-albert-sans">
-            Confirm Password
-          </label>
+        {/* Confirm Password */}
+        <div className="flex flex-col gap-2">
+          <label className="text-sm font-medium text-[#666664]/40 md:text-xl">Confirm Password</label>
           <div className="relative">
             <input
               type={showConfirmPassword ? "text" : "password"}
@@ -241,7 +237,7 @@ const Profile: React.FC = () => {
             <button
               type="button"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              className="cursor-pointer absolute right-4 top-1/2 -translate-y-1/2 text-[#666664] hover:text-[#98C1A9] transition-colors"
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-[#666664] hover:text-[#98C1A9]"
             >
               {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
             </button>
@@ -258,7 +254,7 @@ const Profile: React.FC = () => {
       </form>
 
       {/* Login & Security Section */}
-      <section className="w-[1013px]  ">
+      <section className="w-full space-y-4">
 
         <h3 className="text-2xl font-bold text-[#98C1A9]">Login & Security</h3>
 
@@ -312,7 +308,6 @@ const Profile: React.FC = () => {
           </button>
         </div>
       </section>
-
     </div>
   );
 };

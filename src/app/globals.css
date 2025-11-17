@@ -254,3 +254,32 @@ input[type="range"]::-ms-thumb {
 .scrollbar-green::-webkit-scrollbar-track {
   background: transparent;
 }
+
+/* Mobile slider styling for order history */
+.range-progress {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 14px;
+  border-radius: 9999px;
+  background: linear-gradient(
+    to right,
+    #98c1a9 var(--range-pct, 0%),
+    #e5e7eb var(--range-pct, 0%)
+  );
+}
+
+.range-progress::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 0;
+  height: 0;
+  background: transparent;
+  border: 0;
+}
+
+.range-progress::-moz-range-thumb {
+  width: 0;
+  height: 0;
+  background: transparent;
+  border: 0;
+}

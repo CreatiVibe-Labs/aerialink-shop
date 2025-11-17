@@ -24,7 +24,7 @@ const AccountPage: React.FC = () => {
 
         {/* 3 Boxes in One Line */}
         {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-[10px] lg:gap-6 w-full max-w-5xl m-auto  border border-red-500"> */}
-        <div className="flex flex-wrap gap-[10px] lg:gap-6 w-full max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-[10px] lg:gap-6 w-full max-w-6xl mx-auto">
           {/* Profile */}
           <Box
             title="Profile"
@@ -54,7 +54,7 @@ const AccountPage: React.FC = () => {
         </div>
 
         {/* Section Placeholder */}
-        <div className="mx-auto max-w-[1013px] w-full ">
+        <div className="mx-auto max-w-6xl w-full ">
           {activeSection === "profile" && (
             <div>
               <Profile />
@@ -62,10 +62,7 @@ const AccountPage: React.FC = () => {
           )}
 
           {activeSection === "orders" && (
-            <div
-              className="mx-auto w-full h-[660]"
-              style={{ maxWidth: "1013px" }}
-            >
+            <div className="mx-auto w-full">
               <OrderHistory />
             </div>
           )}
@@ -106,7 +103,7 @@ const Box: React.FC<BoxProps> = ({
     <div
       onClick={onClick}
       className={`rounded-[10px] lg:rounded-[14px] px-2 lg:px-[17px] lg:py-[20px] py-[10px] flex flex-col lg:gap-2 
-        lg:w-[368px] w-full lg:h-[147px] h-auto
+        w-full lg:h-[147px] h-auto
         gap-[10px] cursor-pointer transition-all duration-200 group 
         ${isActive
           ? "bg-[#98C1A9] shadow-[0_0_6.1px_0_#00000040]"
@@ -123,8 +120,7 @@ const Box: React.FC<BoxProps> = ({
             alt={title}
             width={24}
             height={24}
-            className={`transition-all duration-200
-              ${isActive ? "invert-0 " : ""}`}
+            className={`transition-all duration-200 ${isActive ? "brightness-0 invert" : ""}`}
           />
         </div>
 
@@ -137,7 +133,7 @@ const Box: React.FC<BoxProps> = ({
       </div>
 
       <p
-        className={`text-sm leading-snug transition-all duration-200
+        className={`text-sm leading-snug transition-all duration-200 hidden sm:block
           ${isActive ? "text-white/90" : "text-gray-600 "}`}
       >
         {description}

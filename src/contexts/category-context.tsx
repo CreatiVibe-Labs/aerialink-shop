@@ -30,6 +30,7 @@ interface State {
 
   selectedCategory: number | null;
   selectedSort: string;
+  selectedSizes: string[];
 }
 
 type Action =
@@ -39,7 +40,7 @@ type Action =
   | { type: "FETCH_ALL_SUCCESS"; payload: { products: Product[]; meta: Meta,   isFilterFetch?: boolean;  } }
   | {
       type: "SET_FILTERS";
-      payload: { category?: number | null; sort?: string };
+      payload: { category?: number | null; sort?: string; sizes?: string[] };
     }
   | { type: "SORT_PRODUCTS" }
   | { type: "FILTER_LOADING_START" }
@@ -60,12 +61,14 @@ const initialState: State = {
 
   selectedCategory: null,
   selectedSort: "latest",
+  selectedSizes: [],
 };
 
 interface CategoryContextValue {
   state: State;
   setCategory: (id: number | null) => void;
   setSort: (sort: string) => void;
+  setSizes: (sizes: string[]) => void;
   loadMore: () => Promise<void>;
 }
 
@@ -73,6 +76,7 @@ const CategoryContext = createContext<CategoryContextValue>({
   state: initialState,
   setCategory: () => {},
   setSort: () => {},
+  setSizes: () => {},
   loadMore: async () => {},
 });
 
@@ -129,6 +133,10 @@ function categoryReducer(state: State, action: Action): State {
           action.payload.sort !== undefined
             ? action.payload.sort
             : state.selectedSort,
+        selectedSizes:
+          action.payload.sizes !== undefined
+            ? action.payload.sizes
+            : state.selectedSizes,
       };
 
     case "FILTER_LOADING_START":
@@ -142,10 +150,14 @@ function categoryReducer(state: State, action: Action): State {
 
       switch (state.selectedSort) {
         case "price_low":
-          sorted.sort((a, b) => Number(a.price) - Number(b.price));
+          sorted.sort(
+            (a, b) => Number((a as any).price) - Number((b as any).price)
+          );
           break;
         case "price_high":
-          sorted.sort((a, b) => Number(b.price) - Number(a.price));
+          sorted.sort(
+            (a, b) => Number((b as any).price) - Number((a as any).price)
+          );
           break;
         default:
           sorted.sort(
@@ -242,10 +254,24 @@ export const CategoryProvider = ({ children }: { children: ReactNode }) => {
     dispatch({ type: "FETCH_ALL_START" });
     dispatch({ type: "FILTER_LOADING_START" });
     try {
-      let url = `${process.env.NEXT_PUBLIC_API_URL}/products?page=${page}`;
-      if (categoryId) {
-        url = `${process.env.NEXT_PUBLIC_API_URL}/products?category_id=${categoryId}`;
+      const base = `${process.env.NEXT_PUBLIC_API_URL}/products`;
+      const params: string[] = [];
+      params.push(`page=${page}`);
+      if (categoryId) params.push(`category_id=${categoryId}`);
+      // API param name changes:
+      // price_label -> sort_by (values: price_low_to_high | price_high_to_low)
+      // size_labels -> size_category (comma-separated size names)
+      if (state.selectedSort === "price_low") {
+        params.push("sort_by=" + encodeURIComponent("price_low_to_high"));
+      } else if (state.selectedSort === "price_high") {
+        params.push("sort_by=" + encodeURIComponent("price_high_to_low"));
       }
+      if (state.selectedSizes && state.selectedSizes.length > 0) {
+        params.push(
+          `size_category=${encodeURIComponent(state.selectedSizes.join(","))}`
+        );
+      }
+      const url = `${base}?${params.join("&")}`;
 
       const res = await api.get(url);
       const data = res.data.data || res.data;
@@ -288,6 +314,13 @@ export const CategoryProvider = ({ children }: { children: ReactNode }) => {
 
   const setSort = (sort: string) => {
     dispatch({ type: "SET_FILTERS", payload: { sort } });
+    // fetch with filters applied
+    fetchAllProducts(state.selectedCategory, 1, false, true);
+  };
+
+  const setSizes = (sizes: string[]) => {
+    dispatch({ type: "SET_FILTERS", payload: { sizes } });
+    fetchAllProducts(state.selectedCategory, 1, false, true);
   };
 
   useEffect(() => {
@@ -303,7 +336,7 @@ export const CategoryProvider = ({ children }: { children: ReactNode }) => {
   }, [state.selectedSort, state.filteredProducts, state.allLoading]);
 
   return (
-    <CategoryContext.Provider value={{ state, setCategory, setSort, loadMore }}>
+    <CategoryContext.Provider value={{ state, setCategory, setSort, setSizes, loadMore }}>
       {children}
     </CategoryContext.Provider>
   );

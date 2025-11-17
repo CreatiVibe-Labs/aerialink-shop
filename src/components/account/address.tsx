@@ -82,12 +82,12 @@ const DeliveryAddress: React.FC = () => {
     <>
       <Toaster position="top-right" />
       <div className="w-full my-10">
-        {/* Address Boxes */}
-        <div className="flex flex-wrap lg:gap-[26.62px] gap-[10.19px] w-full">
+        {/* Address Boxes (match profile card section spacing & width) */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-[10px] lg:gap-6 w-full max-w-6xl mx-auto">
           {/* Add Address Box */}
           <div
             onClick={() => setShowForm(true)}
-            className="w-full lg:w-[32%] lg:h-[257px] h-[200px] border-2 border-dashed border-[#98C1A9] rounded-[16.21px] flex flex-col justify-center items-center text-[#98C1A9] cursor-pointer hover:bg-[#98C1A9]/10 transition"
+            className="w-full lg:h-[257px] h-[200px] border-2 border-dashed border-[#98C1A9] rounded-[16.21px] flex flex-col justify-center items-center text-[#98C1A9] cursor-pointer hover:bg-[#98C1A9]/10 transition"
           >
             <Plus
               size={43}

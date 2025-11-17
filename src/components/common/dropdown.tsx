@@ -6,7 +6,12 @@ import { createPortal } from "react-dom";
 interface DropdownItem {
   key: string;
   val: string;
-  onClick?: () => void; 
+  onClick?: () => void;
+  type?: "item" | "label" | "divider";
+  disabled?: boolean;
+  checked?: boolean;
+  showCheckbox?: boolean;
+  keepOpen?: boolean; // keep menu open after click (for multi-select)
 }
 
 interface DropdownI {
@@ -63,6 +68,12 @@ const Dropdown: FC<DropdownI> = ({
     e.preventDefault(); 
     console.log(`Clicked on item: ${item.val}`); 
     try {
+      if (item.type && item.type !== "item") {
+        return; // non-interactive entries
+      }
+      if (item.disabled) {
+        return;
+      }
       if (item.onClick) {
         console.log(`Executing onClick for ${item.val}`);
         await item.onClick(); 
@@ -74,13 +85,13 @@ const Dropdown: FC<DropdownI> = ({
       console.error("Error in handleItemClick:", error);
     } finally {
       console.log("Closing dropdown");
-      setOpenDropdown(false); 
+      if (!item.keepOpen) setOpenDropdown(false); 
     }
   };
 
   const dropdownMenu = (
     <div
-      className={`absolute min-w-fit text-white bg-primary mt-1 rounded-2xl p-2 shadow-lg ${DropDownclassName}`}
+      className={`absolute text-white bg-primary mt-1 rounded-2xl p-2 shadow-lg ${DropDownclassName}`}
       style={{
         top: coords.top,
         left: coords.left,
@@ -90,20 +101,44 @@ const Dropdown: FC<DropdownI> = ({
       }}
     >
       <ul>
-        {list.map((item, index) => (
-          <li
-            key={index}
-            onClick={(e) => {
-              console.log(`Direct click on ${item.val}`); 
-              handleItemClick(item, e);
-            }}
-            className="hover:bg-white/20 duration-150 text-sm cursor-pointer transition-all rounded-lg px-2 py-1 text-nowrap"
-            role="button" 
-            tabIndex={0} 
-          >
-            {item.val}
-          </li>
-        ))}
+        {list.map((item, index) => {
+          if (item.type === "divider") {
+            return (
+              <li key={index} className="my-2 h-px bg-white/30" aria-hidden="true" />
+            );
+          }
+          if (item.type === "label") {
+            return (
+              <li key={index} className="px-2 py-1 text-xs uppercase tracking-wide text-white/80 cursor-default select-none">
+                {item.val}
+              </li>
+            );
+          }
+          return (
+            <li
+              key={index}
+              onClick={(e) => {
+                console.log(`Direct click on ${item.val}`);
+                handleItemClick(item, e);
+              }}
+              className={`hover:bg-white/20 duration-150 text-sm transition-all rounded-lg px-2 py-1 whitespace-normal break-words flex items-center gap-2 ${
+                item.disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"
+              }`}
+              role="button"
+              tabIndex={0}
+            >
+              {item.showCheckbox ? (
+                <input
+                  type="checkbox"
+                  checked={!!item.checked}
+                  readOnly
+                  className="accent-white cursor-pointer"
+                />
+              ) : null}
+              <span className="flex-1">{item.val}</span>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
@@ -118,7 +153,7 @@ const Dropdown: FC<DropdownI> = ({
           }
           setOpenDropdown((prev) => !prev);
         }}
-        className={`bg-primary rounded-2xl w-full p-2 flex items-center justify-between space-x-2 cursor-pointer text-white select-none ${className}`}
+        className={`bg-primary right-0 rounded-2xl min-w-[190px] w-full p-2 flex items-center justify-between space-x-2 cursor-pointer text-white select-none ${className}`}
       >
         {prefixIcon ?? ""}
         <span

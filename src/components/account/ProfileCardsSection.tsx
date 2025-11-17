@@ -81,6 +81,7 @@ export default function ProfileCardsSection() {
               <p
                 className="
                   font-albert-sans text-[13px] leading-[17px] text-[#666664]
+                
                 "
               >
                 {card.description}
