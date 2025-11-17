@@ -1,5 +1,6 @@
 "use client";
 import Dropdown from "@/components/common/dropdown";
+import FilterDropdown from "@/components/common/filterDropdown";
 import SmallHeading from "@/components/common/small-heading";
 import { useCategory } from "@/contexts/category-context";
 import { useLanguage } from "@/contexts/language-context";
@@ -35,9 +36,22 @@ const FilterBar: React.FC = () => {
     setSizes(next);
   };
 
-  const summaryTop = [activeLabel, selectedSizes.length ? `Sizes: ${selectedSizes.join(", ")}` : ""]
-    .filter(Boolean)
-    .join("  •  ");
+  const clearAllFilters = () => {
+    setSort("latest");
+    setSizes([]);
+  };
+
+  const hasActiveFilters = selectedSort !== "latest" || selectedSizes.length > 0;
+
+  // Create organized filter summary
+  const filterParts = [];
+  if (selectedSort !== "latest") {
+    filterParts.push(activeLabel);
+  }
+  if (selectedSizes.length > 0) {
+    filterParts.push(`Sizes: ${selectedSizes.join(", ")}`);
+  }
+  const summaryTop = filterParts.length > 0 ? filterParts.join(" • ") : "No filters applied";
 
   return (
     <>
@@ -53,7 +67,7 @@ const FilterBar: React.FC = () => {
               selectedCategory === null
                 ? "bg-white/20 text-white"
                 : "hover:bg-white/20 text-white/80"
-            }`}
+              }`}
           >
             All
           </button>
@@ -67,7 +81,7 @@ const FilterBar: React.FC = () => {
                 selectedCategory === cat.id
                   ? "bg-white/20 text-white "
                   : "hover:bg-white/20 text-white/80"
-              }`}
+                }`}
             >
               {language === "EN" ? cat.name_en : cat.name_jp}
             </button>
@@ -78,20 +92,18 @@ const FilterBar: React.FC = () => {
         <SmallHeading label="Our Product" className="xl:hidden" />
 
         {/* Sort Dropdown */}
-        <Dropdown
+        <FilterDropdown
           label={"Filters"}
           hideLabelOnMobile={false}
-          DropDownclassName="right-0 !z-9"
+          DropDownclassName="right-0 !z-[99]"
           className="bg-white/20! z-99 px-5 max-md:px-3 max-md:text-sm max-xl:bg-primary!"
           labelClassName="text-[17px]"
           list={[
-            { key: "summary", val: summaryTop, type: "label" },
-            { key: "divider-1", val: "", type: "divider" },
-            { key: "label-price", val: "Price:", type: "label" },
+            { key: "label-price", val: "PRICE:", type: "label" },
             { key: "price_low", val: "Low to High", showCheckbox: true, checked: activeKey === "price_low" },
             { key: "price_high", val: "High to Low", showCheckbox: true, checked: activeKey === "price_high" },
-            { key: "divider-2", val: "", type: "divider" },
-            { key: "label-size", val: "Size:", type: "label" },
+            { key: "divider-1", val: "", type: "divider" },
+            { key: "label-size", val: "SIZE:", type: "label" },
             {
               key: "size_edoma",
               val: "Edoma",
@@ -108,6 +120,15 @@ const FilterBar: React.FC = () => {
               keepOpen: true,
               onClick: () => toggleSize("Danchima"),
             },
+            ...(hasActiveFilters ? [
+              { key: "divider-2", val: "", type: "divider" },
+              {
+                key: "clear_all",
+                val: "Clear All Filters",
+                type: "button" as const,
+                onClick: clearAllFilters,
+              },
+            ] : []),
           ]}
           onChange={(key) => {
             // price is single-select; update sort

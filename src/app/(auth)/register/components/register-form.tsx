@@ -4,9 +4,10 @@ import Input from "@/components/common/input";
 import PrimaryButton from "@/components/common/primary-button";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { use, useState } from "react";
 import { useProfile } from "@/contexts/profile-context";
-import toast, {Toaster} from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
+import { useRouter } from "next/dist/client/components/navigation";
 
 interface RegisterFormValues {
   firstName: string;
@@ -27,6 +28,8 @@ const RegisterForm = () => {
     formState: { errors, isSubmitting },
   } = useForm<RegisterFormValues>();
 
+  const router = useRouter();
+
   const { register: registerUser } = useProfile();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
@@ -38,30 +41,41 @@ const RegisterForm = () => {
     setSuccessMessage(null);
 
     try {
-      await registerUser(
+      const res = await registerUser(
         `${data.firstName} ${data.lastName}`.trim(),
         data.email,
         data.password,
         data.phone
       );
-      toast.success("Account created successfully!");
-      // setSuccessMessage("Account created successfully!");
+
+      toast.success("Account created successfully! Verification email has been sent.");
       reset();
+      router.push("/login");
     } catch (error: any) {
       // Handle Laravel validation errors (422) or other errors
-      console.log({error})
+      console.log("Registration API Error:", error);
       const message =
         error?.error?.email?.[0] || // Extract email-specific error
         error?.response?.data?.message || // Fallback to general message
         "Registration failed. Please try again.";
       toast.error(message);
-      // setErrorMessage(message);
     }
   };
 
   return (
     <div className="center-col items-start w-full">
-      <Toaster position="top-right" />
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          // Define default options
+          className: '',
+          duration: 5000,
+          removeDelay: 1000,
+          success: {
+            duration: 5000,
+          },
+        }}
+      />
       {/* header */}
       <div className="center-col items-start space-y-3">
         <h1 className="font-albert-sans font-semibold text-[28px] lg:text-[40px] leading-[100%] tracking-[0] text-[#313131]">

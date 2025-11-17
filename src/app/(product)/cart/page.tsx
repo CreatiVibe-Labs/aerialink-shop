@@ -112,7 +112,7 @@ const CartPage = () => {
   const subtotal = getTotal();
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 py-10">
+    <div className="w-full py-5">
       <BreadCrumbs />
 
       {/* Desktop Table */}

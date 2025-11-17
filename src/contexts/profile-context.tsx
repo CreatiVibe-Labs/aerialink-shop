@@ -63,6 +63,7 @@ interface ProfileContextType {
   logout: () => void;
   fetchProfile: () => Promise<void>;
   forgotPassword: (email: string) => Promise<void>;
+  resendOtp: (email: string) => Promise<void>;
   verifyOtp: (email: string, otp: string) => Promise<void>;
   resetPassword: (
     email: string,
@@ -125,7 +126,8 @@ export const ProfileProvider = ({ children }: { children: React.ReactNode }) => 
       });
 
       if (!res.data.success) throw new Error(res.data.message || "Registration failed");
-      router.push("/login");
+      return res.data;
+      // router.push("/login");
     } catch (err: any) {
       throw err.response?.data || { message: "Registration failed" };
     } finally {
@@ -226,6 +228,19 @@ export const ProfileProvider = ({ children }: { children: React.ReactNode }) => 
     } catch (err: any) {
       Cookies.remove("reset_email");
       throw err.response?.data || { message: "Failed to send OTP" };
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // --- Resend OTP
+  const resendOtp = async (email: string) => {
+    setLoading(true);
+    try {
+      const res = await api.post("/resend-otp", { email });
+      if (!res.data.success) throw new Error(res.data.message || "Failed to resend OTP");
+    } catch (err: any) {
+      throw err.response?.data || { message: "Failed to resend OTP" };
     } finally {
       setLoading(false);
     }
@@ -334,6 +349,7 @@ export const ProfileProvider = ({ children }: { children: React.ReactNode }) => 
         logout,
         fetchProfile,
         forgotPassword,
+        resendOtp,
         verifyOtp,
         resetPassword,
         updateProfile,

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React, { FC } from "react";
 import { RxCross1 } from "react-icons/rx";
 
@@ -25,7 +26,7 @@ const CheckoutItemCard: FC<CheckoutItemCardProps> = ({
   return (
     <div className="flex items-center justify-between border border-primary max-md:border-transparent max-md:p-0 rounded-xl p-2">
       <div className="flex items-center gap-3 max-md:hidden">
-        <img src={image} alt={title} className="size-14" />
+        <Image alt={title} src={image} width={500} height={500} className="w-14 h-14 object-cover rounded-md" />
         <div className="flex flex-col">
           <p className="text-light-gray text-sm font-medium">
             {title} x {quantity}
