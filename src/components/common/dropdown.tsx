@@ -153,7 +153,7 @@ const Dropdown: FC<DropdownI> = ({
           }
           setOpenDropdown((prev) => !prev);
         }}
-        className={`bg-primary right-0 rounded-2xl min-w-[190px] w-full p-2 flex items-center justify-between space-x-2 cursor-pointer text-white select-none ${className}`}
+        className={`bg-primary right-0 rounded-2xl  w-full px-[15px] py-[9px] flex items-center justify-between space-x-3 cursor-pointer text-white select-none ${className}`}
       >
         {prefixIcon ?? ""}
         <span

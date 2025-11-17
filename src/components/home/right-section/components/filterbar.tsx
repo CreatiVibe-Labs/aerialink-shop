@@ -49,7 +49,7 @@ const FilterBar: React.FC = () => {
             onClick={() => {
               setCategory(null);
             }}
-            className={`px-4 cursor-pointer py-2 rounded-xl font-medium transition-colors ${
+            className={`px-4 w-full cursor-pointer py-2 rounded-xl font-medium transition-colors  ${
               selectedCategory === null
                 ? "bg-white/20 text-white"
                 : "hover:bg-white/20 text-white/80"
@@ -63,9 +63,9 @@ const FilterBar: React.FC = () => {
             <button
               key={cat.id}
               onClick={() => setCategory(cat.id)}
-              className={`px-4 py-2 cursor-pointer rounded-xl font-medium transition-colors ${
+              className={`px-4 w-full py-2 cursor-pointer rounded-xl font-medium transition-colors ${
                 selectedCategory === cat.id
-                  ? "bg-white/20 text-white"
+                  ? "bg-white/20 text-white "
                   : "hover:bg-white/20 text-white/80"
               }`}
             >

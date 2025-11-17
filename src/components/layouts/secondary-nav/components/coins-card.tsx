@@ -8,7 +8,9 @@ const CoinsCard = () => {
     <div className="max-md:hidden border-2  border-primary text-primary space-x-1 center rounded-2xl px-1.5 py-0.5">
       <BiDollarCircle size={30} />{" "}
       <span className="font-extrabold text-lg ">
-        {user?.wallet?.balance ?? 0}
+        {/* {user?.wallet?.balance ?? 0}
+
+         */0}
       </span>
     </div>
   );

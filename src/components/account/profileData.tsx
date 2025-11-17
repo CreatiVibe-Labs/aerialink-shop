@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Eye, EyeOff } from "lucide-react";
 import { useProfile } from "@/contexts/profile-context";
 import toast, { Toaster } from "react-hot-toast";
-import PhoneInput from "../about/PhoneInput";
+import PhoneInput from "@/components/account/Phone";
 
 interface FormData {
   fullname: string;
@@ -13,6 +13,10 @@ interface FormData {
   password: string;
   password_confirmation: string;
 }
+
+
+
+
 
 const Profile: React.FC = () => {
   const { user, updateProfile, sessions, logoutAllDevices } = useProfile();
@@ -165,7 +169,7 @@ const Profile: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center space-y-7 p-10">
+    <div className="min-h-screen flex flex-col items-center justify-center space-y-7 ">
       <Toaster position="top-right" />
       {/* Profile Form */}
       <form
@@ -173,7 +177,7 @@ const Profile: React.FC = () => {
         className="rounded-2xl w-full space-y-6"
       >
         {/* Full Name */}
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 pt-8">
           <label className="text-sm font-medium text-[#666664]/40 md:text-xl">Full Name</label>
           <input
             type="text"
@@ -186,8 +190,9 @@ const Profile: React.FC = () => {
         </div>
         {/* Phone Number */}
         <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium text-[#666664]/40 md:text-xl">Phone Number</label>
-          <PhoneInput value={formData.phone} onChange={handleChange} hideLabel />
+          {/* Phone Number */}
+            <PhoneInput value={formData.phone} onChange={handleChange}
+            />
         </div>
         {/* Email Address */}
         <div className="flex flex-col gap-2">

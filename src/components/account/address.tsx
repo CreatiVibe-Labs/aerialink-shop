@@ -81,7 +81,7 @@ const DeliveryAddress: React.FC = () => {
   return (
     <>
       <Toaster position="top-right" />
-      <div className="w-full my-10">
+      <div className="w-full mt-10">
         {/* Address Boxes (match profile card section spacing & width) */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-[10px] lg:gap-6 w-full max-w-6xl mx-auto">
           {/* Add Address Box */}
@@ -105,7 +105,7 @@ const DeliveryAddress: React.FC = () => {
             sortedAddresses.map((address) => (
               <div
                 key={address.id}
-                className="w-full lg:w-[31%] lg:h-[257px] h-auto bg-white rounded-xl border border-[#98C1A9] shadow-sm overflow-hidden flex flex-col"
+                className="w-full lg:w-[100%] lg:h-[257px] h-auto bg-white rounded-xl border border-[#98C1A9] shadow-sm overflow-hidden flex flex-col"
               >
                 {/* Default Header (only if default) */}
                 {address.default !== 0 && (
