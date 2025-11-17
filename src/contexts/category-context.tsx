@@ -314,13 +314,11 @@ export const CategoryProvider = ({ children }: { children: ReactNode }) => {
 
   const setSort = (sort: string) => {
     dispatch({ type: "SET_FILTERS", payload: { sort } });
-    // fetch with filters applied
-    fetchAllProducts(state.selectedCategory, 1, false, true);
   };
 
   const setSizes = (sizes: string[]) => {
     dispatch({ type: "SET_FILTERS", payload: { sizes } });
-    fetchAllProducts(state.selectedCategory, 1, false, true);
+    // ❌ Removed immediate API call - useEffect will handle it
   };
 
   useEffect(() => {
@@ -334,6 +332,15 @@ export const CategoryProvider = ({ children }: { children: ReactNode }) => {
       return () => clearTimeout(timer);
     }
   }, [state.selectedSort, state.filteredProducts, state.allLoading]);
+
+  // Fetch products when sort or sizes change
+  useEffect(() => {
+    // Only call API if there are actual filters applied
+    const hasFilters = state.selectedSort !== "latest" || state.selectedSizes.length > 0;
+    if (hasFilters) {
+      fetchAllProducts(state.selectedCategory, 1, false, true);
+    }
+  }, [state.selectedSort, state.selectedSizes]);
 
   return (
     <CategoryContext.Provider value={{ state, setCategory, setSort, setSizes, loadMore }}>

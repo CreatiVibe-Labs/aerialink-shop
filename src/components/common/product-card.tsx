@@ -70,7 +70,7 @@ const ProductCard: FC<ProductCardI> = ({ product, onHeartOnClick }) => {
   const maxPrice = hasPrices ? Math.max(...prices) : 0;
   const isRange = hasPrices && minPrice !== maxPrice;
   const finalPrice = hasPrices
-    ? `¥${minPrice.toLocaleString()}${isRange ? `–¥${maxPrice.toLocaleString()}` : ""}`
+    ? `¥${minPrice.toLocaleString()}`
     : "Price N/A";
 
   // Cart price: use min variant price as base

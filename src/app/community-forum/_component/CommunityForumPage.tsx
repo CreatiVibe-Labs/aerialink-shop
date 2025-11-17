@@ -140,10 +140,12 @@ export default function CommunityForumComponent() {
                 </span>
                 <span className="productRating">
                   <div className="flex items-center">
-                    {Array.from({
-                      length: activeProduct?.average_rating || 4,
-                    }).map((_, i) => (
-                      <PiStarFill key={i} className="text-amber-300" size={18} />
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <PiStarFill 
+                        key={i} 
+                        className={i < (activeProduct?.average_rating || 0) ? "text-amber-300" : "text-gray-300"} 
+                        size={18} 
+                      />
                     ))}
                   </div>
                 </span>

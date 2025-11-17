@@ -12,6 +12,7 @@ interface AddressSelectorProps {
     onSelectAddress: (address: Address) => void;
     onAddAddress: (address: Omit<Address, "id">) => Promise<{ success: boolean; error?: string }>;
     onUpdateAddress: (id: number, address: Omit<Address, "id">) => Promise<{ success: boolean; error?: string }>;
+    onRemoveAddress: (id: number) => Promise<{ success: boolean; error?: string }>;
     loading?: boolean;
 }
 
@@ -21,6 +22,7 @@ const AddressSelector: React.FC<AddressSelectorProps> = ({
     onSelectAddress,
     onAddAddress,
     onUpdateAddress,
+    onRemoveAddress,
     loading = false,
 }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -56,21 +58,21 @@ const AddressSelector: React.FC<AddressSelectorProps> = ({
     }
 
     return (
-        <div className="space-y-4">
-            <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold text-gray-800">Saved Addresses</h3>
+        <div className="border-2 border-[#C5D3CE] rounded-xl p-6 bg-white">
+            <div className="flex items-center justify-between mb-4">
+                <h3 className="text-[#98C1A9] font-bold text-2xl ">Saved address</h3>
                 <button
                     onClick={() => setIsModalOpen(true)}
-                    className="flex items-center gap-2 text-sm text-blue-600 hover:text-blue-700 font-medium transition cursor-pointer"
+                    className="flex items-center gap-1 text-lg text-[#98C1A9] hover:text-[#98C1A9] font-normal transition cursor-pointer"
                 >
-                    <FiPlus size={16} />
-                    Add New Address
+                    <span className="text-lg">+</span>
+                    Add Shipping address
                 </button>
             </div>
 
             {addresses.length === 0 ? (
-                <div className="border border-dashed border-gray-300 rounded-lg p-8 text-center">
-                    <p className="text-gray-500 mb-3">No saved addresses yet</p>
+                <div className="border-2 border-dashed border-[#C5D3CE] rounded-xl p-8 text-center bg-[#FAFBFA]">
+                    <p className="text-[#C5D3CE] mb-3">No saved addresses yet</p>
                     <PrimaryButton
                         onClick={() => setIsModalOpen(true)}
                         className="max-w-fit mx-auto cursor-pointer"
@@ -84,42 +86,57 @@ const AddressSelector: React.FC<AddressSelectorProps> = ({
                     {addresses.map((address) => (
                         <label
                             key={address.id}
-                            className={`block border rounded-lg p-4 cursor-pointer transition ${selectedAddress?.id === address.id
-                                    ? "border-blue-500 bg-blue-50"
-                                    : "border-gray-300 hover:border-gray-400"
+                            className={`relative block border-2 rounded-xl p-4 cursor-pointer transition ${selectedAddress?.id === address.id
+                                    ? "border-[#98C1A9] bg-white"
+                                    : "border-gray-200 bg-gray-50 hover:border-gray-300"
                                 }`}
                         >
+                            {Boolean(address.default) && (
+                                <div className="absolute top-0 right-0 bg-[#98C1A9] text-white text-xs px-3 py-1 rounded-bl-lg rounded-tr-lg">
+                                    Default
+                                </div>
+                            )}
                             <div className="flex items-start gap-3">
                                 <input
                                     type="radio"
                                     name="address"
                                     checked={selectedAddress?.id === address.id}
                                     onChange={() => onSelectAddress(address)}
-                                    className="mt-1 accent-blue-600 hidden"
+                                    className="mt-1 accent-[#98C1A9] w-4 h-4 hidden"
                                 />
-                                <div className="flex-1">
-                                    <div className="flex items-center justify-between mb-1">
-                                        <div className="flex items-center gap-2">
-                                            <p className="font-semibold text-gray-800">{address.name}</p>
-                                            {Boolean(address.default) && (
-                                                <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded">
-                                                    Default
-                                                </span>
-                                            )}
-                                        </div>
-                                        <button
-                                            onClick={(e) => handleEditClick(address, e)}
-                                            className="text-blue-600 hover:text-blue-700 p-1 transition cursor-pointer"
-                                            title="Edit address"
-                                        >
-                                            <FiEdit2 size={16} />
-                                        </button>
-                                    </div>
+                                <div className="flex-1 pr-16">
+                                    <p className="font-medium text-gray-900 mb-1">{address.name}</p>
                                     <p className="text-sm text-gray-600">{address.address1}</p>
                                     <p className="text-sm text-gray-600 mt-1">
-                                        Postal Code: {address.postal_code}
+                                        postal code: {address.postal_code}
                                     </p>
-                                    <p className="text-sm text-gray-600">Phone: +{address.phone_number}</p>
+                                    <p className="text-sm text-gray-600">Phone: {address.phone_number}</p>
+                                </div>
+                                <div className="absolute right-4 bottom-1 -translate-y-1/2 flex items-center gap-5">
+                                    <button
+                                        onClick={async (e) => {
+                                            e.preventDefault();
+                                            e.stopPropagation();
+                                            if (window.confirm('Are you sure you want to remove this address?')) {
+                                                await onRemoveAddress(address.id);
+                                            }
+                                        }}
+                                        className="text-[#666664] hover:text-red-500 transition cursor-pointer flex items-center justify-center gap-1 text-sm"
+                                    >
+                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M2 4h12M5.333 4V2.667a1.333 1.333 0 0 1 1.334-1.334h2.666a1.333 1.333 0 0 1 1.334 1.334V4m2 0v9.333a1.333 1.333 0 0 1-1.334 1.334H4.667a1.333 1.333 0 0 1-1.334-1.334V4h9.334Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                                        </svg>
+                                        Remove
+                                    </button>
+                                    <button
+                                        onClick={(e) => handleEditClick(address, e)}
+                                        className="text-[#666664] hover:text-[#98C1A9] transition cursor-pointer flex items-center gap-1 text-sm"
+                                    >
+                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M7.333 2.667H2.667A1.333 1.333 0 0 0 1.333 4v9.333a1.333 1.333 0 0 0 1.334 1.334h9.333a1.333 1.333 0 0 0 1.333-1.334V8.667M12.667 1.667a1.414 1.414 0 1 1 2 2L8 10.333l-2.667.667.667-2.667 6.667-6.666Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                                        </svg>
+                                        Edit
+                                    </button>
                                 </div>
                             </div>
                         </label>

@@ -138,6 +138,42 @@ export const useAddresses = () => {
     }
   };
 
+  const removeAddress = async (id: number) => {
+    try {
+      const token = Cookies.get("token");
+
+      if (!token) {
+        throw new Error("Authentication required");
+      }
+
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/delivery-details/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!res.ok) {
+        throw new Error(`Failed to delete address: ${res.status}`);
+      }
+
+      const data = await res.json();
+      console.log("Delete Address API Response:", data);
+
+      // Refresh addresses list
+      await fetchAddresses();
+
+      return { success: true, data };
+    } catch (err) {
+      console.error("Delete Address API Error:", err);
+      return {
+        success: false,
+        error: err instanceof Error ? err.message : "Failed to delete address",
+      };
+    }
+  };
+
   useEffect(() => {
     fetchAddresses();
   }, []);
@@ -150,6 +186,7 @@ export const useAddresses = () => {
     error,
     addAddress,
     updateAddress,
+    removeAddress,
     refreshAddresses: fetchAddresses,
   };
 };
