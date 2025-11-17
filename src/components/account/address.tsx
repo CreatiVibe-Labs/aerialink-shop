@@ -99,7 +99,6 @@ const DeliveryAddress: React.FC = () => {
             </p>
           </div>
 
-<<<<<<< Updated upstream
           {loading && addresses.length === 0 ? (
             <div className="w-full text-center py-8 text-[#666664]">Loading addresses...</div>
           )  : (
@@ -107,98 +106,6 @@ const DeliveryAddress: React.FC = () => {
               <div
                 key={address.id}
                 className="w-full lg:w-[31%] lg:h-[257px] h-auto bg-white rounded-xl border border-[#98C1A9] shadow-sm overflow-hidden flex flex-col"
-=======
-          {/* Default Address Box */}
-          <div className="w-full lg:h-[257px] h-auto bg-white rounded-xl border border-[#98C1A9] shadow-sm overflow-hidden flex flex-col">
-            {/* Default Header */}
-            <div className="bg-[#98C1A9] flex items-center text-white h-[37px] text[16px] pl-[9px] font-medium">
-              Default
-            </div>
-
-            {/* Address Info */}
-            <div className="flex flex-col justify-between flex-grow p-4 ">
-              <div>
-                <h3 className="text-[#666664] font-semibold text-[20px]">
-                  Name
-                </h3>
-                <p className="text-[#666664] font-semibold text-[20px]  leading-snug">
-                  Address
-                </p>
-                <p className="text-[#666664] font-semibold text-[20px] ">
-                  Telephone
-                </p>
-                <p className="text-[#98C1A9] font-semibold text-[16px] mt-5 ">
-                  Add delivery instruction
-                </p>
-              </div>
-
-              {/* Buttons */}
-              <div className="flex justify-between mt-4 gap-[19px]">
-                {/* Edit Button */}
-                <button
-                  type="button"
-                  className="flex items-center justify-center w-[133px] h-[38px] text-white border border-[#98C1A9] bg-[#98C1A9] px-4 py-1 rounded-[14px] text-[16px] font-medium cursor-pointer"
-                >
-                  <Image
-                    src="/assets/account/interface-edit-write.png"
-                    alt="edit"
-                    width={14}
-                    height={14}
-                  />
-                  <span className="ml-2">Edit</span>
-                </button>
-
-                {/* Remove Button */}
-                <button
-                  type="button"
-                  className="flex items-center justify-center w-[133px] h-[38px] text-white border border-[#98C1A9] bg-[#98C1A9] px-4 py-1 rounded-[14px] text-[16px] font-medium"
-                >
-                  <Image
-                    src="/assets/account/interface-delete-bin.png"
-                    alt="delete"
-                    width={14}
-                    height={14}
-                  />
-                  <span className="ml-2">Remove</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Third Address Box */}
-          <div className="w-full lg:h-[257px] h-auto bg-white rounded-xl border border-[#98C1A9] p-4 shadow-sm flex flex-col justify-between">
-            <div>
-              {/* Header Line */}
-              <div className="flex justify-between items-center mb-2">
-                <h3 className="text-[#98C1A9] font-semibold text-[16px]">
-                  Address
-                </h3>
-                <button className="text-[#98C1A9] text-[16px] underline font-medium hover:text-[#7CAB91] transition">
-                  Set as default
-                </button>
-              </div>
-
-              {/* Address Info */}
-              <p className="text-[#666664] font-semibold text-[20px]">Name</p>
-              <p className="text-[#666664] font-semibold text-[20px]">
-                Address
-              </p>
-              <p className="text-[#666664] font-semibold text-[20px]">
-                Telephone
-              </p>
-
-              <p className="text-[#98C1A9] font-semibold text-[16px] mt-5">
-                Add delivery instruction
-              </p>
-            </div>
-
-            {/* Buttons */}
-            <div className="flex justify-between mt-4 gap-[19px]">
-              {/* Edit Button */}
-              <button
-                type="button"
-                className="flex items-center justify-center w-[133px] h-[38px] text-white border border-[#98C1A9] bg-[#98C1A9] px-4 py-1 rounded-[14px] text-[16px] font-medium cursor-pointer"
->>>>>>> Stashed changes
               >
                 {/* Default Header (only if default) */}
                 {address.default !== 0 && (
