@@ -33,7 +33,7 @@ const HomeRightSection = () => {
       <TopBanner />
 
       {/* All Products */}
-      <div className="grid grid-cols-4 gap-4 max-sm:gap-3 max-2xl:grid-cols-3 max-xl:grid-cols-2 max-md:grid-cols-1 max-sm:grid-cols-2">
+      <div className="grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4 gap-4 max-sm:gap-3">
         {allLoading ? (
           <ProductsSkeletonSections />
         ) : allProducts.length > 0 ? (
@@ -50,7 +50,7 @@ const HomeRightSection = () => {
       <FilterBar />
 
       {/* Filtered Products */}
-      <div className="grid grid-cols-4 gap-4 max-sm:gap-3 max-2xl:grid-cols-3 max-xl:grid-cols-2 max-md:grid-cols-1 max-sm:grid-cols-2">
+      <div className="grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4 gap-4 max-sm:gap-3">
         {filterLoading ? (
           <ProductsSkeletonSections />
         ) : filteredProducts.length > 0 ? (

@@ -5,6 +5,8 @@ import { ChevronDown } from "lucide-react";
 interface PhoneInputProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  hideLabel?: boolean; // optionally hide the built-in label
+  label?: string; // custom label text if shown
 }
 
 interface Country {
@@ -69,7 +71,7 @@ const countries: Country[] = [
   { code: "UA", name: "Ukraine", flag: "🇺🇦", dialCode: "+380" },
 ];
 
-const PhoneInput: React.FC<PhoneInputProps> = ({ value, onChange }) => {
+const PhoneInput: React.FC<PhoneInputProps> = ({ value, onChange, hideLabel = false, label = "Phone number" }) => {
   const [countryCode, setCountryCode] = useState("+44");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -145,14 +147,16 @@ const PhoneInput: React.FC<PhoneInputProps> = ({ value, onChange }) => {
 
   return (
     <div className="flex flex-col gap-[8.85px] w-full">
-      <label className="text-sm font-[400] text-[18px] leading-[27px] text-[#666664] opacity-40">
-        Phone number<span className="text-red-500">*</span>
-      </label>
+      {!hideLabel && (
+        <label className="text-sm font-[400] text-[14px] md:text-[18px] leading-[21px] md:leading-[27px] text-[#666664] opacity-40">
+          {label}<span className="text-red-500">*</span>
+        </label>
+      )}
 
       <div className="relative" ref={dropdownRef}>
         <div
           ref={containerRef}
-          className="flex items-center border border-[#C2C2C1] rounded-[14px] h-[55px] px-3 bg-white transition-all"
+          className="flex items-center border border-[#C2C2C1] rounded-[14px] h-[43px] md:h-[55px] px-3 bg-white transition-all"
         >
           {/* Country Selector Button */}
           <button
@@ -160,12 +164,11 @@ const PhoneInput: React.FC<PhoneInputProps> = ({ value, onChange }) => {
             onClick={() => setIsOpen(!isOpen)}
             className="flex items-center gap-2 bg-transparent p-2 outline-none text-[#666664] text-sm h-full cursor-pointer rounded-lg transition-colors"
           >
-            <span className="text-md font-bold">{selectedCountry.code}</span>
             <span className="font-medium">{selectedCountry.dialCode}</span>
             <ChevronDown size={16} className={`transition-transform ${isOpen ? 'rotate-180' : ''}`} />
           </button>
 
-          <div className="w-[1px] h-[30px] bg-[#D9D9D9] mx-2"></div>
+          <div className="w-[1px] h-[24px] md:h-[30px] bg-[#D9D9D9] mx-2"></div>
 
           {/* Phone Number Input */}
           <input

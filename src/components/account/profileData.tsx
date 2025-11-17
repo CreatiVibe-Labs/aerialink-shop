@@ -165,88 +165,111 @@ const Profile: React.FC = () => {
   };
 
   return (
+<<<<<<< Updated upstream
     <div className="min-h-screen flex flex-col items-center justify-center space-y-7 p-10">
       <Toaster position="top-right" />
+=======
+    <div className="w-full mx-auto sm:px-6 md:px-0 py-10 flex flex-col gap-12">
+>>>>>>> Stashed changes
       {/* Profile Form */}
       <form
         onSubmit={handleSubmit}
-        className=" rounded-2xl space-y-7 w-[1013px] "
+        className="rounded-2xl w-full space-y-6"
       >
-        <div className="flex flex-col lg:gap-[15px] gap-[8px]">
-          <label className="block text-[16px] font-medium text-[#666664] lg:text-[20px] opacity-40 leading-[18.86px] lg:leading-[24px] font-albert-sans ">
-            Full Name
-          </label>
+        {/* Full Name */}
+        <div className="flex flex-col gap-2">
+          <label className="text-sm font-medium text-[#666664]/40 md:text-xl">Full Name</label>
           <input
             type="text"
             name="fullname"
             value={formData.fullname}
             onChange={handleChange}
+<<<<<<< Updated upstream
             disabled={isSubmitting}
             className="w-full lg:px-4 px-[19px] py-2 border border-[#EBECF0] text-[#666664] font-[500] placeholder:text-[#666664] lg:text-[20px] text-[16px] lg:leading-[24px] leading-[18.86px] font-albert-sans lg:rounded-[14px] rounded-[11px] lg:h-[55px] h-[40px] focus:outline-none bg-[#F5F5F5] pr-12 disabled:opacity-60"
+=======
+            className="w-full h-11 md:h-12 px-4 rounded-[11px] md:rounded-[14px] focus:outline-none bg-[#EBECF0] text-sm font-medium text-[#666664] md:text-xl"
+>>>>>>> Stashed changes
           />
         </div>
-
-        <PhoneInput value={formData.phone} onChange={handleChange} />
-
-        <div>
-          <label className="block text-sm font-medium mb-1 text-[#666664]/40 text-[20px]">
-            Email Address
-          </label>
+        {/* Phone Number */}
+        <div className="flex flex-col gap-2">
+          <label className="text-sm font-medium text-[#666664]/40 md:text-xl">Phone Number</label>
+          <PhoneInput value={formData.phone} onChange={handleChange} hideLabel />
+        </div>
+        {/* Email Address */}
+        <div className="flex flex-col gap-2">
+          <label className="text-sm font-medium text-[#666664]/40 md:text-xl">Email Address</label>
           <input
             type="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
+<<<<<<< Updated upstream
             disabled={isSubmitting}
             className="w-full lg:px-4 px-[19px] py-2 border border-[#EBECF0] text-[#666664] font-[500] placeholder:text-[#666664] lg:text-[20px] text-[16px] lg:leading-[24px] leading-[18.86px] font-albert-sans lg:rounded-[14px] rounded-[11px] lg:h-[55px] h-[40px] focus:outline-none bg-[#F5F5F5] pr-12 disabled:opacity-60"
+=======
+            className="w-full h-11 md:h-12 px-4 rounded-[11px] md:rounded-[14px] focus:outline-none bg-[#EBECF0] text-sm font-medium text-[#666664] md:text-xl"
+>>>>>>> Stashed changes
           />
         </div>
-
-        <div>
-          <label className="block text-sm font-medium mb-1 text-[#666664]/40 text-[20px]">
-            Password
-          </label>
+        {/* Password */}
+        <div className="flex flex-col gap-2">
+          <label className="text-sm font-medium text-[#666664]/40 md:text-xl">Password</label>
           <div className="relative">
             <input
               type={showPassword ? "text" : "password"}
               name="password"
+<<<<<<< Updated upstream
               value={formData.password}
               onChange={handleChange}
               disabled={isSubmitting}
               className="w-full lg:px-4 px-[19px] py-2 border border-[#EBECF0] text-[#666664] font-[500] placeholder:text-[#666664] lg:text-[20px] text-[16px] lg:leading-[24px] leading-[18.86px] font-albert-sans lg:rounded-[14px] rounded-[11px] lg:h-[55px] h-[40px] focus:outline-none bg-[#F5F5F5] pr-12 disabled:opacity-60"
+=======
+              placeholder="********"
+              value={formData.password}
+              onChange={handleChange}
+              className="w-full h-11 md:h-12 px-4 pr-12 rounded-[11px] md:rounded-[14px] bg-[#F5F5F5] border border-[#EBECF0] text-sm font-medium text-[#666664] md:text-xl focus:outline-none"
+>>>>>>> Stashed changes
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="cursor-pointer absolute right-4 top-1/2 -translate-y-1/2 text-[#666664] hover:text-[#98C1A9] transition-colors"
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-[#666664] hover:text-[#98C1A9]"
             >
               {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
             </button>
           </div>
         </div>
-
-        <div className="flex flex-col lg:gap-[15px] gap-[8px]">
-          <label className="block text-[16px] font-medium text-[#666664] lg:text-[20px] opacity-40 leading-[18.86px] lg:leading-[24px] font-albert-sans">
-            Confirm Password
-          </label>
+        {/* Confirm Password */}
+        <div className="flex flex-col gap-2">
+          <label className="text-sm font-medium text-[#666664]/40 md:text-xl">Confirm Password</label>
           <div className="relative">
             <input
               type={showConfirmPassword ? "text" : "password"}
               name="password_confirmation"
+<<<<<<< Updated upstream
               value={formData.password_confirmation}
               onChange={handleChange}
               disabled={isSubmitting}
               className="w-full lg:px-4 px-[19px] py-2 border border-[#EBECF0] text-[#666664] font-[500] placeholder:text-[#666664] lg:text-[20px] text-[16px] lg:leading-[24px] leading-[18.86px] font-albert-sans lg:rounded-[14px] rounded-[11px] lg:h-[55px] h-[40px] focus:outline-none bg-[#F5F5F5] pr-12 disabled:opacity-60"
+=======
+              placeholder="********"
+              value={formData.password_confirmation}
+              onChange={handleChange}
+              className="w-full h-11 md:h-12 px-4 pr-12 rounded-[11px] md:rounded-[14px] bg-[#F5F5F5] border border-[#EBECF0] text-sm font-medium text-[#666664] md:text-xl focus:outline-none"
+>>>>>>> Stashed changes
             />
             <button
               type="button"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              className="cursor-pointer absolute right-4 top-1/2 -translate-y-1/2 text-[#666664] hover:text-[#98C1A9] transition-colors"
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-[#666664] hover:text-[#98C1A9]"
             >
               {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
             </button>
           </div>
         </div>
+<<<<<<< Updated upstream
 
         <button
           type="submit"
@@ -255,10 +278,21 @@ const Profile: React.FC = () => {
         >
           {isSubmitting ? "Saving..." : "SAVE"}
         </button>
+=======
+        {/* Save Button */}
+        <div className="flex flex-col md:flex-row md:justify-start">
+          <button
+            type="submit"
+            className="w-full md:w-56 h-12 bg-[#98C1A9] text-white font-semibold rounded-[14px] text-sm md:text-[17px]"
+          >
+            SAVE
+          </button>
+        </div>
+>>>>>>> Stashed changes
       </form>
 
       {/* Login & Security Section */}
-      <section className="w-[1013px]  ">
+      <section className="w-full space-y-4">
 
         <h3 className="text-2xl font-bold text-[#98C1A9]">Login & Security</h3>
 
@@ -271,6 +305,7 @@ const Profile: React.FC = () => {
           If you feel your account has been compromised, you should also update your password.
         </p>
 
+<<<<<<< Updated upstream
         <div className="flex flex-col gap-4 pt-2">
           {sessions && sessions.length > 0 ? (
             sessions.map((session) => {
@@ -310,9 +345,69 @@ const Profile: React.FC = () => {
           >
             {isLoggingOutDevices ? "Logging out..." : "Logout From Another Device"}
           </button>
+=======
+        <div className="flex flex-col gap-4 pt-2 ">
+
+          <button
+            type="button"
+            className="h-[80px] w-full bg-[#F5F5F5] text-[#666664] text-sm md:text-[16px] font-medium transition flex items-center justify-start px-4 rounded-[14px]"
+          >
+
+            <div className="w-10 h-10 bg-[#F5F5F5] rounded-full mr-4 flex items-center justify-center">
+              <Image
+                src="/assets/account/computer-desktop-remove.png"
+                alt="Windows Chrome Logo"
+                width={32}
+                height={32}
+                className="object-contain"
+              />
+            </div>
+
+
+            <div className="flex flex-col items-start">
+              <span>Login with Windows Chrome</span>
+              <span className="text-sm text-[#666664] mt-1">
+                Last active: 2 hours ago
+              </span>
+            </div>
+          </button>
+
+
+          <button
+            type="button"
+            className="h-[80px] w-full bg-[#F5F5F5] text-[#666664] text-sm md:text-[16px] font-medium transition flex items-center justify-start px-4 rounded-[14px]"
+          >
+
+            <div className="w-10 h-10 bg-[#F5F5F5] rounded-full mr-4 flex items-center justify-center">
+              <Image
+                src="/assets/account/computer-desktop-remove.png"
+                alt="Linux Chrome Logo"
+                width={32}
+                height={32}
+                className="object-contain"
+              />
+            </div>
+
+
+            <div className="flex flex-col items-start">
+              <span>Login with Linux Chrome</span>
+              <span className="text-sm text-[#666664] mt-1">
+                Last active: 1 day ago
+              </span>
+            </div>
+          </button>
+
+          <div className="flex flex-col md:flex-row md:justify-start">
+            <button
+              type="submit"
+              className="w-full md:w-72 h-12 bg-[#98C1A9] font-semibold text-white text-sm md:text-[17px] rounded-[14px]"
+            >
+              Logout from other devices
+            </button>
+          </div>
+>>>>>>> Stashed changes
         </div>
       </section>
-
     </div>
   );
 };

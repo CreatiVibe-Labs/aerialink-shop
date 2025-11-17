@@ -3,7 +3,7 @@ import { useLanguage } from "@/contexts/language-context";
 import { Product } from "@/contexts/types-and-interfaces/product";
 import Image from "next/image";
 import Link from "next/link";
-import { FC, useState } from "react";
+import { FC, useMemo, useState } from "react";
 import { GoHeart, GoHeartFill } from "react-icons/go";
 import { PiStarFill } from "react-icons/pi";
 import { useCart } from "@/contexts/cart-context";
@@ -56,15 +56,25 @@ interface ProductCardI {
 const ProductCard: FC<ProductCardI> = ({ product, onHeartOnClick }) => {
   const productInnerLink = `/product/${product?.slug}`;
   const { language } = useLanguage();
-  const [selectedSize, setSelectedSize] = useState('');
+  // Extract variant prices safely
+  const prices = useMemo(() => {
+    const list = product?.variants?.map(v => {
+      const p = parseFloat(v.price);
+      return isNaN(p) ? null : p;
+    }).filter((p): p is number => p !== null) || [];
+    return list;
+  }, [product.variants]);
 
-  const prices = product?.variants?.map(v => parseFloat(v.price)) || [];
+  const hasPrices = prices.length > 0;
+  const minPrice = hasPrices ? Math.min(...prices) : 0;
+  const maxPrice = hasPrices ? Math.max(...prices) : 0;
+  const isRange = hasPrices && minPrice !== maxPrice;
+  const finalPrice = hasPrices
+    ? `¥${minPrice.toLocaleString()}${isRange ? `–¥${maxPrice.toLocaleString()}` : ""}`
+    : "Price N/A";
 
-  const minPrice = Math.min(...prices);
-  const maxPrice = Math.max(...prices);
-
-  const finalPrice = `¥${minPrice.toLocaleString()}`;
-  const finalPriceForCart = minPrice === maxPrice ? minPrice.toFixed(2) : maxPrice.toFixed(2);
+  // Cart price: use min variant price as base
+  const cartBasePrice = hasPrices ? minPrice.toFixed(2) : "0.00";
 
   const { addToCart, isInCart } = useCart();
   const { isInWishlist, toggleWishlist, loading } = useWishlist();
@@ -78,35 +88,31 @@ const ProductCard: FC<ProductCardI> = ({ product, onHeartOnClick }) => {
   const [buttonText, setButtonText] = useState("Add to Cart");
 
   const handleAddToCart = () => {
+    if (!hasPrices || product.variants.length === 0) return;
     setAddToCartLoading(true);
 
-    const edomaSizes = product?.variants?.[0]?.sizes?.Edoma || [];
-    const danchimaSizes = product?.variants?.[0]?.sizes?.Danchima || [];
+    const variant = product.variants[0];
+    const edomaSizes = variant?.sizes?.Edoma || [];
+    const danchimaSizes = variant?.sizes?.Danchima || [];
 
-    // Decide size directly
-    const chosenSize =
-      danchimaSizes.length > 0
-        ? danchimaSizes[0].size_value
-        : edomaSizes[0]?.size_value;
+    // Pick first available size (prefer Danchima)
+    const chosenSize = danchimaSizes[0]?.size_value || edomaSizes[0]?.size_value || "";
+    const roomType = danchimaSizes.length > 0 ? 'Danchima' : 'Edoma';
+    const variantId = variant?.id;
 
-    const roomType =
-      danchimaSizes.length > 0
-        ? 'Danchima'
-        : 'Edoma';
-
-    setSelectedSize(chosenSize); // optional, for UI tracking
-
-    // Get variant ID if available
-    const variantId = product?.variants?.[0]?.id;
+    if (!chosenSize) {
+      toast.error("No size available");
+      setAddToCartLoading(false);
+      return;
+    }
 
     setTimeout(() => {
-      addToCart(product.id, 1, chosenSize, finalPriceForCart, roomType, product.slug, variantId);
+      addToCart(product.id, 1, chosenSize, cartBasePrice, roomType, product.slug, variantId);
       toast.success("Product added to cart");
       setButtonText("Added");
-
       setTimeout(() => setButtonText("Add to Cart"), 1000);
       setAddToCartLoading(false);
-    }, 500);
+    }, 400);
   };
 
 
@@ -132,7 +138,7 @@ const ProductCard: FC<ProductCardI> = ({ product, onHeartOnClick }) => {
       <div className="bg-[#FFFDFA] cover-shadow relative rounded-[14px] grid grid-cols-1 p-4 max-sm:p-2 px-4 gap-2">
         {/* Wishlist Icon */}
         <div
-          className={`absolute top-1 right-1 max-sm:top-1 max-sm:right-1 cursor-pointer z-10 transition-colors ${loading
+          className={`absolute top-1 right-1 max-sm:top-1 max-sm:right-1 cursor-pointer z-[1] transition-colors ${loading
             ? "opacity-50 cursor-not-allowed"
             : "text-[#C5C9C5] hover:text-red-500"
             }`}
@@ -149,11 +155,11 @@ const ProductCard: FC<ProductCardI> = ({ product, onHeartOnClick }) => {
         </div>
 
         {/* Image + Link */}
-        <Link href={productInnerLink} className="w-full">
+        <Link href={productInnerLink} className="w-full" aria-label="View product details">
           <div className="w-full h-full xl:min-h-[200px] lg:min-h-[200px] md:min-h-[200px] min-h-[150px] xl:max-h-[200px] lg:max-h-[200px] md:max-h-[200px] max-h-[150px] relative">
             <Image
               src={product?.images?.[0]?.url || "/fallback-image.png"}
-              alt={language === 'EN' ? product.title_en : product.title_jp}
+              alt={language === 'EN' ? String(product.title_en || product.slug || 'Product') : String(product.title_jp || product.slug || 'Product')}
               fill
               className="object-cover w-56 h-56 rounded-md"
             />
@@ -180,7 +186,7 @@ const ProductCard: FC<ProductCardI> = ({ product, onHeartOnClick }) => {
           {/* Add to Cart */}
           <div className="mt-1 w-full z-10 max-sm:mt-1">
             {
-              product.variants.length == 1 ? (
+              hasPrices && product.variants.length === 1 ? (
                 <button
                   onClick={handleAddToCart}
                   disabled={addToCartLoading}
