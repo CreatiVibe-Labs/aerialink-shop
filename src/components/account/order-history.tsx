@@ -97,7 +97,6 @@ const OrderHistory = () => {
             </div>
 
             {/* Orders List */}
-<<<<<<< Updated upstream
             <div className="flex flex-col gap-5 pt-2">
               {loading && orders.length === 0 ? (
                 <div className="text-center py-8 text-[#666664]">Loading orders...</div>
@@ -128,38 +127,6 @@ const OrderHistory = () => {
                   </div>
                 ))
               )}
-=======
-            <div className="flex flex-col gap-5 pt-2 ">
-              {orders.map((order, index) => (
-                <div
-                  key={index}
-                  className="bg-[#FFFDFA] text-[#666664] rounded-[14px] h-auto md:h-[84px] py-4 px-4 md:px-6 shadow-sm text-base md:text-2xl grid md:grid-cols-4 gap-2"
-                >
-                  <div>
-                    <span className="md:hidden block text-xs text-gray-500">Invoice No</span>
-                    <span className="font-medium block md:inline">{order.id}</span>
-                  </div>
-                  <div>
-                    <span className="md:hidden block text-xs text-gray-500">Date</span>
-                    <span className="block md:inline">{order.date}</span>
-                  </div>
-                  <div>
-                    <span className="md:hidden block text-xs text-gray-500">Amount</span>
-                    <span className="text-[#98C1A9] font-semibold block md:inline">{order.amount}</span>
-                  </div>
-                  <div>
-                    <span className="md:hidden block text-xs text-gray-500">Status</span>
-                    <span
-                      className={`font-[500] text-base md:text-[24px] ${
-                        order.status === "Delivered" ? "text-[#666664]" : "text-red-500"
-                      }`}
-                    >
-                      {order.status}
-                    </span>
-                  </div>
-                </div>
-              ))}
->>>>>>> Stashed changes
             </div>
           </div>
         </section>
