@@ -7,7 +7,7 @@ import OtherProductSection from './_components/other-product-section';
 function ProductInnerPage() {
  
   return (
-    <div className='w-full py-10 px-4 max-lg:px-3 h-full max-md:py-5'>
+    <div className='w-full pb-10  max-lg:px-3 h-full max-md:py-5'>
       <ProductExplore/>
       <ProductExploreDetailSection/>
       <OtherProductSection/>

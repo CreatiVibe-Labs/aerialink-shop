@@ -16,7 +16,7 @@ const AccountPage: React.FC = () => {
   return (
     <>
       <BreadCrumbs />
-      <div className="min-h-screen py-2 ">
+      <div className=" ">
         {/* Header */}
         <h1 className="lg:text-[36px] text-[21.05px] font-[500] lg:font-semibold mb-5 text-[#686868] ">
           Hello {user?.name || "username"}
@@ -76,6 +76,14 @@ const AccountPage: React.FC = () => {
             </div>
           )}
         </div>
+
+
+<div className="w-full max-w-6xl mx-auto">
+          {" "}
+          <ProfileCardsSection />
+        </div>
+
+
       </div>
     </>
   );
@@ -102,17 +110,17 @@ const Box: React.FC<BoxProps> = ({
   return (
     <div
       onClick={onClick}
-      className={`rounded-[10px] lg:rounded-[14px] px-2 lg:px-[17px] lg:py-[20px] py-[10px] flex flex-col lg:gap-2 
-        w-full lg:h-[147px] h-auto
+      className={`rounded-[10px] lg:rounded-[14px] px-2 lg:px-[17px] lg:py-[10px] py-[10px] flex flex-col lg:gap-2 
+        w-full lg:h-[100px] h-auto
         gap-[10px] cursor-pointer transition-all duration-200 group 
         ${isActive
           ? "bg-[#98C1A9] shadow-[0_0_6.1px_0_#00000040]"
           : "bg-[#FFFDFA]  border-gray-200 shadow-lg"
         }`}
     >
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2"> 
         <div
-          className={`p-2 rounded-full flex items-center justify-center transition-all duration-200
+          className={` py-2  rounded-full flex items-center justify-center transition-all duration-200
             ${isActive ? "bg-[#98C1A9]" : "bg-white "}`}
         >
           <Image
@@ -133,7 +141,7 @@ const Box: React.FC<BoxProps> = ({
       </div>
 
       <p
-        className={`text-sm leading-snug transition-all duration-200 hidden sm:block
+        className={`text-sm leading-snug pl-8 transition-all duration-200 hidden sm:block
           ${isActive ? "text-white/90" : "text-gray-600 "}`}
       >
         {description}

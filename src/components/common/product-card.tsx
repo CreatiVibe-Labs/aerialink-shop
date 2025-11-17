@@ -140,14 +140,14 @@ const ProductCard: FC<ProductCardI> = ({ product, onHeartOnClick }) => {
         <div
           className={`absolute top-1 right-1 max-sm:top-1 max-sm:right-1 cursor-pointer z-[1] transition-colors ${loading
             ? "opacity-50 cursor-not-allowed"
-            : "text-[#C5C9C5] hover:text-red-500"
+            : "text-[#CCCCFF]/50  hover:text-[#CCCCFF]"
             }`}
           onClick={handleHeartClick}
         >
           {inWishlist ? (
             <GoHeartFill
               size={41}
-              className="bg-red-100 rounded-full  text-red-500! p-2"
+              className="bg-[#CCCCFF] rounded-full  text-[#98C1A9] p-2"
             />
           ) : (
             <GoHeart size={41} className="bg-white rounded-full p-2" />

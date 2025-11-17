@@ -83,7 +83,7 @@ const OrderHistory = () => {
     //   </section>
     // </div>
     <>
-      <div className="flex mt-5">
+      <div className="flex mt-10">
         <section
           className="w-full max-w-6xl mx-auto rounded-[14px] overflow-x-auto scrollbar-green"
         >
@@ -134,7 +134,7 @@ const OrderHistory = () => {
 
       {/* Load More Button */}
       <div className="flex justify-center pt-4">
-        {hasMore && orders.length > 0 && (
+        {hasMore && orders.length >= 5 && (
           <button
             type="button"
             onClick={loadMore}

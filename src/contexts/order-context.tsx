@@ -30,10 +30,13 @@ interface OrderContextType {
 const OrderContext = createContext<OrderContextType | undefined>(undefined);
 
 export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
-  const [orders, setOrders] = useState<Order[]>([]);
+  const [orders, setOrders] = useState<Order[]>([]); // visible slice
+  const [allOrders, setAllOrders] = useState<Order[]>([]); // full list from API
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
+  const INITIAL_COUNT = 5;
+  const [visibleCount, setVisibleCount] = useState(INITIAL_COUNT);
 
   const fetchOrders = async (pageNum: number = 1) => {
     const token = Cookies.get("token");
@@ -41,21 +44,31 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
 
     setLoading(true);
     try {
-      const res = await api.get(`/orders?page=${pageNum}`);
+      // Backend currently returns all orders; fetch once and paginate client-side
+      const res = await api.get(`/orders`);
       if (!res.data.success) throw new Error("Failed to fetch orders");
 
-      const newOrders: Order[] = res.data.data;
-      
-      if (pageNum === 1) {
-        setOrders(newOrders);
-      } else {
-        setOrders((prev) => [...prev, ...newOrders]);
-      }
+      const fetched: Order[] = Array.isArray(res.data.data) ? res.data.data : [];
+      // Deduplicate by id just in case
+      const deduped = (() => {
+        const seen = new Set<number>();
+        const out: Order[] = [];
+        for (const o of fetched) {
+          const id = o.id as number;
+          if (!seen.has(id)) {
+            out.push(o);
+            seen.add(id);
+          }
+        }
+        return out;
+      })();
 
-      // Check if there are more orders (you can adjust this logic based on your API)
-      if (newOrders.length === 0) {
-        setHasMore(false);
-      }
+      setAllOrders(deduped);
+      setPage(1);
+      const initial = Math.min(INITIAL_COUNT, deduped.length);
+      setVisibleCount(initial);
+      setOrders(deduped.slice(0, initial));
+      setHasMore(deduped.length > initial);
     } catch (err: any) {
       console.error("Failed to fetch orders", err);
     } finally {
@@ -65,9 +78,11 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
 
   const loadMore = async () => {
     if (!hasMore || loading) return;
-    const nextPage = page + 1;
-    setPage(nextPage);
-    await fetchOrders(nextPage);
+    // Reveal remaining orders after the initial 5
+    setOrders(allOrders);
+    setVisibleCount(allOrders.length);
+    setHasMore(false);
+    setPage(2);
   };
 
   useEffect(() => {

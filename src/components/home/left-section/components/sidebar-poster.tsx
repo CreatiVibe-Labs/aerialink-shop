@@ -7,34 +7,41 @@ const SidebarPoster: FC = () => {
     {
       src: "/assets/poster/poster-1.png",
       alt: "poster 1",
+      link: "/redirect"
     },
     {
       src: "/assets/poster/poster-2.png",
       alt: "poster 2",
+      link: "/redirect"
     },
     {
       src: "/assets/poster/poster-3.png",
       alt: "poster 3",
+      link: "/redirect"
     },
     {
       src: "/assets/poster/poster-4.png",
       alt: "poster 4",
+      link: "/redirect"
     },
   ];
 
   return (
-    <Link href={'/redirect'}>
+    <>
+
       {POSTERS.map((item, index) => (
-        <div className="min-h-36 relative mb-4" key={index}>
-          <Image
-            fill
-            src={item.src}
-            alt={item.alt}
-            className="object-cover rounded-xl"
-          />
-        </div>
-      ))}
-    </Link>
+        <Link href={item.link} key={index}>
+          <div className="min-h-36 relative">
+            <Image
+              fill
+              src={item.src}
+              alt={item.alt}
+              className="object-cover rounded-xl"
+            />
+          </div>
+        </Link>
+      ))} 
+    </>
   );
 };
 

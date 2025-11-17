@@ -14,17 +14,19 @@ import { useLanguage } from "@/contexts/language-context";
 import { useCart } from "@/contexts/cart-context";
 
 const SecondaryNavbar = () => {
-  const { language, setLanguage } = useLanguage(); 
+  const { language, setLanguage } = useLanguage();
   const { user, loading, logout } = useProfile();
 
   const router = useRouter();
 
   return (
-    <div className="my-8 max-w-7xl w-full mx-auto xl:px-5 lg:px-10 md:px-10 px-5 flex justify-between items-center xl:gap-5 lg:gap-5 md:gap-5 gap-2">
-        {/* Language Selector */}
+    <div className="my-8 max-w-7xl w-full mx-auto xl:px-5 lg:px-10 md:px-10 px-5 flex justify-between items-center xl:gap-5 lg:gap-5 md:gap-5 gap-2 ">
+      {/* Language Selector */}
       <Dropdown
         prefixIcon={<TfiWorld size={20} />}
         label={language}
+        className="px-[15px] py-[9px]"
+        labelClassName="text-[17px] "
         list={[
           { key: "EN", val: "EN" },
           { key: "JP", val: "JP" },
@@ -54,15 +56,14 @@ const SecondaryNavbar = () => {
         <Dropdown
           className="max-md:hidden"
           prefixIcon={<BiUser size={20} />}
-          labelClassName="text-nowrap"
-          label={user.name || user.email?.split("@")[0] || "User"}
+          labelClassName="text-nowrap !capitalize"
+          label="My Account"
           list={[
-            { key: "email", val: user.email || "No email" },
             {
               key: "profile",
               val: "My Profile",
               onClick: () => {
-                console.log("Profile clicked"); 
+                console.log("Profile clicked");
                 router.push("/account");
               },
             },
@@ -70,10 +71,10 @@ const SecondaryNavbar = () => {
               key: "logout",
               val: "Logout",
               onClick: async () => {
-                console.log("Logout clicked"); 
+                console.log("Logout clicked");
                 try {
                   if (logout) {
-                     logout();
+                    logout();
                     console.log("Logout successful");
                     router.push("/login");
                   } else {

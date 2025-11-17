@@ -14,7 +14,7 @@ const OtherProductSection = () => {
     .slice(0, 4); // sirf 4 products
 
   return (
-    <div className="mt-8 px-8 max-lg:px-0">
+    <div className="mt-8  max-lg:px-0">
       <SmallHeading label="You may be also interested in" />
 
       {/* Loading */}
