@@ -21,6 +21,7 @@ export default function ShowroomProductSelection() {
   ]);
   const [openPopup, setOpenPopup] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(0);
+  const [corsFloorImage, setCorsFloorImage] = useState<string>("");
 
   // Check for productId in URL query parameters and set it as selected
   useEffect(() => {
@@ -44,6 +45,49 @@ export default function ShowroomProductSelection() {
   const activeProduct = products.find(
     (p) => p.id === selectedProduct
   );
+
+  useEffect(() => {
+    const fetchCorsFloorImage = async () => {
+      if (!activeProduct?.floor_image) {
+        setCorsFloorImage("");
+        return;
+      }
+
+      try {
+
+        const storagePath = activeProduct.floor_image.replace(
+          "https://dashboard.aerialinkshop.jp/storage/",
+          ""
+        );
+
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/cors-storage/${storagePath}`,
+          {
+            method: "GET",
+          }
+        );
+
+        if (!response.ok) {
+          console.error("Failed to fetch CORS image:", response.status);
+          setCorsFloorImage(activeProduct.floor_image); // Fallback to original
+          return;
+        }
+
+        // Convert response to blob and create object URL
+        const blob = await response.blob();
+        const blobUrl = URL.createObjectURL(blob);
+        
+        console.log("CORS floor image loaded:", blobUrl);
+        setCorsFloorImage(blobUrl);
+
+      } catch (error) {
+        console.error("Error fetching CORS floor image:", error);
+        setCorsFloorImage(activeProduct.floor_image); // Fallback to original
+      }
+    };
+
+    fetchCorsFloorImage();
+  }, [selectedProduct, activeProduct?.floor_image]);
 
   const fileToBase64 = (file: File): Promise<string | ArrayBuffer | null> => {
     return new Promise((resolve, reject) => {
@@ -226,12 +270,10 @@ export default function ShowroomProductSelection() {
             <div className="flex flex-col items-center gap-2">
               {
                 // Debug info or additional UI elements can be added here
-                activeProduct?.floor_image && (
+                corsFloorImage && (
                   <Suspense>
                     <VirtualShowroom360
-                      floorImage={
-                        activeProduct?.floor_image || "/assets/floors/floor1.jpg"
-                      }
+                      floorImage={corsFloorImage}
                       height={"350px"}
                       wallImages={
                         selectedImages.map((image) =>
