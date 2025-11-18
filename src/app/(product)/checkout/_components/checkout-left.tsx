@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import Checkbox from "@/components/common/checkbox";
 import Input from "@/components/common/input";
-import PhoneInput from "@/components/common/phone-input";
+import PhoneInput from "@/components/about/PhoneInput";
 import PrimaryButton from "@/components/common/primary-button";
 import ProductItemsSection from "./right/product-items-section";
 import PontsDiscountSection from "./right/ponts-discount-section";
@@ -408,12 +408,19 @@ const CheckoutLeft = () => {
                   validate: (val) => val.replace(/\D/g, "").length >= 8 || "Enter a valid phone number",
                 }}
                 render={({ field }) => (
-                  <PhoneInput
-                    label="Phone Number *"
-                    value={field.value}
-                    onChange={field.onChange}
-                    error={errDesktop.phone?.message}
-                  />
+                  <div>
+                    <label className="block text-sm text-gray-600 mb-1">
+                      Phone Number<span className="text-red-500">*</span>
+                    </label>
+                    <PhoneInput
+                      hideLabel
+                      value={field.value || ""}
+                      onChange={(e) => field.onChange((e.target as HTMLInputElement).value)}
+                    />
+                    {errDesktop.phone && (
+                      <p className="text-red-500 text-sm mt-1">{errDesktop.phone.message}</p>
+                    )}
+                  </div>
                 )}
               />
             </div>
@@ -591,11 +598,16 @@ const CheckoutLeft = () => {
                         val.replace(/\D/g, "").length >= 8 || "Enter a valid phone number",
                     }}
                     render={({ field }) => (
-                      <PhoneInput
-                        value={field.value}
-                        onChange={field.onChange}
-                        error={errMobile.phone?.message}
-                      />
+                      <div>
+                        <PhoneInput
+                          hideLabel
+                          value={field.value || ""}
+                          onChange={(e) => field.onChange((e.target as HTMLInputElement).value)}
+                        />
+                        {errMobile.phone && (
+                          <p className="text-red-500 text-sm mt-1">{errMobile.phone.message}</p>
+                        )}
+                      </div>
                     )}
                   />
                 </div>

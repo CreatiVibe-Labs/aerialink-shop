@@ -53,7 +53,7 @@ const ProductDetailTab3 = () => {
   const Harmfull = language === 'EN' ? parse(product.harmful_content_en) : parse(product.harmful_content_jp) || "N/A";
 
   return (
-    <div className="rounded-2xl border border-[#666664] overflow-hidden max-w-2xl">
+    <div className="rounded-2xl border border-[#666664] overflow-hidden max-w-[66%]">
       {/* Colors Row */}
       <div className="grid grid-cols-[200px_1fr] border-b border-[#666664]">
         <div className="px-4 py-3 bg-white font-medium text-gray-700 border-r border-[#666664]">Color</div>

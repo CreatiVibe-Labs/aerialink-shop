@@ -45,7 +45,7 @@ const ForgotPasswordForm = () => {
       <BackButton
         href="/login"
         label="back to login"
-        className="mb-5 max-md:static max-md:mb-5 max-md:-ml-2 font-albert-sans font-[500] text-[12px] lg:text-[14px] leading-[100%] tracking-[0%] text-[#313131]"
+        className="mb-5  max-md:static max-md:mb-5 max-md:-ml-2 font-albert-sans font-[500] text-[12px] lg:text-[14px] leading-[100%] tracking-[0%] text-[#313131]"
       />
 
       <div className="center-col items-start space-y-[16px]">
@@ -60,7 +60,7 @@ const ForgotPasswordForm = () => {
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-full max-w-[80%] max-md:max-w-full space-y-5 mt-10"
+        className="w-full max-w-[100%] max-md:max-w-full space-y-5 mt-10"
       >
         <div className="space-y-0.5">
           <Input

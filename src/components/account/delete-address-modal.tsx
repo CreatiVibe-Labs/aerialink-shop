@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -11,7 +11,7 @@ import Image from "next/image";
 interface DeleteAddressModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onConfirm: () => void;
+  onConfirm: () => void | Promise<void>;
   addressName?: string;
 }
 
@@ -21,6 +21,20 @@ const DeleteAddressModal: React.FC<DeleteAddressModalProps> = ({
   onConfirm,
   addressName,
 }) => {
+  const [loading, setLoading] = useState(false);
+
+  const handleConfirm = async () => {
+    if (loading) return;
+    try {
+      setLoading(true);
+      const res = onConfirm?.();
+      if (res && typeof (res as Promise<void>).then === "function") {
+        await (res as Promise<void>);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="rounded-2xl w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl p-6">
@@ -62,18 +76,46 @@ const DeleteAddressModal: React.FC<DeleteAddressModalProps> = ({
           <button
             type="button"
             onClick={onClose}
+            disabled={loading}
             className="w-[140px] lg:w-[180px] h-[42px] lg:h-[50px] border-[1.5px] border-[#98C1A9] text-[#98C1A9] 
-              rounded-[14px] text-[15px] lg:text-[17px] font-semibold hover:bg-[#98C1A9]/10 transition cursor-pointer"
+              rounded-[14px] text-[15px] lg:text-[17px] font-semibold hover:bg-[#98C1A9]/10 transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Cancel
           </button>
           <button
             type="button"
-            onClick={onConfirm}
+            onClick={handleConfirm}
+            disabled={loading}
             className="w-[140px] lg:w-[180px] h-[42px] lg:h-[50px] bg-[#98C1A9] text-white 
-              rounded-[14px] text-[15px] lg:text-[17px] font-semibold hover:bg-[#7CAB91] transition cursor-pointer"
+              rounded-[14px] text-[15px] lg:text-[17px] font-semibold hover:bg-[#7CAB91] transition cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
-            Confirm
+            {loading ? (
+              <>
+                <svg
+                  className="animate-spin h-5 w-5 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                  ></path>
+                </svg>
+                Removing...
+              </>
+            ) : (
+              "Confirm"
+            )}
           </button>
         </div>
       </DialogContent>

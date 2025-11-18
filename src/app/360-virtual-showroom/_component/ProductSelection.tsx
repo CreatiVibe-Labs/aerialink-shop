@@ -86,6 +86,21 @@ export default function ShowroomProductSelection() {
     language == "EN"
       ? activeProduct?.title_en
       : activeProduct?.title_jp;
+
+  // Lock page scroll when product selection modal is open
+  useEffect(() => {
+    if (openPopup) {
+      document.documentElement.classList.add('overflow-hidden');
+      document.body.classList.add('overflow-hidden');
+    } else {
+      document.documentElement.classList.remove('overflow-hidden');
+      document.body.classList.remove('overflow-hidden');
+    }
+    return () => {
+      document.documentElement.classList.remove('overflow-hidden');
+      document.body.classList.remove('overflow-hidden');
+    };
+  }, [openPopup]);
   return (
     <>
       <div className="w-full">
@@ -199,7 +214,7 @@ export default function ShowroomProductSelection() {
                   </svg>
 
                   <h3 className="text-3xl text-[#B9E2D4]">Upload photo</h3>
-                  <p className="text-sm text-[#B9E2D4]">
+                  <p className="text-base text-[#B9E2D4]">
                     {index === 0 && <span>(left side wall)</span>}
                     {index === 1 && <span>(right side wall)</span>}
                     {index === 2 && <span>(back side wall)</span>}
@@ -255,9 +270,9 @@ export default function ShowroomProductSelection() {
 
       {openPopup && (
         <>
-          <div className="background bg-[#666664]/60 fixed top-0 left-0 w-full h-screen z-100"></div>
+          <div className="background bg-[#666664]/60 fixed top-0 left-0 w-full h-screen z-[12000]"></div>
 
-          <div className="popupWrapper fixed top-0 left-0 w-full h-screen z-110 overflow-auto flex items-center justify-center py-10">
+          <div className="popupWrapper fixed top-0 left-0 w-full h-screen z-[12001] overflow-auto flex items-center justify-center py-10">
             <div className="popupContent max-w-[700px] w-full relative rounded-lg p-5 bg-[#FFFDFA] shadow-lg max-h-[90vh] overflow-auto">
               <div
                 onClick={() => setOpenPopup(false)}

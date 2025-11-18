@@ -8,6 +8,7 @@ import Dropdown from "../../common/dropdown";
 import CoinsCard from "./components/coins-card";
 import SearchbarComponent from "./components/searchbar-component";
 import ShopingCard from "./components/shoping-card";
+import WishlistIcon from "./components/wishlist-icon";
 import { useProfile } from "@/contexts/profile-context";
 import { PiSpinnerGapBold } from "react-icons/pi";
 import { useLanguage } from "@/contexts/language-context";
@@ -40,6 +41,9 @@ const SecondaryNavbar = () => {
 
       {/* Searchbar */}
       <SearchbarComponent />
+
+      {/* Wishlist */}
+      <WishlistIcon />
 
       {/* Shopping Cart */}
       <ShopingCard />

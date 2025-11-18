@@ -3,11 +3,12 @@ import Checkbox from "@/components/common/checkbox";
 import Input from "@/components/common/input";
 import PrimaryButton from "@/components/common/primary-button";
 import Link from "next/link";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { use, useState } from "react";
 import { useProfile } from "@/contexts/profile-context";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/dist/client/components/navigation";
+import PhoneInput from "@/components/account/registerphone-input";
 
 interface RegisterFormValues {
   firstName: string;
@@ -25,6 +26,7 @@ const RegisterForm = () => {
     handleSubmit,
     reset,
     watch,
+    control,
     formState: { errors, isSubmitting },
   } = useForm<RegisterFormValues>();
 
@@ -77,7 +79,7 @@ const RegisterForm = () => {
         }}
       />
       {/* header */}
-      <div className="center-col items-start space-y-3">
+      <div className="center-col items-start space-y-3  mt-0 " >
         <h1 className="font-albert-sans font-semibold text-[28px] lg:text-[40px] leading-[100%] tracking-[0] text-[#313131]">
           Register
         </h1>
@@ -87,7 +89,8 @@ const RegisterForm = () => {
       <form
         method="post"
         onSubmit={handleSubmit(onSubmit)}
-        className="w-full max-w-[80%] max-xl:max-w-full space-y-5 mt-10 "
+        className="w-full max-w-[100%] max-xl:max-w-full space-y-5 mt-10
+          "
       >
         {/* First and Last name */}
         <div className="grid grid-cols-2 gap-3 max-md:grid-cols-1">
@@ -136,23 +139,25 @@ const RegisterForm = () => {
             )}
           </div>
           <div className="space-y-0.5">
-            <Input
-              type="tel"
-              label="phone number"
-              placeholder=""
-              {...register("phone", {
+            <Controller
+              name="phone"
+              control={control}
+              rules={{
                 required: "Phone number is required",
-                minLength: {
-                  value: 11,
-                  message: "Phone must be at least 11 digits",
-                },
-              })}
+                validate: (val) => val.replace(/\D/g, "").length >= 8 || "Enter a valid phone number",
+              }}
+              render={({ field }) => (
+                <div>
+                  <PhoneInput
+                    value={field.value || ""}
+                    onChange={(e) => field.onChange((e.target as HTMLInputElement).value)}
+                  />
+                  {errors.phone && (
+                    <span className="text-sm text-red-500">{errors.phone.message}</span>
+                  )}
+                </div>
+              )}
             />
-            {errors.phone && (
-              <span className="text-sm text-red-500">
-                {errors.phone.message}
-              </span>
-            )}
           </div>
         </div>
 

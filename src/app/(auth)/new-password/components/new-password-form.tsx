@@ -61,7 +61,7 @@ const NewPasswordForm = () => {
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-full max-w-[80%] max-md:max-w-full space-y-5 mt-10"
+        className="w-full max-w-[100%] max-md:max-w-full space-y-5 mt-10"
       >
         <div className="space-y-0.5">
           <Input

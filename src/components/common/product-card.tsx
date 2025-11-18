@@ -147,7 +147,7 @@ const ProductCard: FC<ProductCardI> = ({ product, onHeartOnClick }) => {
           {inWishlist ? (
             <GoHeartFill
               size={41}
-              className="bg-[#CCCCFF] rounded-full  text-[#98C1A9] p-2"
+              className="bg-[#EBECF0] rounded-full  text-[#CCCCFF] p-2"      
             />
           ) : (
             <GoHeart size={41} className="bg-white rounded-full p-2" />

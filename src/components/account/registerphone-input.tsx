@@ -155,29 +155,29 @@ const PhoneInput: React.FC<PhoneInputProps> = ({ value, onChange, hideLabel = fa
   const selectedCountry = countries.find(c => c.dialCode === countryCode) || countries[1];
 
   return (
-    <div className="flex flex-col gap-[8.85px] w-full">
+    <div className="flex flex-col w-full relative">
       {!hideLabel && (
-        <label className="text-[18px] font-medium text-[#666664] opacity-40 md:text-xl leading-[21px] md:leading-[27px] ">
-          {label}<span className="text-red-500"></span>
+        <label className="absolute -top-2 left-4 bg-white px-1 text-[14px] leading-[100%] tracking-[0] text-[#1C1B1F] font-[Albert_Sans] font-normal z-10 capitalize">
+          {label}
         </label>
       )}
 
-      <div className="relative" ref={dropdownRef}>
+      <div className="relative w-full" ref={dropdownRef}>
         <div
           ref={containerRef}
-          className="flex items-center border border-[#EBECF0] rounded-[14px] h-[43px] md:h-[55px] px-3 bg-[#F5F5F5] transition-all"
+          className="height w-full flex items-center border border-[#79747E] opacity-75 rounded-[14px] bg-white px-3 transition-all focus-within:border-gray-900"
         >
           {/* Country Selector Button */}
           <button
             type="button"
             onClick={() => setIsOpen(!isOpen)}
-            className="flex items-center gap-2 bg-transparent p-2 outline-none text-[#666664] text-sm h-full cursor-pointer rounded-lg transition-colors"
+            className="flex items-center gap-2 bg-transparent p-2 outline-none text-[#1C1B1F] text-sm h-full cursor-pointer rounded-lg transition-colors"
           >
             <span className="font-medium">{selectedCountry.dialCode}</span>
             <ChevronDown size={16} className={`transition-transform ${isOpen ? 'rotate-180' : ''}`} />
           </button>
 
-          <div className="w-[1px] h-[24px] md:h-[30px] bg-[#D9D9D9] mx-2 "></div>
+          <div className="w-[1px] h-[24px] md:h-[30px] border border-[#C2C2C1] bg-[#D9D9D9] m-1"></div>
 
           {/* Phone Number Input */}
           <input
@@ -185,12 +185,9 @@ const PhoneInput: React.FC<PhoneInputProps> = ({ value, onChange, hideLabel = fa
             name="phone"
             value={formatted}
             onChange={handlePhoneChange}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
             placeholder=""
-            className="flex-1 h-full text-[18px] font-medium text-[#666664]  bg-transparent outline-none"
+            className="flex-1 h-full bg-transparent outline-none text-[12px] lg:text-[16px] text-[#1C1B1F]"
             maxLength={15}
-            required
           />
         </div>
 

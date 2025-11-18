@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import Input from "@/components/common/input";
-import PhoneInput from "@/components/common/phone-input";
+import PhoneInput from "@/components/account/Phone";
 import PrimaryButton from "@/components/common/primary-button";
 import Image from "next/image";
 import { Address } from "@/hooks/use-addresses";
@@ -161,8 +161,7 @@ const AddAddressModal: React.FC<AddAddressModalProps> = ({
               control={control}
               rules={{
                 required: "Phone number is required",
-                validate: (val) =>
-                  val.replace(/\D/g, "").length >= 8 || "Enter a valid phone number",
+                validate: (val) => val.replace(/\D/g, "").length >= 8 || "Enter a valid phone number",
               }}
               render={({ field }) => (
                 <div>
@@ -170,10 +169,13 @@ const AddAddressModal: React.FC<AddAddressModalProps> = ({
                     Phone Number<span className="text-red-500/40">*</span>
                   </label>
                   <PhoneInput
-                    value={field.value}
-                    onChange={field.onChange}
-                    error={errors.phone_number?.message}
+                    hideLabel
+                    value={field.value || ""}
+                    onChange={(e) => field.onChange((e.target as HTMLInputElement).value)}
                   />
+                  {errors.phone_number && (
+                    <p className="text-red-500 text-sm mt-1">{errors.phone_number.message}</p>
+                  )}
                 </div>
               )}
             />

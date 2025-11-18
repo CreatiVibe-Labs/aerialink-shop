@@ -249,9 +249,9 @@ export default function CommunityReviews({ reviews: initialReviews, product_id }
             {/* Popup */}
             {openPopup &&
                 <>
-                    <div className="background bg-[#666664]/60 fixed top-0 left-0 w-full h-screen z-100"></div>
+                    <div className="background bg-[#666664]/60 fixed top-0 left-0 w-full h-screen z-[12000]"></div>
 
-                    <div className="popupWrapper fixed top-0 left-0 w-full h-screen z-110 overflow-auto flex items-center justify-center py-10">
+                    <div className="popupWrapper fixed top-0 left-0 w-full h-screen z-[12001] overflow-auto flex items-center justify-center py-10">
                         <div className="popupContent relative rounded-lg p-5 bg-[#FFFDFA] shadow-lg max-h-[90vh] overflow-auto">
                             <div onClick={() => setOpenPopup(false)} className="close cursor-pointer absolute top-3 right-3">
                                 <svg width="65" height="65" viewBox="0 0 65 65" fill="none" xmlns="http://www.w3.org/2000/svg">
