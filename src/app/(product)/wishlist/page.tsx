@@ -44,8 +44,11 @@ const WishListPage = () => {
       });
 
       setProducts(mappedProducts);
+    } else {
+      // Clear when wishlist becomes empty, so UI updates without refresh
+      setProducts([]);
     }
-  }, [wishlist, token]);
+  }, [wishlist, token, language]);
 
   if (!token) {
     return (
@@ -90,7 +93,7 @@ const WishListPage = () => {
   }
 
   return (
-    <div className="max-w-7xl w-full mx-auto max-md:px-5 max-sm:px-3 my-5">
+    <div className="max-w-7xl w-full mx-auto max-md:px-5 max-sm:px-3 my-8">
       <BreadCrumbs />
       <div className="grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4 gap-4 max-sm:gap-3">
         {products.map((product, i) => (

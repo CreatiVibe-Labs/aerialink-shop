@@ -9,7 +9,7 @@ import ProductDetailTab4 from "./tabs/product-detail-tab-4";
 export default function ProductExploreDetailSection() {
   const [activeTab, setActiveTab] = useState("usage");
   return (
-    <section className="mt-8 px-8 max-lg:px-0">
+    <section className="mt-8  max-lg:px-0">
       {/* Tabs */}
       <div className="flex max-w-3xl gap-3 max-md:gap-1 mb-6">
         {[

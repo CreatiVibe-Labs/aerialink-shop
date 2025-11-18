@@ -61,7 +61,7 @@ const LoginForm = () => {
       <form
         method="post"
         onSubmit={handleSubmit(onSubmit)}
-        className="w-full max-w-[80%] max-md:max-w-full space-y-[24px] mt-10"
+        className="w-full max-w-[100%] max-md:max-w-full space-y-[24px] mt-10"
       >
         {/* Email */}
         <div className="space-y-0.5">

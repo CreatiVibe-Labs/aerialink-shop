@@ -37,6 +37,21 @@ const ProductExploreLeftSection = () => {
     return () => window.removeEventListener("keydown", handler);
   }, [lightboxOpen]);
 
+  // Lock scroll while lightbox is open
+  useEffect(() => {
+    if (lightboxOpen) {
+      document.documentElement.classList.add("overflow-hidden");
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.documentElement.classList.remove("overflow-hidden");
+      document.body.classList.remove("overflow-hidden");
+    }
+    return () => {
+      document.documentElement.classList.remove("overflow-hidden");
+      document.body.classList.remove("overflow-hidden");
+    };
+  }, [lightboxOpen]);
+
   const imageUrls = useMemo(() => {
     if (!product?.images?.length) return [];
     return product.images.map((img) => img.url);
@@ -120,7 +135,7 @@ const ProductExploreLeftSection = () => {
       </div>
       {lightboxOpen && (
         <div
-          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
+          className="fixed inset-0 z-[12000] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
           onClick={() => setLightboxOpen(false)}
         >
           {/* Wrapper positioned relative so controls can sit outside the white box */}

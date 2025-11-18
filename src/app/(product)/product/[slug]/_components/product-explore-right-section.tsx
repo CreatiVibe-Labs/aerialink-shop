@@ -109,6 +109,21 @@ const ProductExploreRightSection: React.FC<Props> = ({ variants, onSizeSelect })
     }
   }, []);
 
+  // Lock scroll when postal modal is open
+  useEffect(() => {
+    if (showPostalModal) {
+      document.documentElement.classList.add("overflow-hidden");
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.documentElement.classList.remove("overflow-hidden");
+      document.body.classList.remove("overflow-hidden");
+    }
+    return () => {
+      document.documentElement.classList.remove("overflow-hidden");
+      document.body.classList.remove("overflow-hidden");
+    };
+  }, [showPostalModal]);
+
   // Use product variants instead of props variants (for now, since props variants might be empty)
   const actualVariants = product?.variants || variants || [];
 
@@ -540,11 +555,11 @@ const ProductExploreRightSection: React.FC<Props> = ({ variants, onSizeSelect })
       {showPostalModal && (
         <>
           <div 
-            className="fixed inset-0 bg-black/60 z-50"
+            className="fixed inset-0 bg-black/60 z-[12000]"
             onClick={handleClosePostalModal}
           ></div>
 
-          <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-white rounded-xl p-6 w-full max-w-md mx-4 shadow-2xl">
+          <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[12001] bg-white rounded-xl p-6 w-full max-w-md mx-4 shadow-2xl">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-xl font-semibold text-min-gray">Check Delivery Availability</h3>
               <button

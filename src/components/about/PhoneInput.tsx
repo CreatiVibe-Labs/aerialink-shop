@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
+import { AsYouType } from "libphonenumber-js";
 import { ChevronDown } from "lucide-react";
 
 interface PhoneInputProps {
@@ -79,18 +80,22 @@ const PhoneInput: React.FC<PhoneInputProps> = ({ value, onChange, hideLabel = fa
   const containerRef = useRef<HTMLDivElement | null>(null);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const isInitialized = useRef(false);
+  const [formatted, setFormatted] = useState("");
 
   // Initialize from value prop (handles values with or without dial code)
   useEffect(() => {
     if (!isInitialized.current && value) {
       const matchedCountry = countries.find(c => value.startsWith(c.dialCode));
+      let digits = "";
       if (matchedCountry) {
         setCountryCode(matchedCountry.dialCode);
-        setPhoneNumber(value.replace(matchedCountry.dialCode, ""));
+        digits = value.replace(matchedCountry.dialCode, "").replace(/\D/g, "").slice(0, 15);
       } else {
         // If value doesn't have a dial code, keep default country and prefill digits
-        setPhoneNumber(value.replace(/\D/g, ""));
+        digits = value.replace(/\D/g, "").slice(0, 15);
       }
+      setPhoneNumber(digits);
+      setFormatted(new AsYouType(selectedCountry.code as any).input(digits));
       isInitialized.current = true;
     }
   }, [value]);
@@ -121,14 +126,16 @@ const PhoneInput: React.FC<PhoneInputProps> = ({ value, onChange, hideLabel = fa
 
   const handleCountrySelect = (dialCode: string) => {
     setCountryCode(dialCode);
+    setFormatted(new AsYouType((countries.find(c=>c.dialCode===dialCode)?.code || selectedCountry.code) as any).input(phoneNumber));
     emitChange(dialCode, phoneNumber);
     setIsOpen(false);
     setSearchTerm("");
   };
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newNumber = e.target.value.replace(/\D/g, "");
+    const newNumber = e.target.value.replace(/\D/g, "").slice(0, 15);
     setPhoneNumber(newNumber);
+    setFormatted(new AsYouType(selectedCountry.code as any).input(newNumber));
     emitChange(countryCode, newNumber);
   };
 
@@ -177,13 +184,14 @@ const PhoneInput: React.FC<PhoneInputProps> = ({ value, onChange, hideLabel = fa
           <input
             type="tel"
             name="phone"
-            value={phoneNumber}
+            value={formatted}
             onChange={handlePhoneChange}
             onFocus={handleFocus}
             onBlur={handleBlur}
             placeholder=""
             className="flex-1 h-full text-sm text-[#333] bg-transparent outline-none"
             required
+            maxLength={15}
           />
         </div>
 
