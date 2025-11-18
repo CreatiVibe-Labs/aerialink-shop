@@ -30,6 +30,8 @@ const RegisterForm = () => {
     formState: { errors, isSubmitting },
   } = useForm<RegisterFormValues>();
 
+  const router = useRouter();
+
   const { register: registerUser } = useProfile();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
@@ -41,24 +43,24 @@ const RegisterForm = () => {
     setSuccessMessage(null);
 
     try {
-      await registerUser(
+      const res = await registerUser(
         `${data.firstName} ${data.lastName}`.trim(),
         data.email,
         data.password,
         data.phone
       );
-      toast.success("Account created successfully!");
-      // setSuccessMessage("Account created successfully!");
+
+      toast.success("Account created successfully! Verification email has been sent.");
       reset();
+      router.push("/login");
     } catch (error: any) {
       // Handle Laravel validation errors (422) or other errors
-      console.log({error})
+      console.log("Registration API Error:", error);
       const message =
         error?.error?.email?.[0] || // Extract email-specific error
         error?.response?.data?.message || // Fallback to general message
         "Registration failed. Please try again.";
       toast.error(message);
-      // setErrorMessage(message);
     }
   };
 

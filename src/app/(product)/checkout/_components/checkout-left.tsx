@@ -19,6 +19,7 @@ import { useAddresses } from "@/hooks/use-addresses";
 import { useProfile } from "@/contexts/profile-context";
 import AddressSelector from "./address-selector";
 import OrderConfirmationModal from "./order-confirmation-modal";
+import AddAddressModal from "./add-address-modal";
 
 interface FormData {
   fullName: string;
@@ -36,6 +37,7 @@ const CheckoutLeft = () => {
   const [mobileFormData, setMobileFormData] = useState<FormData | null>(null);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [pendingOrderData, setPendingOrderData] = useState<FormData | null>(null);
+  const [showAddAddressModal, setShowAddAddressModal] = useState(false);
   const { getTotal, cartItems } = useCart();
   const subtotal = getTotal();
   const { postalCode, shippingRate } = useShippingState();
@@ -50,6 +52,7 @@ const CheckoutLeft = () => {
     loading: addressesLoading,
     addAddress,
     updateAddress,
+    removeAddress,
   } = useAddresses();
 
   // Check if user is logged in
@@ -319,7 +322,7 @@ const CheckoutLeft = () => {
         <h2 className="text-3xl font-medium text-min-gray mb-6">Shipping Details</h2>
 
         {/* Show saved addresses for logged-in users */}
-        {isLoggedIn && (
+        {isLoggedIn && hasAddresses && (
           <div className="mb-5">
             <AddressSelector
               addresses={addresses}
@@ -327,9 +330,32 @@ const CheckoutLeft = () => {
               onSelectAddress={setSelectedAddress}
               onAddAddress={addAddress}
               onUpdateAddress={updateAddress}
+              onRemoveAddress={removeAddress}
               loading={addressesLoading}
             />
           </div>
+        )}
+
+        {/* Show empty state if logged in but no addresses */}
+        {isLoggedIn && !hasAddresses && (
+          <>
+            <div className="mb-5 border-1 border-[#666664] rounded-xl p-6 bg-white">
+              <h3 className="text-[#98C1A9] font-bold text-2xl mb-4">Saved address</h3>
+              <button
+                type="button"
+                onClick={() => setShowAddAddressModal(true)}
+                className="w-full cursor-pointer border-1 border-[#98C1A9] rounded-xl py-10 bg-[#98C1A9]/10 text-[#98C1A9] transition-colors text-lg flex flex-col items-center justify-center gap-2"
+              >
+                <span className="text-2xl">+</span>
+                Add shipping address
+              </button>
+            </div>
+            <AddAddressModal
+              isOpen={showAddAddressModal}
+              onClose={() => setShowAddAddressModal(false)}
+              onSave={addAddress}
+            />
+          </>
         )}
 
         {/* Always show the form (autofilled for logged-in users) */}
@@ -488,7 +514,7 @@ const CheckoutLeft = () => {
         {mobileStep === 1 ? (
           <div className="space-y-4">
             {/* Show saved addresses for logged-in users */}
-            {isLoggedIn && (
+            {isLoggedIn && hasAddresses && (
               <div className="mb-4">
                 <AddressSelector
                   addresses={addresses}
@@ -496,9 +522,32 @@ const CheckoutLeft = () => {
                   onSelectAddress={setSelectedAddress}
                   onAddAddress={addAddress}
                   onUpdateAddress={updateAddress}
+                  onRemoveAddress={removeAddress}
                   loading={addressesLoading}
                 />
               </div>
+            )}
+
+            {/* Show empty state if logged in but no addresses */}
+            {isLoggedIn && !hasAddresses && (
+              <>
+                <div className="mb-4 border-2 border-[#666664] rounded-xl p-6 bg-white">
+                  <h3 className="text-[#98C1A9] font-bold text-2xl mb-4">Saved address</h3>
+                  <button
+                    type="button"
+                    onClick={() => setShowAddAddressModal(true)}
+                    className="w-full border-2 border-dashed border-[#C5D3CE] rounded-xl py-16 bg-[#FAFBFA] text-[#C5D3CE] hover:bg-gray-50 transition-colors text-sm flex items-center justify-center gap-2"
+                  >
+                    <span className="text-2xl">+</span>
+                    Add shipping address
+                  </button>
+                </div>
+                <AddAddressModal
+                  isOpen={showAddAddressModal}
+                  onClose={() => setShowAddAddressModal(false)}
+                  onSave={addAddress}
+                />
+              </>
             )}
 
             {/* Always show the form (autofilled for logged-in users) */}

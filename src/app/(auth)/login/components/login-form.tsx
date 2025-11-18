@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { useProfile } from "@/contexts/profile-context";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
-import toast, {Toaster} from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 interface LoginFormValues {
   email: string;
@@ -36,7 +36,9 @@ const LoginForm = () => {
       router.replace("/");
       reset();
     } catch (error: any) {
+      console.log("Login API Error:", error);
       const message =
+        error?.message ||
         error?.response?.data?.error?.email?.[0] ||
         error?.response?.data?.message ||
         "Invalid credentials. Please check your email or password.";
@@ -47,7 +49,18 @@ const LoginForm = () => {
 
   return (
     <div className="center-col items-start w-full">
-      <Toaster position="top-right" />
+      <Toaster position="top-right"
+        toastOptions={{
+          // Define default options
+          className: '',
+          duration: 5000,
+          removeDelay: 1000,
+          // Default options for specific types
+          success: {
+            duration: 5000,
+          },
+        }}
+      />
       {/* Header */}
       <div className="center-col items-start space-y-[16px]">
         <h1 className="font-albert-sans font-semibold lg:text-[40px] text-[28px] leading-[100%] tracking-[0] text-[#313131]">
@@ -68,7 +81,7 @@ const LoginForm = () => {
           <Input
             label="email"
             type="email"
-            placeholder="Example@gmail.com"
+            placeholder=""
             {...register("email", {
               required: "Email is required",
               pattern: {
@@ -87,7 +100,7 @@ const LoginForm = () => {
           <Input
             type="password"
             label="password"
-            placeholder="•••••••••••••••••••••••••"
+            placeholder=""
             {...register("password", {
               required: "Password is required",
               minLength: {

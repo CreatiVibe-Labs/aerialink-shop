@@ -5,7 +5,7 @@ import BackButton from "@/components/common/back-button";
 import Input from "@/components/common/input";
 import PrimaryButton from "@/components/common/primary-button";
 import { useProfile } from "@/contexts/profile-context";
-import toast, {Toaster} from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 interface ForgotPasswordValues {
   email: string;
@@ -66,7 +66,7 @@ const ForgotPasswordForm = () => {
           <Input
             type="email"
             label="email"
-            placeholder="example@gmail.com"
+            placeholder=""
             {...register("email", {
               required: "Email is required",
               pattern: {

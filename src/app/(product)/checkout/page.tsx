@@ -6,7 +6,7 @@ import BreadCrumbs from "@/components/common/bread-crumbs";
 
 const CheckOutPage = () => {
   return (
-    <div className="w-full py-10">
+    <div className="w-full py-5">
       {/* Breadcrumb */}
       <BreadCrumbs className="max-md:hidden" />
 

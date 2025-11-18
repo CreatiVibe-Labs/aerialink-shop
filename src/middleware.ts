@@ -4,7 +4,7 @@ import { NextRequest } from "next/server";
 export function middleware(req: NextRequest) {
   const token = req.cookies.get("token")?.value;
   const forgotToken = req.cookies.get("reset_email")?.value;
-  const otpToken = req.cookies.get("fp_email")?.value;
+  const otpToken = req.cookies.get("reset_otp")?.value;
 
   if (!forgotToken && req.nextUrl.pathname.startsWith('/verify-code')) {
     return NextResponse.redirect(new URL("/forgot-password", req.url));
