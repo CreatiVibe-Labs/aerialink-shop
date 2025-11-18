@@ -80,13 +80,16 @@ const PhoneInput: React.FC<PhoneInputProps> = ({ value, onChange, hideLabel = fa
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const isInitialized = useRef(false);
 
-  // Initialize from value prop
+  // Initialize from value prop (handles values with or without dial code)
   useEffect(() => {
     if (!isInitialized.current && value) {
       const matchedCountry = countries.find(c => value.startsWith(c.dialCode));
       if (matchedCountry) {
         setCountryCode(matchedCountry.dialCode);
         setPhoneNumber(value.replace(matchedCountry.dialCode, ""));
+      } else {
+        // If value doesn't have a dial code, keep default country and prefill digits
+        setPhoneNumber(value.replace(/\D/g, ""));
       }
       isInitialized.current = true;
     }

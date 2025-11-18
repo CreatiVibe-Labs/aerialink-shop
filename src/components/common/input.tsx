@@ -48,11 +48,11 @@ const Input: React.FC<InputProps> = ({
             onClick={() => setShowPassword((prev) => !prev)}
             className={`absolute inset-y-0 right-3 flex items-center ${
               showPassword
-                ? "text-black"
-                : "text-light-gray cursor-pointer hover:text-black"
+                ? "text-[#666664]"
+                : "text-[#666664] cursor-pointer hover:text-[#98C1A9]"
             }`}
           >
-            {showPassword ? <IoEyeOff size={22} /> : <IoEye size={22} />}
+            {showPassword ? <IoEyeOff size={20} /> : <IoEye size={20} />}
           </button>
         )}
       </div>
