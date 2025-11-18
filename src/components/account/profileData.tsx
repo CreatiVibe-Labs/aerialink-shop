@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, ChangeEvent, FormEvent, useEffect, useMemo } from "react";
 import Image from "next/image";
-import { Eye, EyeOff } from "lucide-react";
+import { IoEye, IoEyeOff } from "react-icons/io5";
 import { useProfile } from "@/contexts/profile-context";
 import toast, { Toaster } from "react-hot-toast";
 import PhoneInput from "@/components/account/Phone";
@@ -223,7 +223,7 @@ const Profile: React.FC = () => {
               onClick={() => setShowPassword(!showPassword)}
               className="absolute right-4 top-1/2 -translate-y-1/2 text-[#666664] hover:text-[#98C1A9]"
             >
-              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+              {showPassword ? <IoEyeOff size={20} /> : <IoEye size={20} />}
             </button>
           </div>
         </div>
@@ -244,7 +244,7 @@ const Profile: React.FC = () => {
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               className="absolute right-4 top-1/2 -translate-y-1/2 text-[#666664] hover:text-[#98C1A9]"
             >
-              {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+              {showConfirmPassword ? <IoEyeOff size={20} /> : <IoEye size={20} />}
             </button>
           </div>
         </div>
