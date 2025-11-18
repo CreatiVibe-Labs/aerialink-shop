@@ -84,18 +84,15 @@ export const WishlistProvider = ({ children }: { children: ReactNode }) => {
           prev.filter((item) => item.product.id !== productId)
         );
         setWishlistProductIds((prev) => prev.filter((id) => id !== productId));
-        toast.success("Removed from wishlist!");
       } else {
         // Add to wishlist
         await api.post("/wishlist", { product_id: productId });
         // Refetch to get updated data (or you can add manually if you have product data)
         await fetchWishlist();
-        toast.success("Added to wishlist!");
       }
       setError(null);
     } catch (err: any) {
       setError(err.message || "Failed to toggle wishlist");
-      toast.error("Failed to toggle wishlist");
     } finally {
       setLoading(false);
     }

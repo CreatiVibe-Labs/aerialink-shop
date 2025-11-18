@@ -78,7 +78,7 @@ const AccountPage: React.FC = () => {
         </div>
 
 
-<div className="w-full max-w-6xl mx-auto">
+        <div className="w-full max-w-6xl mx-auto">
           {" "}
           <ProfileCardsSection />
         </div>
@@ -118,7 +118,7 @@ const Box: React.FC<BoxProps> = ({
           : "bg-[#FFFDFA]  border-gray-200 shadow-lg"
         }`}
     >
-      <div className="flex items-center gap-2"> 
+      <div className="flex items-center gap-2">
         <div
           className={` py-2  rounded-full flex items-center justify-center transition-all duration-200
             ${isActive ? "bg-[#98C1A9]" : "bg-white "}`}

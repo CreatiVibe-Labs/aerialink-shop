@@ -136,7 +136,7 @@ const CartPage = () => {
             key={`${displayItem.id}-${displayItem.size}-${displayItem.room_type}`}
             id={displayItem.id}
             image={loading ? "/fallback-image.png" : (displayItem as EnrichedCartItem).images?.[0]?.url || "/fallback-image.png"}
-            name={loading ? "Loading..." : language === "EN" ? ((displayItem as EnrichedCartItem).title_en || "Product Name") : ((displayItem as EnrichedCartItem).title_jp || "Product Name")}
+            name={loading ? "Loading..." : language === "EN" ? ((displayItem as EnrichedCartItem).title_en || (displayItem as EnrichedCartItem).title_jp || "Product Name") : ((displayItem as EnrichedCartItem).title_jp || (displayItem as EnrichedCartItem).title_en || "Product Name")}
             price={displayItem.price}
             quantity={displayItem.quantity}
             size={displayItem.size}

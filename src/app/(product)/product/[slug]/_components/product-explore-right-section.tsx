@@ -398,7 +398,9 @@ const ProductExploreRightSection: React.FC<Props> = ({ variants, onSizeSelect })
     <div className="flex flex-col gap-2 max-md:mt-2 h-full">
       <Toaster position="top-right" />
       <h2 className="text-2xl font-semibold text-min-gray">
-        {language === "EN" ? product.title_en : product.title_jp}
+        {language === "EN" 
+          ? product.title_en || product.title_jp || "Product"
+          : product.title_jp || product.title_en || "Product"}
       </h2>
 
       <div className="flex items-center gap-2 flex-wrap">

@@ -128,8 +128,8 @@ export default function ShowroomProductSelection() {
 
   const productTitle =
     language == "EN"
-      ? activeProduct?.title_en
-      : activeProduct?.title_jp;
+      ? activeProduct?.title_en || activeProduct?.title_jp || "Product"
+      : activeProduct?.title_jp || activeProduct?.title_en || "Product";
 
   // Lock page scroll when product selection modal is open
   useEffect(() => {
@@ -176,9 +176,9 @@ export default function ShowroomProductSelection() {
                 width={500}
                 height={500}
                 alt={productTitle || "Product image"}
-                className="w-64 h-auto object-cover"
+                className="w-64 h-auto object-cover rounded-2xl"
               />
-              <p className="xl:text-lg text-md text-center text-[#686868] line-clamp-1">
+              <p className="xl:text-lg text-md text-center text-[#686868] line-clamp-1 mt-4 -mb-4">
                 {productTitle}
               </p>
             </>
@@ -365,18 +365,18 @@ export default function ShowroomProductSelection() {
                             src={product.images[0].url}
                             alt={
                               language == "EN"
-                                ? product.title_en
-                                : product.title_jp
+                                ? product.title_en || product.title_jp || "Product"
+                                : product.title_jp || product.title_en || "Product"
                             }
                             width={500}
                             height={500}
                             className="mx-auto w-50 object-cover rounded"
                           />
                         )}
-                        <p className="text-[#666664] text-sm line-clamp-1">
+                        <p className="text-[#666664] text-sm line-clamp-1 mt-4 -mb-3">
                           {language == "EN"
-                            ? product.title_en
-                            : product.title_jp}
+                            ? product.title_en || product.title_jp || "Product"
+                            : product.title_jp || product.title_en || "Product"}
                         </p>
                       </div>
                     ))}

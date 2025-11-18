@@ -42,8 +42,8 @@ const ProductItemsSection = () => {
                   ...cartItem,
                   productData: product?.product,
                   images: product?.product?.images || [],
-                  title_en: product?.product?.title_en || 'Product Name',
-                  title_jp: product?.product?.title_jp || 'Product Name'
+                  title_en: product?.product?.title_en,
+                  title_jp: product?.product?.title_jp || product?.product?.title_en || 'Product Name'
                 };
               }
               return cartItem;
@@ -101,8 +101,8 @@ const ProductItemsSection = () => {
             const productTitle = loading 
               ? "Loading..."
               : language === "EN"
-                ? enrichedItem.title_en || "Product Name"
-                : enrichedItem.title_jp || "Product Name";
+                ? enrichedItem.title_en || enrichedItem.title_jp || "Product Name"
+                : enrichedItem.title_jp || enrichedItem.title_en || "Product Name";
                 
             const productImage = loading 
               ? "/fallback-image.png"

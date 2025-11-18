@@ -2,15 +2,14 @@ import Image from "next/image";
 
 const Gallery = () => {
   const images = [
-    "/assets/about/gallaryimage1.png",
-    "/assets/about/gallaryimage2.png",
-    "/assets/about/gallaryimage3.png",
-    "/assets/about/gallaryimage4.png",
+    "/assets/about/gallaryimage1.jpg",
+    "/assets/about/gallaryimage2.jpg",
+    "/assets/about/gallaryimage3.jpg",
+    "/assets/about/gallaryimage4.jpg",
     "/assets/about/gallaryimage5.png",
-    "/assets/about/gallaryimage6.png",
-    "/assets/about/gallaryimage7.png",
+    "/assets/about/gallaryimage6.jpg",
+    "/assets/about/gallaryimage7.jpg",
     "/assets/about/gallaryimage8.png",
-    "/assets/about/gallaryimage9.png",
   ];
 
   return (
@@ -26,7 +25,7 @@ const Gallery = () => {
       </div>
 
       {/* Masonry layout using Tailwind columns */}
-      <div className="flex flex-wrap justify-center gap-5">
+      <div className="flex flex-wrap justify-start gap-5">
         {images.map((src, i) => (
           <div
             key={i}

@@ -45,12 +45,30 @@ const ProductDetailTab3 = () => {
   // No product
   if (!product) return <p className="text-gray-500">No product data.</p>;
 
-  // Parse colors, sizes, weight from specifications
-  const color = language === 'EN' ? product.color.name_en : product.color.name_jp || "N/A";
-  const NetWeight = language === 'EN' ? parse(product.net_weight_en) : parse(product.net_weight_jp) || "N/A";
-  const packing = language === 'EN' ? parse(product.packing_en) : parse(product.packing_jp) || "N/A";
-  const packingRemarks = language === 'EN' ? parse(product.packing_remarks_en) : parse(product.packing_remarks_jp) || "N/A";
-  const Harmfull = language === 'EN' ? parse(product.harmful_content_en) : parse(product.harmful_content_jp) || "N/A";
+  // Parse colors, sizes, weight from specifications with fallback
+  const color = language === 'EN' 
+    ? product.color.name_en || product.color.name_jp || "N/A"
+    : product.color.name_jp || product.color.name_en || "N/A";
+  
+  const netWeightContent = language === 'EN'
+    ? product.net_weight_en || product.net_weight_jp
+    : product.net_weight_jp || product.net_weight_en;
+  const NetWeight = netWeightContent ? parse(netWeightContent) : "N/A";
+  
+  const packingContent = language === 'EN'
+    ? product.packing_en || product.packing_jp
+    : product.packing_jp || product.packing_en;
+  const packing = packingContent ? parse(packingContent) : "N/A";
+  
+  const packingRemarksContent = language === 'EN'
+    ? product.packing_remarks_en || product.packing_remarks_jp
+    : product.packing_remarks_jp || product.packing_remarks_en;
+  const packingRemarks = packingRemarksContent ? parse(packingRemarksContent) : "N/A";
+  
+  const harmfulContent = language === 'EN'
+    ? product.harmful_content_en || product.harmful_content_jp
+    : product.harmful_content_jp || product.harmful_content_en;
+  const Harmfull = harmfulContent ? parse(harmfulContent) : "N/A";
 
   return (
     <div className="rounded-2xl border border-[#666664] overflow-hidden max-w-[66%]">

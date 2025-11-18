@@ -19,26 +19,23 @@ interface FormData {
 }
 
 const socialLinks = [
-    {
-      href: "#",
-      icon: <FaTwitter className="text-primary group-hover:text-white" />,
-    },
-    {
-      href: "#",
-      icon: <FaFacebook className="text-primary group-hover:text-white" />,
-    },
-    {
-      href: "#",
-      icon: <FaInstagram className="text-primary group-hover:text-white" />,
-    },
-    {
-      href: "#",
-      icon: <FaGithub className="text-primary group-hover:text-white" />,
-    },
-  ];
-
-
-
+  {
+    href: "#",
+    icon: <FaTwitter className="text-primary group-hover:text-white" />,
+  },
+  {
+    href: "#",
+    icon: <FaFacebook className="text-primary group-hover:text-white" />,
+  },
+  {
+    href: "#",
+    icon: <FaInstagram className="text-primary group-hover:text-white" />,
+  },
+  {
+    href: "#",
+    icon: <FaGithub className="text-primary group-hover:text-white" />,
+  },
+];
 
 
 const cardData = [
@@ -187,7 +184,7 @@ export default function AboutPage() {
         <div className="mt-5 lg:mt-0 flex flex-col md:flex-row items-center md:items-start gap-[16px] lg:gap-[56px]">
           <div className="flex-1 order-1 md:order-1 w-full">
             <img
-              src="/assets/about/product.png"
+              src="/assets/about/product.jpg"
               alt="Product 2"
               className="rounded-2xl border-0 md:w-[603px] md:h-[432px]"
             />
@@ -245,15 +242,15 @@ export default function AboutPage() {
           </div>
 
           <div className="flex items-center  text-gray-600 gap-3">
-            
-              {socialLinks.map((item, i) => (
-                <Link key={i} href={item.href}>
-                  <div className="hover:bg-primary border border-primary group cursor-pointer rounded-full size-8 center">
-                    {item.icon}
-                  </div>
-                </Link>
-              ))}
-            
+
+            {socialLinks.map((item, i) => (
+              <Link key={i} href={item.href}>
+                <div className="hover:bg-primary border border-primary group cursor-pointer rounded-full size-8 center">
+                  {item.icon}
+                </div>
+              </Link>
+            ))}
+
           </div>
 
           <button

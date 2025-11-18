@@ -283,7 +283,7 @@ const CartTable: React.FC<CartTableProps> = ({
                   <div className="relative w-16 h-16 p-0.5 border-2 border-primary rounded-xl">
                     <img
                       src={hasEnrichedData ? enrichedItem.images?.[0]?.url || "/fallback-image.png" : "/fallback-image.png"}
-                      alt={hasEnrichedData ? (language === "EN" ? enrichedItem.title_en : enrichedItem.title_jp) : "Product"}
+                      alt={hasEnrichedData ? (language === "EN" ? enrichedItem.title_en || enrichedItem.title_jp || "Product" : enrichedItem.title_jp || enrichedItem.title_en || "Product") : "Product"}
                       className="rounded-md w-full h-full object-cover"
                     />
                     <button
@@ -295,7 +295,7 @@ const CartTable: React.FC<CartTableProps> = ({
                   </div>
                   <span className="text-sm font-medium">
                     {loading ? "Loading..." : hasEnrichedData
-                      ? (language === "EN" ? enrichedItem.title_en || "Product Name" : enrichedItem.title_jp || "Product Name")
+                      ? (language === "EN" ? enrichedItem.title_en || enrichedItem.title_jp || "Product Name" : enrichedItem.title_jp || enrichedItem.title_en || "Product Name")
                       : "Product Name"}
                   </span>
                 </td>
