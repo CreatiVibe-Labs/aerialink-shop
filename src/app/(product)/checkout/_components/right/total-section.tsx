@@ -24,7 +24,7 @@ const TotalSection = () => {
   } else if (shippingRate === 0) {
     shippingDisplay = 'Free';
   } else {
-    shippingDisplay = `¥${shippingRate.toFixed(2)}`;
+    shippingDisplay = `¥${Number(shippingRate).toLocaleString()}`;
   }
 
   // Consumer tax display
@@ -50,7 +50,7 @@ const TotalSection = () => {
     <div className="w-full mt-5 max-md:border max-md:border-min-gray max-md:px-4 max-md:py-5 max-md:rounded-xl max-md:mt-3">
       <div className="flex justify-between text-sm text-min-gray mb-4 max-md:mb-3 font-medium">
         <span>Subtotal:</span>
-        <span>¥{subtotal.toFixed(2)}</span>
+        <span>¥{Number(subtotal).toLocaleString()}</span>
       </div>
 
       <div className="flex justify-between text-sm border-t font-medium border-min-gray pt-4 max-md:pt-3 text-min-gray mb-2">
@@ -66,7 +66,7 @@ const TotalSection = () => {
 
       <div className="flex justify-between text-sm font-semibold text-min-gray mt-3 border-t border-min-gray pt-2">
         <span>Total:</span>
-        <span>¥{total.toFixed(2)}</span>
+        <span>¥{Number(total).toLocaleString()}</span>
       </div>
 
       {/* Mobile Place Order Button */}

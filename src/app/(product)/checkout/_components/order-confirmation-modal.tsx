@@ -213,7 +213,7 @@ const OrderConfirmationModal: React.FC<OrderConfirmationModalProps> = ({
                       {/* Price */}
                       <div className="text-right flex-shrink-0">
                         <p className="font-semibold text-[#666664] text-xs lg:text-base">
-                          ¥{parseFloat(item.price).toFixed(2)}
+                          ¥{Number(item.price).toLocaleString()}
                         </p>
                       </div>
                     </div>
@@ -231,19 +231,19 @@ const OrderConfirmationModal: React.FC<OrderConfirmationModalProps> = ({
             <div className="space-y-1.5 lg:space-y-2 text-[12px] lg:text-[17px] text-[#666664]">
               <div className="flex justify-between">
                 <span>Subtotal:</span>
-                <span>¥{subtotal.toFixed(2)}</span>
+                <span>¥{Number(subtotal).toLocaleString()}</span>
               </div>
               <div className="flex justify-between">
                 <span>Shipping:</span>
-                <span>¥{shippingRate.toFixed(2)}</span>
+                <span>¥{Number(shippingRate).toLocaleString()}</span>
               </div>
               <div className="flex justify-between">
                 <span>Tax ({consumerTax}%):</span>
-                <span>¥{taxAmount.toFixed(2)}</span>
+                <span>¥{Number(taxAmount).toLocaleString()}</span>
               </div>
               <div className="flex justify-between font-semibold text-[14px] lg:text-[20px] pt-1.5 lg:pt-2 border-t-2 border-gray-400 mt-1.5 lg:mt-2">
                 <span>Total:</span>
-                <span>¥{total.toFixed(2)}</span>
+                <span>¥{Number(total).toLocaleString()}</span>
               </div>
             </div>
           </div>

@@ -301,7 +301,7 @@ const CartTable: React.FC<CartTableProps> = ({
                 </td>
 
                 {/* Price Column */}
-                <td className="py-3 text-sm">${item.price}</td>
+                <td className="py-3 text-sm">¥{Number(item.price).toLocaleString()}</td>
 
                 {/* Quantity Column */}
                 <td className="py-3 text-sm">
@@ -390,7 +390,7 @@ const CartTable: React.FC<CartTableProps> = ({
 
                 {/* Subtotal */}
                 <td className="py-3 text-sm">
-                  ${Number(item.price) * item.quantity}
+                  ¥{(Number(item.price) * item.quantity).toLocaleString()}
                 </td>
               </tr>
             )
