@@ -58,16 +58,22 @@ const Footer = () => {
           </div>
 
           {/* Links */}
-          <div className="flex flex-col gap-4 items-center  md:items-start ">
+          <div className="flex flex-col gap-2 items-center  md:items-start ">
             <a href="#" className="text-gray-700 hover:text-primary">
               Terms of service
             </a>
             <a href="#" className="text-gray-700 hover:text-primary">
               Privacy policy
             </a>
-            <a href="#" className="text-gray-700 hover:text-primary">
-              FAQs
-            </a>
+            <Link href="/policy" className="text-gray-700 hover:text-primary">
+              Shipping & Returns Policy
+            </Link>
+            <Link href="/installation-guide" className="text-gray-700 hover:text-primary">
+              Installation Guide
+            </Link>
+            <Link href="/free-samples" className="text-gray-700 hover:text-primary">
+              Free Samples
+            </Link>
           </div>
 
           {/* Socials + Payments */}

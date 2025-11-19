@@ -40,7 +40,7 @@ export default function RootLayout({
           <Navbar />
           {/* <SecondaryNavbar /> */}
           <ConditionalSecondaryNav />
-          <div className="app max-w-7xl w-full mx-auto xl:px-0 lg:px-4 md:px-4 px-4">
+          <div className="app max-w-7xl w-full mx-auto xl:px-4 lg:px-4 md:px-4 px-4">
             {children}
           </div>
           {/* <ToastContainer /> */}
