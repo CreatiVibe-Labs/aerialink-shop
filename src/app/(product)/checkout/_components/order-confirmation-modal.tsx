@@ -9,6 +9,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { CartItem } from "@/contexts/cart-context";
+import { useLanguage } from "@/contexts/language-context";
 import api from "@/lib/api";
 
 interface EnrichedCartItem extends CartItem {
@@ -47,6 +48,7 @@ const OrderConfirmationModal: React.FC<OrderConfirmationModalProps> = ({
   consumerTax,
   total,
 }) => {
+  const { language } = useLanguage();
   const [enrichedCartItems, setEnrichedCartItems] = useState<EnrichedCartItem[]>([]);
   const [loading, setLoading] = useState(false);
   const taxAmount = (subtotal + shippingRate) * (consumerTax / 100);
@@ -73,8 +75,8 @@ const OrderConfirmationModal: React.FC<OrderConfirmationModalProps> = ({
                   ...cartItem,
                   productData: product?.product,
                   images: product?.product?.images || [],
-                  title_en: product?.product?.title_en || 'Product Name',
-                  title_jp: product?.product?.title_jp || 'Product Name'
+                  title_en: product?.product?.title_en,
+                  title_jp: product?.product?.title_jp || product?.product?.title_en
                 };
               }
               return { ...cartItem, title_en: 'Product Name', images: [] };
@@ -153,7 +155,7 @@ const OrderConfirmationModal: React.FC<OrderConfirmationModalProps> = ({
               </div>
               <div className="flex gap-2 flex-wrap">
                 <span className="font-medium min-w-[80px] lg:min-w-[120px]">Phone:</span>
-                <span className="break-words flex-1">+{shippingDetails.phone}</span>
+                <span className="break-words flex-1">{shippingDetails.phone}</span>
               </div>
               <div className="flex gap-2 flex-wrap">
                 <span className="font-medium min-w-[80px] lg:min-w-[120px]">Address:</span>
@@ -191,7 +193,7 @@ const OrderConfirmationModal: React.FC<OrderConfirmationModalProps> = ({
                       <div className="relative w-[50px] h-[50px] lg:w-[80px] lg:h-[80px] flex-shrink-0 rounded-lg overflow-hidden bg-white">
                         <Image
                           src={productImage}
-                          alt={item.title_en || 'Product'}
+                          alt={(language === "EN" ? item.title_en || item.title_jp : item.title_jp || item.title_en) || 'Product'}
                           fill
                           className="object-cover"
                         />
@@ -200,7 +202,7 @@ const OrderConfirmationModal: React.FC<OrderConfirmationModalProps> = ({
                       {/* Product Details */}
                       <div className="flex-1 min-w-0">
                         <p className="font-semibold text-[#666664] text-xs lg:text-base line-clamp-2">
-                          {item.title_en || `Product #${item.id}`}
+                          {(language === "EN" ? item.title_en || item.title_jp : item.title_jp || item.title_en) || `Product #${item.id}`}
                         </p>
                         <p className="text-[10px] lg:text-sm text-gray-500 mt-0.5 lg:mt-1">
                           Size: {item.size} | Room: {item.room_type}
@@ -213,7 +215,7 @@ const OrderConfirmationModal: React.FC<OrderConfirmationModalProps> = ({
                       {/* Price */}
                       <div className="text-right flex-shrink-0">
                         <p className="font-semibold text-[#666664] text-xs lg:text-base">
-                          ¥{parseFloat(item.price).toFixed(2)}
+                          ¥{Number(item.price).toLocaleString()}
                         </p>
                       </div>
                     </div>
@@ -231,19 +233,19 @@ const OrderConfirmationModal: React.FC<OrderConfirmationModalProps> = ({
             <div className="space-y-1.5 lg:space-y-2 text-[12px] lg:text-[17px] text-[#666664]">
               <div className="flex justify-between">
                 <span>Subtotal:</span>
-                <span>¥{subtotal.toFixed(2)}</span>
+                <span>¥{Number(subtotal).toLocaleString()}</span>
               </div>
               <div className="flex justify-between">
                 <span>Shipping:</span>
-                <span>¥{shippingRate.toFixed(2)}</span>
+                <span>¥{Number(shippingRate).toLocaleString()}</span>
               </div>
               <div className="flex justify-between">
                 <span>Tax ({consumerTax}%):</span>
-                <span>¥{taxAmount.toFixed(2)}</span>
+                <span>¥{Number(taxAmount).toLocaleString()}</span>
               </div>
               <div className="flex justify-between font-semibold text-[14px] lg:text-[20px] pt-1.5 lg:pt-2 border-t-2 border-gray-400 mt-1.5 lg:mt-2">
                 <span>Total:</span>
-                <span>¥{total.toFixed(2)}</span>
+                <span>¥{Number(total).toLocaleString()}</span>
               </div>
             </div>
           </div>

@@ -5,6 +5,7 @@ import { IoEye, IoEyeOff } from "react-icons/io5";
 import { useProfile } from "@/contexts/profile-context";
 import toast, { Toaster } from "react-hot-toast";
 import PhoneInput from "@/components/account/Phone";
+import { useRouter } from "next/dist/client/components/navigation";
 
 interface FormData {
   fullname: string;
@@ -15,11 +16,10 @@ interface FormData {
 }
 
 
-
-
-
 const Profile: React.FC = () => {
   const { user, updateProfile, sessions, logoutAllDevices } = useProfile();
+
+  const router = useRouter();
 
   const [formData, setFormData] = useState<FormData>({
     fullname: "",
@@ -100,6 +100,7 @@ const Profile: React.FC = () => {
       setIsLoggingOutDevices(true);
       await logoutAllDevices();
       toast.success("Logged out from other devices");
+      router.push("/login");
     } catch (err: any) {
       const msg = err?.message || err?.data?.message || "Failed to logout devices";
       toast.error(msg);
@@ -191,8 +192,8 @@ const Profile: React.FC = () => {
         {/* Phone Number */}
         <div className="flex flex-col gap-2">
           {/* Phone Number */}
-            <PhoneInput value={formData.phone} onChange={handleChange}
-            />
+          <PhoneInput value={formData.phone} onChange={handleChange}
+          />
         </div>
         {/* Email Address */}
         <div className="flex flex-col gap-2">

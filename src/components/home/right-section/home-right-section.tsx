@@ -9,6 +9,7 @@ import GridSection from "../grid-section/grid-section";
 import { useCategory } from "@/contexts/category-context";
 import { useState } from "react";
 import ProductsSkeletonSections from "./components/products-skeleton-sections";
+import Image from "next/image";
 
 const HomeRightSection = () => {
   const { state, loadMore } = useCategory();
@@ -30,7 +31,9 @@ const HomeRightSection = () => {
 
   return (
     <div className="flex flex-col gap-10">
-      <TopBanner />
+      <div className='w-full h-[265px] relative'>
+        <Image src={'/assets/home/top-banner.png'} alt='top banner' fill className='!relative w-full h-full object-cover rounded-2xl ' />
+      </div>
 
       {/* All Products */}
       <div className="grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4 gap-4 max-sm:gap-3">

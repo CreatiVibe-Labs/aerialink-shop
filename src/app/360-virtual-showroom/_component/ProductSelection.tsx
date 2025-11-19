@@ -21,6 +21,7 @@ export default function ShowroomProductSelection() {
   ]);
   const [openPopup, setOpenPopup] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(0);
+  const [corsFloorImage, setCorsFloorImage] = useState<string>("");
 
   // Check for productId in URL query parameters and set it as selected
   useEffect(() => {
@@ -44,6 +45,49 @@ export default function ShowroomProductSelection() {
   const activeProduct = products.find(
     (p) => p.id === selectedProduct
   );
+
+  useEffect(() => {
+    const fetchCorsFloorImage = async () => {
+      if (!activeProduct?.floor_image) {
+        setCorsFloorImage("");
+        return;
+      }
+
+      try {
+
+        const storagePath = activeProduct.floor_image.replace(
+          "https://dashboard.aerialinkshop.jp/storage/",
+          ""
+        );
+
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/cors-storage/${storagePath}`,
+          {
+            method: "GET",
+          }
+        );
+
+        if (!response.ok) {
+          console.error("Failed to fetch CORS image:", response.status);
+          setCorsFloorImage(activeProduct.floor_image); // Fallback to original
+          return;
+        }
+
+        // Convert response to blob and create object URL
+        const blob = await response.blob();
+        const blobUrl = URL.createObjectURL(blob);
+        
+        console.log("CORS floor image loaded:", blobUrl);
+        setCorsFloorImage(blobUrl);
+
+      } catch (error) {
+        console.error("Error fetching CORS floor image:", error);
+        setCorsFloorImage(activeProduct.floor_image); // Fallback to original
+      }
+    };
+
+    fetchCorsFloorImage();
+  }, [selectedProduct, activeProduct?.floor_image]);
 
   const fileToBase64 = (file: File): Promise<string | ArrayBuffer | null> => {
     return new Promise((resolve, reject) => {
@@ -84,8 +128,8 @@ export default function ShowroomProductSelection() {
 
   const productTitle =
     language == "EN"
-      ? activeProduct?.title_en
-      : activeProduct?.title_jp;
+      ? activeProduct?.title_en || activeProduct?.title_jp || "Product"
+      : activeProduct?.title_jp || activeProduct?.title_en || "Product";
 
   // Lock page scroll when product selection modal is open
   useEffect(() => {
@@ -132,9 +176,9 @@ export default function ShowroomProductSelection() {
                 width={500}
                 height={500}
                 alt={productTitle || "Product image"}
-                className="w-64 h-auto object-cover"
+                className="w-64 h-auto object-cover rounded-2xl"
               />
-              <p className="xl:text-lg text-md text-center text-[#686868] line-clamp-1">
+              <p className="xl:text-lg text-md text-center text-[#686868] line-clamp-1 mt-4 -mb-4">
                 {productTitle}
               </p>
             </>
@@ -241,12 +285,10 @@ export default function ShowroomProductSelection() {
             <div className="flex flex-col items-center gap-2">
               {
                 // Debug info or additional UI elements can be added here
-                activeProduct?.floor_image && (
+                corsFloorImage && (
                   <Suspense>
                     <VirtualShowroom360
-                      floorImage={
-                        activeProduct?.floor_image || "/assets/floors/floor1.jpg"
-                      }
+                      floorImage={corsFloorImage}
                       height={"350px"}
                       wallImages={
                         selectedImages.map((image) =>
@@ -323,18 +365,18 @@ export default function ShowroomProductSelection() {
                             src={product.images[0].url}
                             alt={
                               language == "EN"
-                                ? product.title_en
-                                : product.title_jp
+                                ? product.title_en || product.title_jp || "Product"
+                                : product.title_jp || product.title_en || "Product"
                             }
                             width={500}
                             height={500}
                             className="mx-auto w-50 object-cover rounded"
                           />
                         )}
-                        <p className="text-[#666664] text-sm line-clamp-1">
+                        <p className="text-[#666664] text-sm line-clamp-1 mt-4 -mb-3">
                           {language == "EN"
-                            ? product.title_en
-                            : product.title_jp}
+                            ? product.title_en || product.title_jp || "Product"
+                            : product.title_jp || product.title_en || "Product"}
                         </p>
                       </div>
                     ))}

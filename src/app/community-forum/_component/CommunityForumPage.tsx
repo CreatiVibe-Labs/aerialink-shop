@@ -125,8 +125,8 @@ export default function CommunityForumComponent() {
                     height={500}
                     alt={
                       language === "EN"
-                        ? activeProduct?.title_en ?? ""
-                        : activeProduct?.title_jp ?? ""
+                        ? activeProduct?.title_en || activeProduct?.title_jp || "Product"
+                        : activeProduct?.title_jp || activeProduct?.title_en || "Product"
                     }
                     className="w-28 h-28 object-cover rounded-xl bg-[#FFFDFA] shadow-[0px_1px_2px_0px_rgba(60,64,67,0.3),0px_2px_6px_2px_rgba(60,64,67,0.15)]"
                   />
@@ -135,8 +135,8 @@ export default function CommunityForumComponent() {
               <div className="productMeta flex flex-col gap-2">
                 <span className="productTitle font-medium text-[#666664] text-lg line-clamp-1 xl:pr-5">
                   {language === "EN"
-                    ? activeProduct?.title_en
-                    : activeProduct?.title_jp}
+                    ? activeProduct?.title_en || activeProduct?.title_jp || "Product"
+                    : activeProduct?.title_jp || activeProduct?.title_en || "Product"}
                 </span>
                 <span className="productRating">
                   <div className="flex items-center">
@@ -159,8 +159,8 @@ export default function CommunityForumComponent() {
               <span className="font-medium text-sm text-[#666664]">Description</span>
               <span className="font-medium text-sm text-[#666664] line-clamp-2">
                 {language === "EN"
-                  ? parse(activeProduct?.detailed_description_en)
-                  : parse(activeProduct?.detailed_description_jp)}
+                  ? parse(activeProduct?.detailed_description_en || activeProduct?.detailed_description_jp || "No description available")
+                  : parse(activeProduct?.detailed_description_jp || activeProduct?.detailed_description_en || "No description available")}
               </span>
               <Link
                 href={`/product/${activeProduct.slug}`}

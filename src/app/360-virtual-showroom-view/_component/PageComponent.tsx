@@ -10,6 +10,7 @@ export default function PageComponent() {
   const [data, setData] = useState(false);
   const [productImage, setProductImage] = useState("");
   const [wallImages, setWallImages] = useState("");
+  const [corsFloorImage, setCorsFloorImage] = useState<string>("");
 
   useEffect(() => {
     const productInfoString = sessionStorage.getItem("productInfo");
@@ -28,6 +29,49 @@ export default function PageComponent() {
       console.warn('SessionStorage "productInfo" not found.');
     }
   }, []); // run once on client
+
+  // Fetch CORS-enabled floor image
+  useEffect(() => {
+    const fetchCorsFloorImage = async () => {
+      if (!productImage) {
+        setCorsFloorImage("");
+        return;
+      }
+
+      try {
+        const storagePath = productImage.replace(
+          "https://dashboard.aerialinkshop.jp/storage/",
+          ""
+        );
+
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/cors-storage/${storagePath}`,
+          {
+            method: "GET",
+          }
+        );
+
+        if (!response.ok) {
+          console.error("Failed to fetch CORS image:", response.status);
+          setCorsFloorImage(productImage); // Fallback to original
+          return;
+        }
+
+        // Convert response to blob and create object URL
+        const blob = await response.blob();
+        const blobUrl = URL.createObjectURL(blob);
+        
+        console.log("CORS floor image loaded:", blobUrl);
+        setCorsFloorImage(blobUrl);
+
+      } catch (error) {
+        console.error("Error fetching CORS floor image:", error);
+        setCorsFloorImage(productImage); // Fallback to original
+      }
+    };
+
+    fetchCorsFloorImage();
+  }, [productImage]);
 
   const handleClickBack = () => {
     sessionStorage.removeItem("productInfo");
@@ -75,10 +119,10 @@ export default function PageComponent() {
         </div>
       </div>
       <div className="">
-        {data == true && productImage != "" && wallImages != "" && (
+        {data == true && corsFloorImage != "" && wallImages != "" && (
           <div>
             <VirtualShowroom360
-              floorImage={productImage}
+              floorImage={corsFloorImage}
               height={"80vh"}
               wallImages={wallImages}
             />

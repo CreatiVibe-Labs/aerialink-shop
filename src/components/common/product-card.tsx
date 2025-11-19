@@ -1,6 +1,7 @@
 "use client";
 import { useLanguage } from "@/contexts/language-context";
 import { Product } from "@/contexts/types-and-interfaces/product";
+import { getProductTitle } from "@/lib/language-helpers";
 import Image from "next/image";
 import Link from "next/link";
 import { FC, useMemo, useState } from "react";
@@ -159,7 +160,7 @@ const ProductCard: FC<ProductCardI> = ({ product, onHeartOnClick }) => {
           <div className="w-full h-full xl:min-h-[200px] lg:min-h-[200px] md:min-h-[200px] min-h-[150px] xl:max-h-[200px] lg:max-h-[200px] md:max-h-[200px] max-h-[150px] relative">
             <Image
               src={product?.images?.[0]?.url || "/fallback-image.png"}
-              alt={language === 'EN' ? String(product.title_en || product.slug || 'Product') : String(product.title_jp || product.slug || 'Product')}
+              alt={getProductTitle(product.title_en, product.title_jp, language)}
               fill
               className="object-cover w-56 h-56 rounded-md"
             />
@@ -170,7 +171,7 @@ const ProductCard: FC<ProductCardI> = ({ product, onHeartOnClick }) => {
         <div className="center-col items-start max-sm:text-xs gap-[6.23px]">
           <Link href={productInnerLink}>
             <h2 className="text-[#666664] font-[500] text-base leading-[19px] my-1 font-font-albert-sans line-clamp-1">
-              {language === 'EN' ? product.title_en : product.title_jp}
+              {getProductTitle(product.title_en, product.title_jp, language)}
             </h2>
           </Link>
 

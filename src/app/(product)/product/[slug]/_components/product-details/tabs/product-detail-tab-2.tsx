@@ -27,8 +27,10 @@ const ProductDetailTab2 = () => {
 
   const productFinal = {
     productDetails:
-      language === "EN" ? product?.title_en : product?.title_jp,
-    productDescription: language === "EN" ? product?.detailed_description_en : product?.detailed_description_jp,
+      language === "EN" ? (product?.title_en || product?.title_jp) : (product?.title_jp || product?.title_en),
+    productDescription: language === "EN" 
+      ? (product?.detailed_description_en || product?.detailed_description_jp)
+      : (product?.detailed_description_jp || product?.detailed_description_en),
   };
 
   if (!product) return <p className="text-gray-500">No product data.</p>;
