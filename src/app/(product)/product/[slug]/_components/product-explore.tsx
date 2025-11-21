@@ -23,7 +23,7 @@ export default function ProductExplore() {
     return <p className="text-red-500">Error: {productError}</p>;
 
   return (
-    <div className="grid grid-cols-3 gap-8 max-md:gap-3 max-w-7xl mx-auto items-start max-lg:grid-cols-2 max-md:grid-cols-1">
+    <div className="grid grid-cols-3 gap-8 max-md:gap-3 max-w-7xl  items-start max-lg:grid-cols-2 max-md:grid-cols-1">
       <ProductExploreLeftSection />
       <ProductExploreRightSection />
     </div>

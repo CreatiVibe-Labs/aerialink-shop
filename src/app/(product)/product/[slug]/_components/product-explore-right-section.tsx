@@ -517,12 +517,12 @@ const ProductExploreRightSection: React.FC<Props> = ({ variants, onSizeSelect })
 
       <button
         onClick={handleVisitShowroom}
-        className="mt-2 p-3 text-white text-center bg-[#CCCCFF] rounded-md w-full hover:bg-[#b8b8ff] transition-colors cursor-pointer"
+        className="mt-2 p-3  text-white text-center bg-[#CCCCFF] rounded-md w-full hover:bg-[#b8b8ff] transition-colors cursor-pointer"
       >
-        Visit the 360° virtual showroom to see how it fits your room. It's fun!
+        Visit the 360° virtual showroom to see how it fits your room. It s fun!
       </button>
 
-      <div className="border border-light-gray rounded-xl mt-2 space-y-3 text-sm text-min-gray">
+      <div className="w-full border border-light-gray rounded-xl mt-2 space-y-3 text-sm text-min-gray">
         <div className="flex items-center gap-3 my-3 border-b p-3 pb-4">
           <TbTruckDelivery className="size-7" strokeWidth={1} />
           <p className="flex flex-col">

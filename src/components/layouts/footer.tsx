@@ -49,8 +49,8 @@ const Footer = () => {
         {/* Top Section */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 items-start text-center md:text-left"> 
           {/* Logo + Description */}
-          <div>
-            <Image src={'/assets/common/ecommerce-logo.png'} width={100} height={100} alt="Aerialink" className="xl:w-18 xl:h-18 xl:mr-auto lg:w-12 lg:h-12 lg:mr-auto md:w-10 md:h-10 h-12 w-12 md:mr-auto object-contain text-center items-start  sm:items-center " />
+          <div className="flex flex-col items-center md:items-start">
+            <Image src={'/assets/common/ecommerce-logo.png'} width={100} height={100} alt="Aerialink" className="xl:w-18 xl:h-18 lg:w-12 lg:h-12 md:w-10 md:h-10 h-12 w-12 object-contain md:mr-auto" />
             <p className="mt-2 text-base text-[#AFB1AE] max-w-[70%] hidden sm:block ">
               We have clothes that suits your style and which you’re proud to
               wear. From women to men.

@@ -71,20 +71,20 @@ const ProductDetailTab3 = () => {
   const Harmfull = harmfulContent ? parse(harmfulContent) : "N/A";
 
   return (
-    <div className="rounded-2xl border border-[#666664] overflow-hidden max-w-[66%]">
+    <div className="rounded-2xl border border-[#666664] overflow-hidden w-full md:max-w-[66%]">
       {/* Colors Row */}
-      <div className="grid grid-cols-[200px_1fr] border-b border-[#666664]">
+      <div className="grid md:grid-cols-[200px_1fr] grid-cols-[150px_1fr] border-b border-[#666664]">
         <div className="px-4 py-3 bg-white font-medium text-gray-700 border-r border-[#666664]">Color</div>
         <div className="px-4 py-3 bg-white text-gray-600">{color}</div>
       </div>
 
       {/* Sizes Row */}
-      <div className="grid grid-cols-[200px_1fr] border-b border-[#666664]">
+      <div className="grid md:grid-cols-[200px_1fr] grid-cols-[150px_1fr] border-b border-[#666664]">
         <div className="px-4 py-3 bg-white font-medium text-gray-700 border-r border-[#666664]">New Weight</div>
         <div className="px-4 py-3 bg-white text-gray-600">{NetWeight}</div>
       </div>
 
-      <div className="grid grid-cols-[200px_1fr] border-b border-[#666664]">
+      <div className="grid md:grid-cols-[200px_1fr] grid-cols-[150px_1fr] border-b border-[#666664]">
         <div className="px-4 py-3 bg-white font-medium text-gray-700 border-r border-[#666664]">Packing</div>
         <div className="px-4 py-3 bg-white text-gray-600">
           <div>{packing}</div>
@@ -94,7 +94,7 @@ const ProductDetailTab3 = () => {
 
 
       {/* Weight Row */}
-      <div className="grid grid-cols-[200px_1fr]">
+      <div className="grid md:grid-cols-[200px_1fr] grid-cols-[150px_1fr]">
         <div className="px-4 py-3 bg-white font-medium text-gray-700 border-r border-[#666664]">Harmfull Content</div>
         <div className="px-4 py-3 bg-white text-gray-600">{Harmfull}</div>
       </div>
