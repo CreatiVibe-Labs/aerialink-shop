@@ -8,7 +8,7 @@ import parse from 'html-react-parser';
 const VariantsSkeleton = () => (
   <div className="rounded-xl border border-gray-200 overflow-hidden max-w-2xl animate-pulse">
     {/* Header */}
-    <div className="bg-gray-50 grid grid-cols-4 text-sm font-medium text-gray-700 border-b border-gray-200">
+    <div className="bg-gray-50 grid grid-cols-4 text-sm font-medium text-[#AFB1AE] border-b border-gray-200">
       <div className="p-3">Variant</div>
       <div className="p-3">Color</div>
       <div className="p-3">Price</div>

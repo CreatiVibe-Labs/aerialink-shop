@@ -83,11 +83,11 @@ const DeliveryAddress: React.FC = () => {
       <Toaster position="top-right" />
       <div className="w-full mt-10">
         {/* Address Boxes (match profile card section spacing & width) */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-[10px] lg:gap-6 w-full max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-[10px] lg:gap-6 w-full max-w-6xl mx-auto bg-[#fdfdfd]">
           {/* Add Address Box */}
           <div
             onClick={() => setShowForm(true)}
-            className="w-full lg:h-[257px] h-[200px] border-2 border-dashed border-[#98C1A9] rounded-[16.21px] flex flex-col justify-center items-center text-[#98C1A9] cursor-pointer hover:bg-[#98C1A9]/10 transition"
+            className="w-full lg:h-[257px] h-[200px] border-2 border-dashed border-[#98C1A9] rounded-[16.21px] flex flex-col justify-center items-center text-[#98C1A9] cursor-pointer hover:bg-[#98C1A9]/10 transition bg-[#fdfdfd]"
           >
             <Plus
               size={43}
@@ -100,7 +100,7 @@ const DeliveryAddress: React.FC = () => {
           </div>
 
           {loading && addresses.length === 0 ? (
-            <div className="w-full text-center py-8 text-[#666664]">Loading addresses...</div>
+            <div className="w-full text-center py-8 text-[#AFB1AE]">Loading addresses...</div>
           )  : (
             sortedAddresses.map((address) => (
               <div
@@ -115,10 +115,10 @@ const DeliveryAddress: React.FC = () => {
                 )}
 
                 {/* Address Info */}
-                <div className="flex flex-col justify-between flex-grow p-4">
+                <div className="flex flex-col justify-between flex-grow p-4 bg-[#fdfdfd]">
                   <div>
                     {!address.default && (
-                      <div className="flex justify-between items-center mb-2">
+                      <div className="flex justify-between items-center mb-2 bg-[#fdfdfd]">
                         <h3 className="text-[#98C1A9] font-semibold text-[16px]">
                           Address
                         </h3>
@@ -130,18 +130,18 @@ const DeliveryAddress: React.FC = () => {
                         </button>
                       </div>
                     )}
-                    <h3 className="text-[#666664] font-semibold text-[20px]">
+                    <h3 className="text-[#AFB1AE] font-semibold text-[20px]">
                       {address.name}
                     </h3>
-                    <p className="text-[#666664] font-semibold text-[18px] leading-snug">
+                    <p className="text-[#AFB1AE] font-semibold text-[18px] leading-snug">
                       {address.address1}
                       {address.address2 && `, ${address.address2}`}
                     </p>
-                    <p className="text-[#666664] font-semibold text-[18px]">
+                    <p className="text-[#AFB1AE] font-semibold text-[18px]">
                       {address.postal_code}
                       {address.prefecture && `, ${address.prefecture}`}
                     </p>
-                    <p className="text-[#666664] font-semibold text-[18px]">
+                    <p className="text-[#AFB1AE] font-semibold text-[18px]">
                       {address.phone_number}
                     </p>
                     

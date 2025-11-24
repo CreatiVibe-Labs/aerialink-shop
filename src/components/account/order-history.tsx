@@ -99,14 +99,14 @@ const OrderHistory = () => {
             {/* Orders List */}
             <div className="flex flex-col gap-5 pt-2">
               {loading && orders.length === 0 ? (
-                <div className="text-center py-8 text-[#666664]">Loading orders...</div>
+                <div className="text-center py-8 text-[#AFB1AE]">Loading orders...</div>
               ) : orders.length === 0 ? (
-                <div className="text-center py-8 text-[#666664]">No orders found</div>
+                <div className="text-center py-8 text-[#AFB1AE]">No orders found</div>
               ) : (
                 orders.map((order, index) => (
                   <div
                     key={`${order.id}-${index}`}
-                    className="grid grid-cols-4 items-center bg-[#FFFDFA] text-[#666664] rounded-[14px] h-[84px] py-4 px-6 shadow-sm text-2xl"
+                    className="grid grid-cols-4 items-center  text-[#AFB1AE] rounded-[14px] h-[84px] py-4 px-6 shadow-sm text-2xl"
                   >
                     <span className="font-medium">#{order.id}</span>
                     <span>{formatDate(order.created_at)}</span>
@@ -116,7 +116,7 @@ const OrderHistory = () => {
                     <span
                       className={`font-[500] text-[24px] ${
                         formatStatus(order.status) === "Delivered"
-                          ? "text-[#666664]"
+                          ? "text-[#AFB1AE]"
                           : formatStatus(order.status) === "Cancelled"
                           ? "text-red-500"
                           : "text-[#98C1A9]"

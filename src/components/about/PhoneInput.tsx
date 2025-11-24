@@ -156,10 +156,10 @@ const PhoneInput: React.FC<PhoneInputProps> = ({ value, onChange, hideLabel = fa
   const selectedCountry = countries.find(c => c.dialCode === countryCode) || countries[1];
 
   return (
-    <div className="flex flex-col gap-[8.85px] w-full">
+    <div className="flex flex-col w-full ">
       {!hideLabel && (
-        <label className="text-sm font-[400] text-[14px] md:text-[18px] leading-[21px] md:leading-[27px] text-[#666664] opacity-40">
-          {label}<span className="text-red-500">*</span>
+        <label className="text-sm font-[400] text-[14px] md:text-[18px] leading-[21px] md:leading-[27px] text-[#AFB1AE] opacity-40">
+        <span className="text-red-500"></span>
         </label>
       )}
 
@@ -172,7 +172,7 @@ const PhoneInput: React.FC<PhoneInputProps> = ({ value, onChange, hideLabel = fa
           <button
             type="button"
             onClick={() => setIsOpen(!isOpen)}
-            className="flex items-center gap-2 bg-transparent p-2 outline-none text-[#666664] text-sm h-full cursor-pointer rounded-lg transition-colors"
+            className="flex items-center gap-2 bg-transparent p-2 outline-none text-[#AFB1AE] text-sm h-full cursor-pointer rounded-lg transition-colors"
           >
             <span className="font-medium">{selectedCountry.dialCode}</span>
             <ChevronDown size={16} className={`transition-transform ${isOpen ? 'rotate-180' : ''}`} />
@@ -189,7 +189,7 @@ const PhoneInput: React.FC<PhoneInputProps> = ({ value, onChange, hideLabel = fa
             onFocus={handleFocus}
             onBlur={handleBlur}
             placeholder=""
-            className="flex-1 h-full text-sm text-[#333] bg-transparent outline-none"
+            className="flex-1 h-full text-sm text-[#AFB1AE]/40 bg-transparent outline-none"
             required
             maxLength={15}
           />

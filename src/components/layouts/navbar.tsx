@@ -32,7 +32,7 @@ const Navbar = () => {
   }, [isOpen]);
 
   return (
-    <nav className="z-[9999] sticky top-5 xl:px-4 lg:px-4 md:px-4 px-4">
+    <nav className="z-[9999] sticky top-5 xl:px-4 lg:px-4 md:px-4 px-4 bg-[#fdfdfd]">
       <div className="bg-primary rounded-full max-w-7xl w-full mx-auto flex justify-between items-center py-3 px-8">
         {/* Mobile Menu Button */}
         <div className="center">

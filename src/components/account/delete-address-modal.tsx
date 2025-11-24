@@ -40,7 +40,7 @@ const DeleteAddressModal: React.FC<DeleteAddressModalProps> = ({
       <DialogContent className="rounded-2xl w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl p-6">
         <DialogHeader>
           <DialogTitle className="flex justify-between items-center">
-            <h3 className="text-[18.86px] leading-[15.72px] font-albert-sans tracking-[4%] lg:text-[28px] font-[500] text-[#666664]">
+            <h3 className="text-[18.86px] leading-[15.72px] font-albert-sans tracking-[4%] lg:text-[28px] font-[500] text-[#AFB1AE]">
               Delete Address
             </h3>
             <button
@@ -59,7 +59,7 @@ const DeleteAddressModal: React.FC<DeleteAddressModalProps> = ({
         </DialogHeader>
 
         <div className="py-6">
-          <p className="text-[#666664] text-[16px] lg:text-[18px] text-center">
+          <p className="text-[#AFB1AE] text-[16px] lg:text-[18px] text-center">
             Are you sure you want to delete this address?
           </p>
           {addressName && (
@@ -67,7 +67,7 @@ const DeleteAddressModal: React.FC<DeleteAddressModalProps> = ({
               {addressName}
             </p>
           )}
-          <p className="text-[#666664] text-[14px] lg:text-[16px] text-center mt-4 opacity-70">
+          <p className="text-[#AFB1AE] text-[14px] lg:text-[16px] text-center mt-4 opacity-70">
             This action cannot be undone.
           </p>
         </div>

@@ -35,7 +35,7 @@ const OtherProductSection = () => {
         </div>
       ) : (
         /* No related products */
-        <p className="text-center text-gray-500 mt-5">
+        <p className="text-center text-[#AFB1AE] mt-5">
           No related products found.
         </p>
       )}

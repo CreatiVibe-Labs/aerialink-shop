@@ -63,7 +63,7 @@ const ProductExploreLeftSection = () => {
   if (!product || imageUrls.length === 0) {
     return (
       <div className="col-span-2 flex h-full items-center justify-center">
-        <p className="text-gray-500">No images available</p>
+        <p className="text-[#AFB1AE]">No images available</p>
       </div>
     );
   }
@@ -118,7 +118,7 @@ const ProductExploreLeftSection = () => {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-5 h-5 text-gray-600"
+            className="w-5 h-5 text-[#AFB1AE]"
           >
             <path
               strokeLinecap="round"

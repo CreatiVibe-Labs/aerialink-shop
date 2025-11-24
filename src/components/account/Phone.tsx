@@ -155,40 +155,43 @@ const PhoneInput: React.FC<PhoneInputProps> = ({ value, onChange, hideLabel = fa
   const selectedCountry = countries.find(c => c.dialCode === countryCode) || countries[1];
 
   return (
-    <div className="flex flex-col gap-[8.85px] w-full">
+    <div className="flex flex-col gap-[8.85px] w-full bg-[#fdfdfd]">
       {!hideLabel && (
-        <label className="text-[18px] font-medium text-[#666664] opacity-40 md:text-xl leading-[21px] md:leading-[27px] ">
-          {label}<span className="text-red-500"></span>
+        <label className="text-[18px] font-medium text-[#AFB1AE] opacity-40 md:text-xl leading-[21px] md:leading-[27px] bg-[#fdfdfd] ">
+        <span className="text-red-500"></span>
         </label>
       )}
 
-      <div className="relative" ref={dropdownRef}>
+      <div className="relative bg-[#fdfdfd]" ref={dropdownRef}>
         <div
           ref={containerRef}
-          className="flex items-center border border-[#EBECF0] rounded-[14px] h-[43px] md:h-[55px] px-3 bg-[#F5F5F5] transition-all"
+          className="flex items-center border border-[#AFB1AE] rounded-[14px] h-[43px] md:h-[55px] px-3  transition-all"
         >
           {/* Country Selector Button */}
           <button
             type="button"
             onClick={() => setIsOpen(!isOpen)}
-            className="flex items-center gap-2 bg-transparent p-2 outline-none text-[#666664] text-sm h-full cursor-pointer rounded-lg transition-colors"
+            className="flex items-center gap-2 bg-transparent p-2 outline-none text-[#AFB1AE] text-sm h-full cursor-pointer rounded-lg transition-colors"
           >
             <span className="font-medium">{selectedCountry.dialCode}</span>
             <ChevronDown size={16} className={`transition-transform ${isOpen ? 'rotate-180' : ''}`} />
           </button>
 
-          <div className="w-[1px] h-[24px] md:h-[30px] bg-[#D9D9D9] mx-2 "></div>
+          <div className="w-[1px] h-[24px] md:h-[30px] mx-2 "></div>
 
           {/* Phone Number Input */}
           <input
             type="tel"
             name="phone"
             value={formatted}
+
+
+            
             onChange={handlePhoneChange}
             onFocus={handleFocus}
             onBlur={handleBlur}
-            placeholder=""
-            className="flex-1 h-full text-[18px] font-medium text-[#666664]  bg-transparent outline-none"
+            placeholder="Phone"
+            className="flex-1 h-full text-[18px] font-medium text-[#AFB1AE]  bg-transparent outline-none"
             maxLength={15}
             required
           />
@@ -196,37 +199,37 @@ const PhoneInput: React.FC<PhoneInputProps> = ({ value, onChange, hideLabel = fa
 
         {/* Dropdown Menu */}
         {isOpen && (
-          <div className="absolute z-50 w-full mt-2 bg-white border border-[#C2C2C1] rounded-[14px] shadow-lg max-h-[300px] overflow-hidden">
+          <div className="absolute z-50 w-full mt-2 bg-white border border-[#AFB1AE] rounded-[14px] shadow-lg max-h-[300px] overflow-hidden">
             {/* Search Input */}
-            <div className="p-3 border-b border-[#C2C2C1]">
+            <div className="p-3 border-b border-[#AFB1AE] bg-[#fdfdfd]">
               <input
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Search country..."
-                className="w-full px-3 py-2 text-sm border border-[#C2C2C1] rounded-lg outline-none focus:ring-1 focus:ring-[#98C1A9]"
+                className="w-full px-3 py-2 text-sm bg-[#fdfdfd] border border-[#AFB1AE] rounded-lg outline-none focus:ring-1 focus:ring-[#98C1A9]"
               />
             </div>
 
             {/* Country List */}
-            <div className="overflow-y-auto max-h-[240px]">
+            <div className="overflow-y-auto max-h-[240px] bg-[#fdfdfd]">
               {filteredCountries.length > 0 ? (
                 filteredCountries.map((country) => (
                   <button
                     key={country.code}
                     type="button"
                     onClick={() => handleCountrySelect(country.dialCode)}
-                    className={`w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-gray-50 transition-colors cursor-pointer ${
-                      country.dialCode === countryCode ? 'bg-[#98C1A9]/10' : ''
+                    className={`w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-[#fdfdfd] transition-colors cursor-pointer ${
+                      country.dialCode === countryCode ? 'bg-[#fdfdfd]' : ''
                     }`}
                   >
                     <span className="text-xs font-bold">{country.code}</span>
-                    <span className="flex-1 text-sm text-[#666664]">{country.name}</span>
-                    <span className="text-sm font-medium text-[#666664]">{country.dialCode}</span>
+                    <span className="flex-1 text-sm text-[#AFB1AE]">{country.name}</span>
+                    <span className="text-sm font-medium text-[#AFB1AE]">{country.dialCode}</span>
                   </button>
                 ))
               ) : (
-                <div className="px-4 py-6 text-center text-sm text-[#666664] opacity-60">
+                <div className="px-4 py-6 text-center text-sm text-[#AFB1AE] opacity-60">
                   No countries found
                 </div>
               )}

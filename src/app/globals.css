@@ -11,7 +11,7 @@
 :root {
   --primary-color: #98c1a9;
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
+  --background: #fdfdfd;
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
@@ -111,8 +111,7 @@
   font-family: var(--font-albert-sans);
 }
 body {
-  /* background-color: black; */
-  /* color: white; */
+  background-color: #fdfdfd !important;
   min-height: 140vh;
   overflow-x: hidden;
 }

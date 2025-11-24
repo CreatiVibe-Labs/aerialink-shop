@@ -64,7 +64,7 @@ export default function ProductExploreDetailSection() {
                 className={`w-full text-left px-4 py-2 text-sm font-medium transition-colors duration-150 flex items-center justify-between ${
                   activeTab === tab.key
                     ? "bg-primary text-white"
-                    : "text-gray-800 hover:bg-primary/10"
+                    : "text-[#AFB1AE] hover:bg-primary/10"
                 }`}
               >
                 {tab.label}

@@ -170,7 +170,7 @@ const ProductCard: FC<ProductCardI> = ({ product, onHeartOnClick }) => {
         {/* Details */}
         <div className="center-col items-start max-sm:text-xs gap-[6.23px]">
           <Link href={productInnerLink}>
-            <h2 className="text-[#666664] font-[500] text-base leading-[19px] my-1 font-font-albert-sans line-clamp-1">
+            <h2 className="text-[#AFB1AE] font-[500] text-base leading-[19px] my-1 font-font-albert-sans line-clamp-1">
               {getProductTitle(product.title_en, product.title_jp, language)}
             </h2>
           </Link>

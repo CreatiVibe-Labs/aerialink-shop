@@ -21,7 +21,7 @@ const SecondaryNavbar = () => {
   const router = useRouter();
 
   return (
-    <div className="mt-8 max-w-7xl w-full mx-auto xl:px-9 lg:px-10 md:px-10 px-5 flex justify-between items-center xl:my-8 lg:my-8 md:my-8 xl:gap-5 lg:gap-5 md:gap-5 gap-2 ">
+    <div className="mt-8 max-w-7xl w-full mx-auto xl:px-9 lg:px-10 md:px-10 px-5 flex justify-between items-center xl:my-8 lg:my-8 md:my-8 xl:gap-5 lg:gap-5 md:gap-5 gap-2 bg-[#fdfdfd] ">
       {/* Language Selector */}
       <Dropdown
         prefixIcon={<TfiWorld size={20} />}

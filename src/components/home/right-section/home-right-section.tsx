@@ -30,7 +30,7 @@ const HomeRightSection = () => {
   const visibleProducts = filteredProducts.slice(0, visibleCount);
 
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-10  ">
       <div className='w-full h-[265px] relative'>
         <Image src={'/assets/home/top-banner.png'} alt='top banner' fill className='!relative w-full h-full object-cover rounded-2xl ' />
       </div>
@@ -44,7 +44,7 @@ const HomeRightSection = () => {
             <ProductCard key={product.id} product={product} onHeartOnClick={() => { }} />
           ))
         ) : (
-          <p className="col-span-full text-center text-gray-500 py-8">No products</p>
+          <p className="col-span-full text-center text-[#AFB1AE] py-8">No products</p>
         )}
       </div>
 
@@ -65,7 +65,7 @@ const HomeRightSection = () => {
             />
           ))
         ) : (
-          <p className="col-span-full text-center text-gray-500 py-8">
+          <p className="col-span-full text-center text-[#AFB1AE] py-8">
             No products match
           </p>
         )}
