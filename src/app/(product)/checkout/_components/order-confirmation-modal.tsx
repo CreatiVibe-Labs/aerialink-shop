@@ -254,7 +254,7 @@ const OrderConfirmationModal: React.FC<OrderConfirmationModalProps> = ({
           <div className="flex flex-col sm:flex-row justify-center gap-2 lg:gap-5 pt-2">
             <button
               onClick={onClose}
-              className="bg-gray-300 hover:bg-gray-400 text-[#AFB1AE] w-full sm:w-[200px] lg:w-[300px] 
+              className="bg-gray-200 hover:bg-gray-300 text-[#AFB1AE] w-full sm:w-[200px] lg:w-[300px] 
                 h-[38px] lg:h-[53px] px-4 lg:px-8 py-2 rounded-[14px]
                 text-[13px] uppercase lg:text-[20px] cursor-pointer transition"
             >

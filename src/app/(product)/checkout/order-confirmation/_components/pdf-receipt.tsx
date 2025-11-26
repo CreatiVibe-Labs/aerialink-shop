@@ -36,32 +36,32 @@ const PDFReceipt = forwardRef<HTMLDivElement, PDFReceiptProps>(
             </div>
           </div>
 
-          <h2 className="text-3xl font-bold mb-2">Thank you for your order!</h2>
+          <h2 className="text-3xl font-bold mb-2 text-[#AFB1AE]">Thank you for your order!</h2>
           <p className="text-[#AFB1AE] mb-6 text-lg">
             Your payment has been successfully done.
           </p>
 
           <hr className="border-gray-300 w-3/4 mb-6" />
 
-          <h3 className="text-xl font-semibold mb-4">Total Payment</h3>
+          <h3 className="text-xl font-semibold mb-4 text-[#AFB1AE]">Total Payment</h3> 
           <p className="text-4xl font-bold text-[#AFB1AE] mb-6">{totalPayment}</p>
 
           <div className="grid grid-cols-2 gap-4 text-left text-base w-[80%]">
             <div className="border border-gray-300 p-4 rounded-lg">
-              <p className="font-semibold">Order Number</p>
-              <p>{orderNumber}</p>
+              <p className="font-semibold text-[#AFB1AE]">Order Number</p>
+              <p className="text-[#AFB1AE]">{orderNumber}</p>
             </div>
             <div className="border border-gray-300 p-4 rounded-lg">
-              <p className="font-semibold">Date/Time</p>
-              <p>{dateTime}</p>
+              <p className="font-semibold text-[#AFB1AE]">Date/Time</p>
+              <p className="text-[#AFB1AE]">{dateTime}</p>
             </div>
             <div className="border border-gray-300 p-4 rounded-lg">
-              <p className="font-semibold">Payment Method</p>
-              <p>{paymentMethod}</p>
+              <p className="font-semibold text-[#AFB1AE]">Payment Method</p>
+              <p className="text-[#AFB1AE]">{paymentMethod}</p>
             </div>
-            <div className="border border-gray-300 p-4 rounded-lg">
-              <p className="font-semibold">Sender Name</p>
-              <p>{senderName}</p>
+            <div className="border border-gray-300 p-4 rounded-lg text-[#AFB1AE]">
+              <p className="font-semibold text-[#AFB1AE]">Sender Name</p>
+              <p className="text-[#AFB1AE]">{senderName}</p>
             </div>
           </div>
         </div>
