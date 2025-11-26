@@ -55,7 +55,7 @@ const WishListPage = () => {
       <div className="max-w-7xl w-full mx-auto max-md:px-5 max-sm:px-3 my-5">
         <BreadCrumbs />
         <div className="text-center py-10">
-          <p className="text-lg text-gray-600 font-medium">
+          <p className="text-lg text-[#AFB1AE] font-medium">
             Please log in first to view or add wishlist items.
           </p>
         </div>
@@ -86,7 +86,7 @@ const WishListPage = () => {
       <div className="max-w-7xl w-full mx-auto max-md:px-5 max-sm:px-3 my-5">
         <BreadCrumbs />
         <div className="text-center py-10">
-          <p className="text-lg text-gray-500">Your wishlist is empty.</p>
+          <p className="text-lg text-[#AFB1AE]">Your wishlist is empty.</p>
         </div>
       </div>
     );

@@ -19,7 +19,7 @@ const Gallery = () => {
         <div className="w-[22.22px] h-[44.44px] rounded-[4.44px] bg-[#98C1A9] "></div>
 
         {/* Heading */}
-        <h2 className="text-[24px] font-semibold leading-[22.22px] text-[#666664] font-poppins">
+        <h2 className="text-[24px] font-semibold leading-[22.22px] text-[#AFB1AE] font-poppins">
           Our Gallery
         </h2>
       </div>

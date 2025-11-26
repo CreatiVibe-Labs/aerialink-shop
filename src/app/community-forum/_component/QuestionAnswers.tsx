@@ -342,25 +342,25 @@ export default function CommunityQuestionsAnswers({ selectedProduct }: Props) {
             className="rounded-full w-12 h-auto object-cover"
           />
           <div className="flex flex-col">
-            <span className="font-medium text-[#666664] flex justify-center items-center gap-2 text-md">
+            <span className="font-medium text-[#AFB1AE] flex justify-center items-center gap-2 text-md">
               {reply.user.name}
               <svg width="7" height="7" viewBox="0 0 7 7" fill="none">
-                <circle cx="3.46332" cy="3.43402" r="2.75238" fill="#666664" />
+                <circle cx="3.46332" cy="3.43402" r="2.75238" fill="#AFB1AE" />
               </svg>
             </span>
-            <span className="text-xs text-[#666664]">
+            <span className="text-xs text-[#AFB1AE]">
               {new Date(reply.created_at).toLocaleDateString()}
             </span>
           </div>
         </div>
 
-        <p className="text-[#666664] text-lg">{reply.message}</p>
+        <p className="text-[#AFB1AE] text-lg">{reply.message}</p>
 
         <div className="flex xl:flex-row lg:flex-row md:flex-row min-[360px]:flex-col gap-5 xl:justify-between lg:justify-between md:justify-between min-[360px]:justify-start mt-5 mb-2">
           <div className="likeDislike flex gap-5">
             <span
               onClick={() => handleLike(reply.id)}
-              className={`transition-all border-1 py-2 min-w-[100px] w-full rounded-xl cursor-pointer flex justify-center items-center gap-2 font-medium text-sm ${reply.user_liked ? 'border-[#98C1A9] bg-[#98C1A9] text-white' : 'border-[#98C1A9] text-[#666664]'
+              className={`transition-all border-1 py-2 min-w-[100px] w-full rounded-xl cursor-pointer flex justify-center items-center gap-2 font-medium text-sm ${reply.user_liked ? 'border-[#98C1A9] bg-[#98C1A9] text-white' : 'border-[#98C1A9] text-[#AFB1AE]'
                 }`}
             >
               <svg width="20" height="20" viewBox="0 0 14 15" fill="none">
@@ -399,26 +399,26 @@ export default function CommunityQuestionsAnswers({ selectedProduct }: Props) {
             </span>
             <span
               onClick={() => handleDislike(reply.id)}
-              className={`transition-all border-1 py-2 min-w-[100px] w-full rounded-xl cursor-pointer flex justify-center items-center gap-2 font-medium text-sm ${reply.user_disliked ? 'border-[#98C1A9] bg-[#98C1A9] text-white' : 'border-[#98C1A9] text-[#666664]'
+              className={`transition-all border-1 py-2 min-w-[100px] w-full rounded-xl cursor-pointer flex justify-center items-center gap-2 font-medium text-sm ${reply.user_disliked ? 'border-[#98C1A9] bg-[#98C1A9] text-white' : 'border-[#98C1A9] text-[#AFB1AE]'
                 }`}
             >
               <svg width="20" height="20" viewBox="0 0 15 15" fill="none">
                 <g clipPath="url(#clip0_3159_23215)">
                   <path
                     d="M11.1641 9.04673L8.62406 13.1067C8.52562 13.2672 8.3873 13.3994 8.22257 13.4906C8.05784 13.5817 7.87231 13.6286 7.68406 13.6267C7.5358 13.6321 7.38797 13.6077 7.24931 13.5549C7.11065 13.5022 6.98398 13.4221 6.87677 13.3196C6.76956 13.217 6.68399 13.094 6.62513 12.9579C6.56627 12.8217 6.5353 12.6751 6.53406 12.5267V9.61673H2.14406C1.98185 9.61147 1.82258 9.57194 1.67674 9.50072C1.5309 9.42951 1.40178 9.32823 1.29788 9.20355C1.19398 9.07887 1.11765 8.93361 1.0739 8.77731C1.03015 8.62102 1.01999 8.45724 1.04406 8.29673L1.84406 3.13673C1.87819 2.86097 2.01185 2.60717 2.21994 2.42302C2.42802 2.23888 2.6962 2.13707 2.97406 2.13673H9.53406C9.84634 2.13551 10.1546 2.20743 10.4341 2.34673L11.1541 2.70673"
-                    stroke={reply.user_disliked ? "white" : "#666664"}
+                    stroke={reply.user_disliked ? "white" : "#AFB1AE"}
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   />
                   <path
                     d="M11.1641 9.04633V2.73633"
-                    stroke={reply.user_disliked ? "white" : "#666664"}
+                    stroke={reply.user_disliked ? "white" : "#AFB1AE"}
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   />
                   <path
                     d="M13.5352 2.73633H11.1652V9.04633H13.5352C13.6678 9.04633 13.7949 8.99365 13.8887 8.89988C13.9825 8.80611 14.0352 8.67894 14.0352 8.54633V3.23633C14.0352 3.10372 13.9825 2.97654 13.8887 2.88277C13.7949 2.78901 13.6678 2.73633 13.5352 2.73633V2.73633Z"
-                    stroke={reply.user_disliked ? "white" : "#666664"}
+                    stroke={reply.user_disliked ? "white" : "#AFB1AE"}
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   />
@@ -439,7 +439,7 @@ export default function CommunityQuestionsAnswers({ selectedProduct }: Props) {
           </div>
           <span
             onClick={() => handleReply(reply.id, reply.message)}
-            className="communityReply transition-all border-1 border-[#98C1A9] py-2 min-w-[120px] max-w-[120px] w-full rounded-xl cursor-pointer flex justify-center items-center gap-2 text-[#666664] font-medium text-sm"
+            className="communityReply transition-all border-1 border-[#98C1A9] py-2 min-w-[120px] max-w-[120px] w-full rounded-xl cursor-pointer flex justify-center items-center gap-2 text-[#AFB1AE] font-medium text-sm"
           >
             <svg width="20" height="20" viewBox="0 0 15 15" fill="none">
               <g clipPath="url(#clip0_3159_15870)">
@@ -491,7 +491,7 @@ export default function CommunityQuestionsAnswers({ selectedProduct }: Props) {
   if (loading) {
     return (
       <div className="text-center py-10">
-        <p className="text-[#666664]">Loading questions...</p>
+        <p className="text-[#AFB1AE]">Loading questions...</p>
       </div>
     );
   }
@@ -507,8 +507,8 @@ export default function CommunityQuestionsAnswers({ selectedProduct }: Props) {
               <path d="M8.5 12.5L10.5 14.5L15.5 9.5" stroke="#98C1A9" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 13.5997 2.37562 15.1116 3.04346 16.4525C3.22094 16.8088 3.28001 17.2161 3.17712 17.6006L2.58151 19.8267C2.32295 20.793 3.20701 21.677 4.17335 21.4185L6.39939 20.8229C6.78393 20.72 7.19121 20.7791 7.54753 20.9565C8.88837 21.6244 10.4003 22 12 22Z" stroke="#98C1A9" strokeWidth="2" />
             </svg>
-            <h3 className="text-xl font-semibold text-[#666664]">No Questions Yet</h3>
-            <p className="text-[#666664] text-base max-w-md">
+            <h3 className="text-xl font-semibold text-[#AFB1AE]">No Questions Yet</h3>
+            <p className="text-[#AFB1AE] text-base max-w-md">
               Be the first to ask a question about this product! Our community is here to help.
             </p>
           </div>
@@ -528,7 +528,7 @@ export default function CommunityQuestionsAnswers({ selectedProduct }: Props) {
                 className="rounded-full w-12 h-auto object-cover"
               />
               <div className="flex flex-col">
-                <span className="font-medium text-[#666664] flex justify-center items-center gap-2 text-md">
+                <span className="font-medium text-[#AFB1AE] flex justify-center items-center gap-2 text-md">
                   {q.user.name}
                   <svg width="7" height="7" viewBox="0 0 7 7" fill="none">
                     <circle
@@ -539,38 +539,38 @@ export default function CommunityQuestionsAnswers({ selectedProduct }: Props) {
                     />
                   </svg>
                 </span>
-                <span className="text-xs text-[#666664]">
+                <span className="text-xs text-[#AFB1AE]">
                   {new Date(q.created_at).toLocaleDateString()}
                 </span>
               </div>
             </div>
 
-            <p className="text-[#666664] text-lg">{q.message}</p>
+            <p className="text-[#AFB1AE] text-lg">{q.message}</p>
 
             <div className="flex xl:flex-row lg:flex-row md:flex-row min-[360px]:flex-col gap-5 xl:justify-between lg:justify-between md:justify-between min-[360px]:justify-start mt-5 mb-2">
               <div className="likeDislike flex gap-5">
                 <span
                   onClick={() => handleLike(q.id)}
-                  className={`transition-all border-1 py-2 min-w-[100px] w-full rounded-xl cursor-pointer flex justify-center items-center gap-2 font-medium text-sm ${q.user_liked ? 'border-[#98C1A9] bg-[#98C1A9] text-white' : 'border-[#98C1A9] text-[#666664]'
+                  className={`transition-all border-1 py-2 min-w-[100px] w-full rounded-xl cursor-pointer flex justify-center items-center gap-2 font-medium text-sm ${q.user_liked ? 'border-[#98C1A9] bg-[#98C1A9] text-white' : 'border-[#98C1A9] text-[#AFB1AE]'
                     }`}
                 >
                   <svg width="20" height="20" viewBox="0 0 14 15" fill="none">
                     <g clipPath="url(#clip0_3159_16598)">
                       <path
                         d="M3.37109 6.74674L5.91109 2.68674C6.00953 2.52627 6.14785 2.39403 6.31259 2.3029C6.47732 2.21177 6.66284 2.16486 6.85109 2.16674V2.16674C6.99935 2.16139 7.14718 2.18581 7.28584 2.23857C7.4245 2.29132 7.55118 2.37134 7.65839 2.47388C7.7656 2.57643 7.85116 2.69943 7.91003 2.83561C7.96889 2.97179 7.99985 3.11839 8.00109 3.26674V6.17674H12.3911C12.5533 6.182 12.7126 6.22154 12.8584 6.29275C13.0043 6.36396 13.1334 6.46524 13.2373 6.58992C13.3412 6.7146 13.4175 6.85987 13.4613 7.01616C13.505 7.17245 13.5152 7.33623 13.4911 7.49674L12.6911 12.6567C12.657 12.9325 12.5233 13.1863 12.3152 13.3705C12.1071 13.5546 11.839 13.6564 11.5611 13.6567H5.00109C4.68881 13.658 4.38058 13.586 4.10109 13.4467L3.38109 13.0867"
-                        stroke={q.user_liked ? "white" : "#666664"}
+                        stroke={q.user_liked ? "white" : "#AFB1AE"}
                         strokeLinecap="round"
                         strokeLinejoin="round"
                       />
                       <path
                         d="M3.37109 6.74707V13.0571"
-                        stroke={q.user_liked ? "white" : "#666664"}
+                        stroke={q.user_liked ? "white" : "#AFB1AE"}
                         strokeLinecap="round"
                         strokeLinejoin="round"
                       />
                       <path
                         d="M1 6.74707H3.37V13.0571H1C0.867392 13.0571 0.740215 13.0044 0.646447 12.9106C0.552678 12.8169 0.5 12.6897 0.5 12.5571V7.24707C0.5 7.11446 0.552678 6.98729 0.646447 6.89352C0.740215 6.79975 0.867392 6.74707 1 6.74707V6.74707Z"
-                        stroke={q.user_liked ? "white" : "#666664"}
+                        stroke={q.user_liked ? "white" : "#AFB1AE"}
                         strokeLinecap="round"
                         strokeLinejoin="round"
                       />
@@ -590,26 +590,26 @@ export default function CommunityQuestionsAnswers({ selectedProduct }: Props) {
                 </span>
                 <span
                   onClick={() => handleDislike(q.id)}
-                  className={`transition-all border-1 py-2 min-w-[100px] w-full rounded-xl cursor-pointer flex justify-center items-center gap-2 font-medium text-sm ${q.user_disliked ? 'border-[#98C1A9] bg-[#98C1A9] text-white' : 'border-[#98C1A9] text-[#666664]'
+                  className={`transition-all border-1 py-2 min-w-[100px] w-full rounded-xl cursor-pointer flex justify-center items-center gap-2 font-medium text-sm ${q.user_disliked ? 'border-[#98C1A9] bg-[#98C1A9] text-white' : 'border-[#98C1A9] text-[#AFB1AE]'
                     }`}
                 >
                   <svg width="20" height="20" viewBox="0 0 15 15" fill="none">
                     <g clipPath="url(#clip0_3159_23215)">
                       <path
                         d="M11.1641 9.04673L8.62406 13.1067C8.52562 13.2672 8.3873 13.3994 8.22257 13.4906C8.05784 13.5817 7.87231 13.6286 7.68406 13.6267C7.5358 13.6321 7.38797 13.6077 7.24931 13.5549C7.11065 13.5022 6.98398 13.4221 6.87677 13.3196C6.76956 13.217 6.68399 13.094 6.62513 12.9579C6.56627 12.8217 6.5353 12.6751 6.53406 12.5267V9.61673H2.14406C1.98185 9.61147 1.82258 9.57194 1.67674 9.50072C1.5309 9.42951 1.40178 9.32823 1.29788 9.20355C1.19398 9.07887 1.11765 8.93361 1.0739 8.77731C1.03015 8.62102 1.01999 8.45724 1.04406 8.29673L1.84406 3.13673C1.87819 2.86097 2.01185 2.60717 2.21994 2.42302C2.42802 2.23888 2.6962 2.13707 2.97406 2.13673H9.53406C9.84634 2.13551 10.1546 2.20743 10.4341 2.34673L11.1541 2.70673"
-                        stroke={q.user_disliked ? "white" : "#666664"}
+                        stroke={q.user_disliked ? "white" : "#AFB1AE"}
                         strokeLinecap="round"
                         strokeLinejoin="round"
                       />
                       <path
                         d="M11.1641 9.04633V2.73633"
-                        stroke={q.user_disliked ? "white" : "#666664"}
+                        stroke={q.user_disliked ? "white" : "#AFB1AE"}
                         strokeLinecap="round"
                         strokeLinejoin="round"
                       />
                       <path
                         d="M13.5352 2.73633H11.1652V9.04633H13.5352C13.6678 9.04633 13.7949 8.99365 13.8887 8.89988C13.9825 8.80611 14.0352 8.67894 14.0352 8.54633V3.23633C14.0352 3.10372 13.9825 2.97654 13.8887 2.88277C13.7949 2.78901 13.6678 2.73633 13.5352 2.73633V2.73633Z"
-                        stroke={q.user_disliked ? "white" : "#666664"}
+                        stroke={q.user_disliked ? "white" : "#AFB1AE"}
                         strokeLinecap="round"
                         strokeLinejoin="round"
                       />
@@ -631,7 +631,7 @@ export default function CommunityQuestionsAnswers({ selectedProduct }: Props) {
 
               <span
                 onClick={() => handleReply(q.id, q.message)}
-                className="communityReply transition-all border-1 border-[#98C1A9] py-2 min-w-[120px] max-w-[120px] w-full rounded-xl cursor-pointer flex justify-center items-center gap-2 text-[#666664] font-medium text-sm"
+                className="communityReply transition-all border-1 border-[#98C1A9] py-2 min-w-[120px] max-w-[120px] w-full rounded-xl cursor-pointer flex justify-center items-center gap-2 text-[#AFB1AE] font-medium text-sm"
               >
                 <svg width="20" height="20" viewBox="0 0 15 15" fill="none">
                   <g clipPath="url(#clip0_3159_15870)">
@@ -730,7 +730,7 @@ export default function CommunityQuestionsAnswers({ selectedProduct }: Props) {
 
       {/* Form */}
       <section className="">
-        <p className="text-[#585C5A] text-3xl font-medium text-center mt-10 mb-8">
+        <p className="text-[#AFB1AE] text-3xl font-medium text-center mt-10 mb-8">
           {formHeading}
         </p>
 
@@ -744,7 +744,7 @@ export default function CommunityQuestionsAnswers({ selectedProduct }: Props) {
         >
           {parentId != null && (
             <div className="field flex flex-col gap-2 w-full">
-              <label className="text-[#666664] text-md">Reply On</label>
+              <label className="text-[#AFB1AE] text-md">Reply On</label>
               <div className="w-full relative flex items-center">
                 <input
                   type="text"
@@ -778,40 +778,36 @@ export default function CommunityQuestionsAnswers({ selectedProduct }: Props) {
 
           <div className="row flex xl:flex-row lg:flex-row md:flex-row flex-col gap-10">
             <div className="field flex flex-col gap-2 w-full">
-              <label htmlFor="full_name" className="text-[#666664] text-md">
-                Full Name
-              </label>
+              
               <input
+              placeholder="Full Name"
                 type="text"
                 id="full_name"
                 name="full_name"
                 value={formData.full_name}
                 onChange={handleChange}
-                className="rounded-lg py-3 px-3 outline-0 shadow-[0px_1px_2px_0px_rgba(60,64,67,0.3),0px_2px_6px_2px_rgba(60,64,67,0.15)]"
+                className="rounded-lg py-3 px-3 placeholder:text-[#AFB1AE]/40 text-[#AFB1AE] text-[18px] font-medium outline-0 shadow-[0px_1px_2px_0px_rgba(60,64,67,0.3),0px_2px_6px_2px_rgba(60,64,67,0.15)]"
                 required
               />
             </div>
 
             <div className="field flex flex-col gap-2 w-full">
-              <label htmlFor="email_address" className="text-[#666664] text-md">
-                Email Address
-              </label>
+           
               <input
+              placeholder="Email Address"
                 type="email"
                 id="email_address"
                 name="email_address"
                 value={formData.email_address}
                 onChange={handleChange}
-                className="rounded-lg py-3 px-3 outline-0 shadow-[0px_1px_2px_0px_rgba(60,64,67,0.3),0px_2px_6px_2px_rgba(60,64,67,0.15)]"
+                className="rounded-lg py-3 px-3 placeholder:text-[#AFB1AE]/40 text-[#AFB1AE] text-[18px] font-medium outline-0 shadow-[0px_1px_2px_0px_rgba(60,64,67,0.3),0px_2px_6px_2px_rgba(60,64,67,0.15)]"
                 required
               />
             </div>
           </div>
 
           <div className="field flex flex-col gap-2">
-            <label htmlFor="comments" className="text-[#666664] text-md">
-              Comments
-            </label>
+            
             <textarea
               placeholder="Write your question or comment here"
               id="comments"
@@ -820,7 +816,7 @@ export default function CommunityQuestionsAnswers({ selectedProduct }: Props) {
               required
               value={formData.comments}
               onChange={handleChange}
-              className="resize-none rounded-lg py-2 px-3 outline-0 shadow-[0px_1px_2px_0px_rgba(60,64,67,0.3),0px_2px_6px_2px_rgba(60,64,67,0.15)]"
+              className="resize-none rounded-lg py-2 px-3 placeholder:text-[#AFB1AE]/40 text-[#AFB1AE] text-[18px] font-medium outline-0 shadow-[0px_1px_2px_0px_rgba(60,64,67,0.3),0px_2px_6px_2px_rgba(60,64,67,0.15)]"
             ></textarea>
           </div>
 

@@ -161,7 +161,7 @@ export default function ShowroomProductSelection() {
                 alt="logo"
                 className="w-24 h-auto object-cover"
               />
-              <p className="xl:text-5xl text-3xl xl:mt-4 text-center text-[#686868] font-bold">
+              <p className="xl:text-5xl text-3xl xl:mt-4 text-center text-[#AFB1AE] font-bold">
                 Select a Product
               </p>
             </>
@@ -178,7 +178,7 @@ export default function ShowroomProductSelection() {
                 alt={productTitle || "Product image"}
                 className="w-64 h-auto object-cover rounded-2xl"
               />
-              <p className="xl:text-lg text-md text-center text-[#686868] line-clamp-1 mt-4 -mb-4">
+              <p className="xl:text-lg text-md text-center text-[#AFB1AE] line-clamp-1 mt-4 -mb-4">
                 {productTitle}
               </p>
             </>
@@ -257,8 +257,8 @@ export default function ShowroomProductSelection() {
                     </defs>
                   </svg>
 
-                  <h3 className="text-3xl text-[#B9E2D4]">Upload photo</h3>
-                  <p className="text-base text-[#B9E2D4]">
+                  <h3 className="text-3xl text-primary">Upload photo</h3>
+                  <p className="text-base text-primary">
                     {index === 0 && <span>(left side wall)</span>}
                     {index === 1 && <span>(right side wall)</span>}
                     {index === 2 && <span>(back side wall)</span>}
@@ -346,7 +346,7 @@ export default function ShowroomProductSelection() {
               <div className="popupBody mt-20">
                 {products.length === 0 ? (
                   <div className="text-center py-10">
-                    <p className="text-gray-500">No products available</p>
+                    <p className="text-[#AFB1AE]">No products available</p>
                   </div>
                 ) : (
                   <div className="grid xl:grid-cols-3 grid-cols-2  gap-4">
@@ -373,7 +373,7 @@ export default function ShowroomProductSelection() {
                             className="mx-auto w-50 object-cover rounded"
                           />
                         )}
-                        <p className="text-[#666664] text-sm line-clamp-1 mt-4 -mb-3">
+                        <p className="text-[#AFB1AE] text-sm line-clamp-1 mt-4 -mb-3">
                           {language == "EN"
                             ? product.title_en || product.title_jp || "Product"
                             : product.title_jp || product.title_en || "Product"}

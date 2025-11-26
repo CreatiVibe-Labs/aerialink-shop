@@ -7,8 +7,8 @@ export const metadata = {
 
 const Section: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => (
   <section className="mb-10">
-    <h2 className="text-3xl font-semibold text-[#666664] mb-2">{title}</h2>
-    <div className="space-y-4 text-[#666664] leading-relaxed md:text-[20px]">
+    <h2 className="text-3xl font-semibold text-[#AFB1AE] mb-2">{title}</h2>
+    <div className="space-y-4 text-[#AFB1AE] leading-relaxed md:text-[20px]">
       {children}
     </div>
   </section>
@@ -17,10 +17,10 @@ const Section: React.FC<{ title: string; children: React.ReactNode }> = ({ title
 export default function PolicyPage() {
   return (
     <main className="max-w-7xl mx-auto  py-2">
-      <h1 className="text-[40px] font-bold text-[#666664] mb-4">Shipping & Return Policy</h1>
+      <h1 className="text-[40px] font-bold text-[#AFB1AE] mb-4">Shipping & Return Policy</h1>
 
       <Section title="Delivery">
-        <ul className="list-disc pl-6 space-y-2 text-[#666664] text-[20px] ">
+        <ul className="list-disc pl-6 space-y-2 text-[#AFB1AE] text-[20px] ">
           <li>The package is heavy. Please prepare a dolly by yourself.</li>
           <li>
             In the following cases, the package will be delivered to the parking location or at the first floor building entrance:
@@ -51,8 +51,8 @@ export default function PolicyPage() {
           <li>Additional shipping fees vary depending on the size of the carpet, the area to be delivered, and the number of items.</li>
           <li>
             If you would like to check the shipping fee in advance, please fill out the following items in the &quot;Inquiries&quot; section and we will inform you.
-            <div className="mt-2 p-4  rounded-md text-[#666664] mr-5.5">
-              <p className="font-semibold text-text-[#666664] mb-1 text-2xl">Shipping Fee Inquiries</p>
+            <div className="mt-2 p-4  rounded-md text-[#AFB1AE] mr-5.5">
+              <p className="font-semibold text-text-[#AFB1AE] mb-1 text-2xl">Shipping Fee Inquiries</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Delivery address / zip code</li>
                 <li>Product number (Example: GA71)</li>
@@ -68,7 +68,7 @@ export default function PolicyPage() {
       </Section>
 
       <Section title="Returns & Exchanges">
-        <h3 className="text-2xl font-semibold text-text-[#666664]">Returns (Customer Convenience)</h3>
+        <h3 className="text-2xl font-semibold text-text-[#AFB1AE]">Returns (Customer Convenience)</h3>
         <p className="mt-2">The following reasons are considered to be customer convenience:</p>
         <ul className="list-disc pl-6 space-y-2 mt-2">
           <li>Different from what you expected, narrow access route, not delivered on the desired date, 2-pack wood carpet, etc.</li>
@@ -78,8 +78,8 @@ export default function PolicyPage() {
           For returns after the product has been shipped, the customer will be responsible for the round-trip shipping fee (plus additional shipping fee for remote islands) and other expenses (repacking amount, inspection amount, refund administration fee). Since the return address is different from the company&apos;s location, we will not be able to accept the return without contacting us. All expenses incurred at that time will be borne by the customer.
         </p>
         <div className="mt-4 p-4  rounded-md mx-5.5">
-          <p className="font-semibold text-[#666664] mb-2 text-2xl">Return Request (within 7 days)</p>
-          <ul className="list-disc pl-6 space-y-1 text-min-gray">
+          <p className="font-semibold text-[#AFB1AE] mb-2 text-2xl">Return Request (within 7 days)</p>
+          <ul className="list-disc pl-6 space-y-1 text-[#AFB1AE]">
             <li>Name</li>
             <li>Order number</li>
             <li>Product number to be returned</li>
@@ -96,8 +96,8 @@ export default function PolicyPage() {
             If the product is not returned by the delivery company designated by our company, the customer will be responsible for the difference in shipping fee.
           </li>
         </ul>
-          <p className="font-semibold text-[#666664] mb-2 text-2xl">Return Request (within 7 days)</p>
-        <h4 className="text-2xl font-semibold text-[#666664] mt-6">Returns Not Accepted</h4>
+          <p className="font-semibold text-[#AFB1AE] mb-2 text-2xl">Return Request (within 7 days)</p>
+        <h4 className="text-2xl font-semibold text-[#AFB1AE] mt-6">Returns Not Accepted</h4>
         <ul className="list-disc pl-6 space-y-1 mt-2">
           <li>Damage, dents, scratches on the packaging material, or damage or dirt to the packaging material that occurred during transportation</li>
           <li>Minor scratches in the details or chipping or peeling due to the nature of the material</li>
@@ -106,7 +106,7 @@ export default function PolicyPage() {
           <li>Products that have been accidentally soiled or damaged by the customer</li>
           <li>More than 7 days have passed since the delivery was completed</li>
         </ul>
-        <h3 className="text-xl font-semibold text-[#666664] mt-8">Exchanges</h3>
+        <h3 className="text-xl font-semibold text-[#AFB1AE] mt-8">Exchanges</h3>
         <p className="mt-2">We will only exchange products if we send the wrong product or if you receive a defective product.</p>
         <p className="mt-2">Please contact us within one week of receiving the product. We will send you a replacement product.</p>
         <p className="mt-2">Delivery and collection will be done by the regular delivery service of each delivery company, so it will take a few days to pick up and deliver the defective product.</p>

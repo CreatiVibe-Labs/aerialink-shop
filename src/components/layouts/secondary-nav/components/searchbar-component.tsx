@@ -133,7 +133,7 @@ const SearchbarComponent = () => {
           onMouseDown={(e) => e.preventDefault()}
         >
           {loading ? (
-            <div className="p-4 text-center text-gray-500 text-sm">
+            <div className="p-4 text-center text-[#AFB1AE] text-sm">
               Loading...
             </div>
           ) : searchResults.length > 0 ? (
@@ -185,7 +185,7 @@ const SearchbarComponent = () => {
               })}
             </div>
           ) : (
-            <div className="p-4 text-center text-gray-500 text-sm">
+            <div className="p-4 text-center text-[#AFB1AE] text-sm">
               No products found
             </div>
           )}

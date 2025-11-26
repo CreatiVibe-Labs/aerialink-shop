@@ -3,7 +3,7 @@ import { BsClock } from "react-icons/bs";
 
 const OfficeTimingComponent = () => {
   return (
-    <div className="rounded-xl border border-light-gray p-3 space-y-2 text-light-gray hover:text-black">
+    <div className="rounded-xl border border-light-gray p-3 space-y-2 text-[#AFB1AE] hover:text-black">
       {/* Heading */}
       <div className="flex items-center space-x-2">
         <BsClock /> <span className="font-medium">Office Timing</span>

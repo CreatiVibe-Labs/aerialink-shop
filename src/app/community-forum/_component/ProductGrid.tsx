@@ -74,7 +74,7 @@ const CommunityProductGrid: React.FC<CommunityProductGridProps> = ({
                   />
                 </div>
               )}
-              <p className="text-[#666664] text-sm font-medium mt-3 line-clamp-1">
+              <p className="text-[#AFB1AE] text-sm font-medium mt-3 line-clamp-1">
                 {language == "EN"
                   ? product.title_en || product.title_jp || "Product"
                   : product.title_jp || product.title_en || "Product"}
@@ -85,7 +85,7 @@ const CommunityProductGrid: React.FC<CommunityProductGridProps> = ({
 
       {currentProducts?.length == 0 && (
         <div className="text-center w-full">
-          <p className="capitalize text-[#666664] text-xl">
+          <p className="capitalize text-[#AFB1AE] text-xl">
             No Products Found!
           </p>
         </div>

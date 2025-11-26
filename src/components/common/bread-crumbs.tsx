@@ -10,7 +10,7 @@ type BreadCrumbsProps = {
 const BreadCrumbs : FC<BreadCrumbsProps> = ({className = ''}) => {
   const path = usePathname();
   return (
-      <div className={`text-sm text-min-gray mb-6 space-x-1 ${className}`}>
+      <div className={`text-sm text-[#AFB1AE] mb-6 space-x-1 ${className}`}>
         <span ><Link href={'/'}>Home</Link></span> <span>/</span> <span className="text-primary font-medium capitalize">{path.replace('/','')}</span>
       </div>
   );

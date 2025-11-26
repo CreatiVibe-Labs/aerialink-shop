@@ -29,7 +29,7 @@ const renderStars = (rating: number, reviewCount: number) => {
       {/* Half Star */}
       {hasHalfStar && (
         <div className="relative">
-          <PiStarFill className="text-gray-300" size={16} />
+          <PiStarFill className="text-[#AFB1AE]" size={16} />
           <div className="absolute inset-0 overflow-hidden w-1/2">
             <PiStarFill className="text-amber-400" size={16} />
           </div>
@@ -38,11 +38,11 @@ const renderStars = (rating: number, reviewCount: number) => {
 
       {/* Empty Stars */}
       {Array.from({ length: emptyStars }).map((_, i) => (
-        <PiStarFill key={`empty-${i}`} className="text-gray-300" size={16} />
+        <PiStarFill key={`empty-${i}`} className="text-[#AFB1AE]" size={16} />
       ))}
 
       {/* Review Count */}
-      <span className="text-[#666664] text-base font-[600] pl-1 leading-[16px] font-font-albert-sans">
+      <span className="text-[#AFB1AE] text-base font-[600] pl-1 leading-[16px] font-font-albert-sans">
         ({reviewCount})
       </span>
     </div>

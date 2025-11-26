@@ -7,7 +7,7 @@ export default function NotFound() {
       {/* Breadcrumb */}
       <div className="w-full max-w-7xl mx-auto mb-6 ">
         <nav className="text-sm md:text-[14px] text-[#9AA09D]">
-          <Link href="/" className="text-[#666664] hover:text-primary">Home</Link>
+          <Link href="/" className="text-[#AFB1AE] hover:text-primary">Home</Link>
           <span className="mx-2">/</span>
           <span className="text-primary/70">404 Error</span>
         </nav>
@@ -27,12 +27,12 @@ export default function NotFound() {
         </div>
 
         {/* Title */}
-        <h1 className="xl:text-[60px] lg:text-[60px] md:text-4xl font-extrabold text-[#666664] mb-2">
+        <h1 className="xl:text-[60px] lg:text-[60px] md:text-4xl font-extrabold text-[#AFB1AE] mb-2">
           Looks like you are lost.
         </h1>
 
         {/* Subtitle */}
-        <p className="font-extrabold text-lg text-[#666664]">
+        <p className="font-extrabold text-lg text-[#AFB1AE]">
           Oops! The page you are looking for does not exist. It might have been
           moved or deleted.
         </p>

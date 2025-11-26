@@ -45,7 +45,7 @@ const DeleteAddressModal: React.FC<DeleteAddressModalProps> = ({
             </h3>
             <button
               onClick={onClose}
-              className="p-2 rounded-full cursor-pointer hover:bg-gray-100 transition"
+              className="p-2 rounded-full cursor-pointer transition"
             >
               <Image
                 src="/assets/account/icon-cancel.png"
@@ -78,7 +78,7 @@ const DeleteAddressModal: React.FC<DeleteAddressModalProps> = ({
             onClick={onClose}
             disabled={loading}
             className="w-[140px] lg:w-[180px] h-[42px] lg:h-[50px] border-[1.5px] border-[#98C1A9] text-[#98C1A9] 
-              rounded-[14px] text-[15px] lg:text-[17px] font-semibold hover:bg-[#98C1A9]/10 transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+              rounded-[14px] text-[15px] lg:text-[17px] font-semibold hover:bg-[#98C1A9]/5 transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Cancel
           </button>

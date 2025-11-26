@@ -105,12 +105,12 @@ const AddressSelector: React.FC<AddressSelectorProps> = ({
                                     className="mt-1 accent-[#98C1A9] w-4 h-4 hidden"
                                 />
                                 <div className="flex-1 pr-16">
-                                    <p className="font-medium text-gray-900 mb-1">{address.name}</p>
-                                    <p className="text-sm text-gray-600">{address.address1}</p>
-                                    <p className="text-sm text-gray-600 mt-1">
+                                    <p className="font-medium text-[#AFB1AE] mb-1">{address.name}</p>
+                                    <p className="text-sm text-[#AFB1AE]">{address.address1}</p>
+                                    <p className="text-sm text-[#AFB1AE] mt-1">
                                         postal code: {address.postal_code}
                                     </p>
-                                    <p className="text-sm text-gray-600">Phone: {address.phone_number}</p>
+                                    <p className="text-sm text-[#AFB1AE]">Phone: {address.phone_number}</p>
                                 </div>
                                 <div className="absolute right-4 bottom-1 -translate-y-1/2 flex items-center gap-5">
                                     <button
@@ -121,7 +121,7 @@ const AddressSelector: React.FC<AddressSelectorProps> = ({
                                                 await onRemoveAddress(address.id);
                                             }
                                         }}
-                                        className="text-[#666664] hover:text-red-500 transition cursor-pointer flex items-center justify-center gap-1 text-sm"
+                                        className="text-[#AFB1AE] hover:text-red-500 transition cursor-pointer flex items-center justify-center gap-1 text-sm"
                                     >
                                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M2 4h12M5.333 4V2.667a1.333 1.333 0 0 1 1.334-1.334h2.666a1.333 1.333 0 0 1 1.334 1.334V4m2 0v9.333a1.333 1.333 0 0 1-1.334 1.334H4.667a1.333 1.333 0 0 1-1.334-1.334V4h9.334Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -130,7 +130,7 @@ const AddressSelector: React.FC<AddressSelectorProps> = ({
                                     </button>
                                     <button
                                         onClick={(e) => handleEditClick(address, e)}
-                                        className="text-[#666664] hover:text-[#98C1A9] transition cursor-pointer flex items-center gap-1 text-sm"
+                                        className="text-[#AFB1AE] hover:text-[#98C1A9] transition cursor-pointer flex items-center gap-1 text-sm"
                                     >
                                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M7.333 2.667H2.667A1.333 1.333 0 0 0 1.333 4v9.333a1.333 1.333 0 0 0 1.334 1.334h9.333a1.333 1.333 0 0 0 1.333-1.334V8.667M12.667 1.667a1.414 1.414 0 1 1 2 2L8 10.333l-2.667.667.667-2.667 6.667-6.666Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>

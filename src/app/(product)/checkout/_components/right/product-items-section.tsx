@@ -90,7 +90,7 @@ const ProductItemsSection = () => {
       <div className="max-md:mt-3 space-y-2 px-1">
         {loading && (
           <div className="flex justify-center items-center p-8">
-            <div className="text-gray-500">Loading product details...</div>
+            <div className="text-[#AFB1AE]">Loading product details...</div>
           </div>
         )}
         
@@ -122,7 +122,7 @@ const ProductItemsSection = () => {
             );
           })
         ) : (
-          <p className="text-center text-gray-500 py-4">No items in cart</p>
+          <p className="text-center text-[#AFB1AE] py-4">No items in cart</p>
         )}
       </div>
     </div>

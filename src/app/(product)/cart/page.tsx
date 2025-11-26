@@ -87,7 +87,7 @@ const CartPage = () => {
       <div className="w-full max-w-7xl mx-auto px-4 py-10">
         <BreadCrumbs />
         <div className="text-center py-16">
-          <p className="text-lg text-gray-500">Your cart is empty.</p>
+          <p className="text-lg text-[#AFB1AE]">Your cart is empty.</p>
         </div>
       </div>
     );

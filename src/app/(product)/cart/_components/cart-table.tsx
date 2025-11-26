@@ -277,7 +277,7 @@ const CartTable: React.FC<CartTableProps> = ({
             const enrichedItem = item as EnrichedCartItem;
             const hasEnrichedData = 'images' in item && 'title_en' in item;
             return (
-              <tr key={item.id} className="shadow-xs rounded-xl text-gray-700">
+              <tr key={item.id} className="shadow-xs rounded-xl text-[#AFB1AE]">
                 {/* Product Column */}
                 <td className="py-3 pl-6 flex items-center gap-3">
                   <div className="relative w-16 h-16 p-0.5 border-2 border-primary rounded-xl">
@@ -308,7 +308,7 @@ const CartTable: React.FC<CartTableProps> = ({
                   <div className="flex items-center gap-3 rounded-md px-3 py-1 w-fit">
                     <button
                       onClick={() => handleQuantityChange(index, "dec")}
-                      className="text-gray-500 text-lg cursor-pointer"
+                      className="text-[#AFB1AE] text-lg cursor-pointer"
                     >
                       –
                     </button>
@@ -320,7 +320,7 @@ const CartTable: React.FC<CartTableProps> = ({
                     />
                     <button
                       onClick={() => handleQuantityChange(index, "inc")}
-                      className="text-gray-500 text-lg cursor-pointer"
+                      className="text-[#AFB1AE] text-lg cursor-pointer"
                     >
                       +
                     </button>
@@ -330,8 +330,8 @@ const CartTable: React.FC<CartTableProps> = ({
                 {/* Room Type Dropdown */}
                 <td className="py-3 text-sm">
                   <Dropdown
-                    className="bg-transparent border border-light-gray text-min-gray! max-md:py-1.5 text-sm px-5 rounded-xl"
-                    DropDownclassName={`bg-white text-min-gray! !z-[${50 + index}]`}
+                    className="bg-transparent border border-light-gray text-[#AFB1AE]! max-md:py-1.5 text-sm px-5 rounded-xl"
+                    DropDownclassName={`bg-white text-[#AFB1AE]! !z-[${50 + index}]`}
                     hideLabelOnMobile={false}
                     label={item.room_type || "Select Room"}
                     forceClose={openDropdown !== null && openDropdown !== `room-${index}`}
@@ -360,7 +360,7 @@ const CartTable: React.FC<CartTableProps> = ({
                 {/* Size Dropdown */}
                 <td className="py-3 text-sm">
                   <Dropdown
-                    className="bg-transparent border border-light-gray text-min-gray! max-md:py-1.5 text-sm px-5 rounded-xl"
+                    className="bg-transparent border border-light-gray text-[#AFB1AE]! max-md:py-1.5 text-sm px-5 rounded-xl"
                     DropDownclassName={`bg-white text-min-gray! !z-[${40 + index}]`}
                     hideLabelOnMobile={false}
                     label={item.size || "Select Size"}

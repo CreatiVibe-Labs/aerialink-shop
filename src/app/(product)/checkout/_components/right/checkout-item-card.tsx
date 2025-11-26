@@ -32,7 +32,7 @@ const CheckoutItemCard: FC<CheckoutItemCardProps> = ({
             {title} x {quantity}
           </p>
           {(size || roomType) && (
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text-[#AFB1AE]">
               {roomType && `${roomType}`}
               {roomType && size && ' • '}
               {size && `Size: ${size}`}
@@ -57,13 +57,13 @@ const CheckoutItemCard: FC<CheckoutItemCardProps> = ({
         <div className="flex flex-col">
           <span className="text-sm font-medium">{title}</span>
           {(size || roomType) && (
-            <span className="text-xs text-gray-500">
+            <span className="text-xs text-[#AFB1AE]">
               {roomType && `${roomType}`}
               {roomType && size && ' • '}
               {size && `Size: ${size}`}
             </span>
           )}
-          <span className="text-xs text-gray-600">¥{Number(price).toLocaleString()}</span>
+          <span className="text-xs text-[#AFB1AE]">¥{Number(price).toLocaleString()}</span>
         </div>
       </div>
       <p className=" text-light-gray ">¥{Number(price).toLocaleString()}</p>

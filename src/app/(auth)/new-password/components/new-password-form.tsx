@@ -50,10 +50,10 @@ const NewPasswordForm = () => {
       /> */}
 
       <div className="center-col items-start space-y-[16px]">
-        <h1 className="font-albert-sans font-semibold lg:text-[40px] text-[28px] leading-[100%] tracking-[0] text-[#313131]">
+        <h1 className="font-albert-sans font-semibold lg:text-[40px] text-[28px] leading-[100%] tracking-[0] text-[#AFB1AE]">
           Set New Password
         </h1>
-        <p className="w-full lg:max-w-[512px] font-albert-sans opacity-75 font-[400] lg:text-[16px] text-[12px] leading-[120%] tracking-[0%] text-[#313131]">
+        <p className="w-full lg:max-w-[512px] font-albert-sans opacity-75 font-[400] lg:text-[16px] text-[12px] leading-[120%] tracking-[0%] text-[#AFB1AE]">
           Your previous password has been reseted. Please set a new password for
           your account.
         </p>

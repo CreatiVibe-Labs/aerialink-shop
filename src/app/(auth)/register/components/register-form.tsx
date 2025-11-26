@@ -80,7 +80,7 @@ const RegisterForm = () => {
       />
       {/* header */}
       <div className="center-col items-start space-y-3  mt-0 " >
-        <h1 className="font-albert-sans font-semibold text-[28px] lg:text-[40px] leading-[100%] tracking-[0] text-[#313131]">
+        <h1 className="font-albert-sans font-semibold text-[28px] lg:text-[40px] leading-[100%] tracking-[0] text-[#AFB1AE]">
           Register
         </h1>
         {/* <p className="text-light-gray">Create your new account</p> */}
@@ -240,7 +240,7 @@ const RegisterForm = () => {
             {isSubmitting ? "Creating account..." : "Create account"}
           </PrimaryButton>
 
-          <p className="text-sm text-[#313131]  font-[600] ">
+          <p className="text-sm text-[#AFB1AE]  font-[600] ">
             Already have an account?{" "}
             <Link
               href={"/login"}

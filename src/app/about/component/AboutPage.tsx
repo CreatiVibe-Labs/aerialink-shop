@@ -241,7 +241,7 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <div className="flex items-center  text-gray-600 gap-3">
+          <div className="flex items-center  text-[#AFB1AE] gap-3">
 
             {socialLinks.map((item, i) => (
               <Link key={i} href={item.href}>
@@ -293,7 +293,7 @@ export default function AboutPage() {
                 value={formData.name}
                 onChange={handleChange}
                 placeholder="Full Name"
-                className="border border-[#C2C2C1] rounded-[14px] h-[43px] md:h-[55px] p-2 pl-5 text-sm focus:outline-[#98C1A9]"
+                className="border  placeholder:text-[#AFB1AE]/40 text-[#AFB1AE] text-[18px] font-medium rounded-[14px] h-[43px] md:h-[55px] p-2 pl-5 text-sm "
                 required
               />
             </div>
@@ -310,7 +310,7 @@ export default function AboutPage() {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="Email"
-                className="border border-[#C2C2C1] rounded-[14px] h-[43px] md:h-[55px] p-2 pl-5 text-sm focus:outline-[#98C1A9]"
+                className="border placeholder:text-[#AFB1AE]/40 text-[#AFB1AE] text-[18px] font-medium rounded-[14px] h-[43px] md:h-[55px] p-2 pl-5 text-sm "
                 required
               />
             </div>
@@ -324,7 +324,7 @@ export default function AboutPage() {
                 value={formData.order}
                 onChange={handleChange}
                 placeholder="Order Number"
-                className="border border-[#C2C2C1] rounded-[14px] h-[43px] md:h-[55px] p-2 pl-5 text-sm focus:outline-[#98C1A9]"
+                className="border placeholder:text-[#AFB1AE]/40 text-[#AFB1AE] text-[18px] font-medium rounded-[14px] h-[43px] md:h-[55px] p-2 pl-5 text-sm "
               />
             </div>
 
@@ -336,7 +336,7 @@ export default function AboutPage() {
                 value={formData.message}
                 onChange={handleChange}
                 placeholder="Write your message or Complaint here"
-                className="border border-[#C2C2C1] text-[#AFB1AE]/40  font-semibold rounded-[14px] h-[140px] md:h-[171px] resize-none p-3 pl-5 text-[17px] focus:outline-[#98C1A9]"
+                className="border placeholder:text-[#AFB1AE]/40 text-[#AFB1AE] font-semibold rounded-[14px] h-[140px] md:h-[171px] resize-none p-3 pl-5 text-[17px] "
                 required
               />
             </div>

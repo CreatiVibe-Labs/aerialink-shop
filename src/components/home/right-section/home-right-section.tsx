@@ -10,6 +10,7 @@ import { useCategory } from "@/contexts/category-context";
 import { useState } from "react";
 import ProductsSkeletonSections from "./components/products-skeleton-sections";
 import Image from "next/image";
+import BestSellSection from "./components/best-sell-section";
 
 const HomeRightSection = () => {
   const { state, loadMore } = useCategory();
@@ -34,6 +35,9 @@ const HomeRightSection = () => {
       <div className='w-full h-[265px] relative'>
         <Image src={'/assets/home/top-banner.png'} alt='top banner' fill className='!relative w-full h-full object-cover rounded-2xl ' />
       </div>
+
+      {/* Best Sell Section */}
+      <BestSellSection />
 
       {/* All Products */}
       <div className="grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4 gap-4 max-sm:gap-3">

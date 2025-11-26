@@ -157,7 +157,7 @@ const PhoneInput: React.FC<PhoneInputProps> = ({ value, onChange, hideLabel = fa
   return (
     <div className="flex flex-col w-full relative">
       {!hideLabel && (
-        <label className="absolute -top-2 left-4 bg-white px-1 text-[14px] leading-[100%] tracking-[0] text-[#1C1B1F] font-[Albert_Sans] font-normal z-10 capitalize">
+        <label className="absolute -top-2 left-4 bg-white px-1 text-[14px] leading-[100%] tracking-[0] text-[#AFB1AE] font-[Albert_Sans] font-normal z-10 capitalize">
           {label}
         </label>
       )}
@@ -171,7 +171,7 @@ const PhoneInput: React.FC<PhoneInputProps> = ({ value, onChange, hideLabel = fa
           <button
             type="button"
             onClick={() => setIsOpen(!isOpen)}
-            className="flex items-center gap-2 bg-transparent p-2 outline-none text-[#1C1B1F] text-sm h-full cursor-pointer rounded-lg transition-colors"
+            className="flex items-center gap-2 bg-transparent p-2 outline-none text-[#AFB1AE] text-sm h-full cursor-pointer rounded-lg transition-colors"
           >
             <span className="font-medium">{selectedCountry.dialCode}</span>
             <ChevronDown size={16} className={`transition-transform ${isOpen ? 'rotate-180' : ''}`} />
@@ -186,7 +186,7 @@ const PhoneInput: React.FC<PhoneInputProps> = ({ value, onChange, hideLabel = fa
             value={formatted}
             onChange={handlePhoneChange}
             placeholder=""
-            className="flex-1 h-full bg-transparent outline-none text-[12px] lg:text-[16px] text-[#1C1B1F]"
+            className="flex-1 h-full bg-transparent outline-none text-[12px] lg:text-[16px] text-[#AFB1AE]"
             maxLength={15}
           />
         </div>
@@ -218,12 +218,12 @@ const PhoneInput: React.FC<PhoneInputProps> = ({ value, onChange, hideLabel = fa
                     }`}
                   >
                     <span className="text-xs font-bold">{country.code}</span>
-                    <span className="flex-1 text-sm text-[#666664]">{country.name}</span>
-                    <span className="text-sm font-medium text-[#666664]">{country.dialCode}</span>
+                    <span className="flex-1 text-sm text-[#AFB1AE]">{country.name}</span>
+                    <span className="text-sm font-medium text-[#AFB1AE]">{country.dialCode}</span>
                   </button>
                 ))
               ) : (
-                <div className="px-4 py-6 text-center text-sm text-[#666664] opacity-60">
+                <div className="px-4 py-6 text-center text-sm text-[#AFB1AE] opacity-60">
                   No countries found
                 </div>
               )}

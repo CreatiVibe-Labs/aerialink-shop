@@ -364,7 +364,7 @@ const CheckoutLeft = () => {
           <div className={`${isLoggedIn ? 'hidden' : 'space-y-5'}`}>
             {/* Full Name */}
             <div>
-              <label className="block text-sm text-gray-600 mb-1">
+              <label className="block text-sm text-[#AFB1AE] mb-1">
                 Full Name<span className="text-red-500">*</span>
               </label>
               <Input
@@ -379,7 +379,7 @@ const CheckoutLeft = () => {
 
             {/* Email */}
             <div>
-              <label className="block text-sm text-gray-600 mb-1">
+              <label className="block text-sm text-[#AFB1AE] mb-1">
                 Email<span className="text-red-500">*</span>
               </label>
               <Input
@@ -409,7 +409,7 @@ const CheckoutLeft = () => {
                 }}
                 render={({ field }) => (
                   <div>
-                    <label className="block text-sm text-gray-600 mb-1">
+                    <label className="block text-sm text-[#AFB1AE] mb-1">
                       Phone Number<span className="text-red-500">*</span>
                     </label>
                     <PhoneInput
@@ -427,7 +427,7 @@ const CheckoutLeft = () => {
 
             {/* Address */}
             <div>
-              <label className="block text-sm text-gray-600 mb-1">
+              <label className="block text-sm text-[#AFB1AE] mb-1">
                 Street Address<span className="text-red-500">*</span>
               </label>
               <Input
@@ -442,7 +442,7 @@ const CheckoutLeft = () => {
 
             {/* Postal Code */}
             <div>
-              <label className="block text-sm text-gray-600 mb-1">
+              <label className="block text-sm text-[#AFB1AE] mb-1">
                 Postal Code<span className="text-red-500">*</span>
               </label>
               <Input
@@ -473,7 +473,7 @@ const CheckoutLeft = () => {
 
           {/* Payment */}
           <div className="pt-6">
-            <h3 className="font-semibold text-gray-800 mb-3">Payment Method</h3>
+            <h3 className="font-semibold text-[#AFB1AE] mb-3">Payment Method</h3>
             <div className="flex items-center gap-2">
               <input
                 type="radio"
@@ -481,7 +481,7 @@ const CheckoutLeft = () => {
                 {...regDesktop("payment")}
                 className="accent-light-gray"
               />
-              <label className="text-gray-700 font-medium">KOMOJU</label>
+              <label className="text-[#AFB1AE] font-medium">KOMOJU</label>
             </div>
           </div>
 
@@ -498,7 +498,7 @@ const CheckoutLeft = () => {
       {/* ================== MOBILE VIEW ================== */}
       <div className="md:hidden">
         <div className="flex justify-between items-center mb-5">
-          <h2 className="text-2xl font-medium text-min-gray">
+          <h2 className="text-2xl font-medium text-[#AFB1AE]">
             {mobileStep === 1 ? "Billing Details" : "Review & Pay"}
           </h2>
           {mobileStep === 2 && (
@@ -674,9 +674,9 @@ const CheckoutLeft = () => {
                 value="komoju"
                 checked={mobileFormData?.payment === "komoju"}
                 readOnly
-                className="accent-light-gray size-5"
+                className="accent-[#AFB1AE] size-5"
               />
-              <label className="text-gray-700 font-medium">KOMOJU</label>
+              <label className="text-[#AFB1AE] font-medium">KOMOJU</label>
             </div>
 
             {/* <CouponSection /> */}

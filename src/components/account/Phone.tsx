@@ -155,9 +155,9 @@ const PhoneInput: React.FC<PhoneInputProps> = ({ value, onChange, hideLabel = fa
   const selectedCountry = countries.find(c => c.dialCode === countryCode) || countries[1];
 
   return (
-    <div className="flex flex-col gap-[8.85px] w-full bg-[#fdfdfd]">
+    <div className="flex flex-col gap-[8.85px] w-full ">
       {!hideLabel && (
-        <label className="text-[18px] font-medium text-[#AFB1AE] opacity-40 md:text-xl leading-[21px] md:leading-[27px] bg-[#fdfdfd] ">
+        <label className="text-[18px] font-medium text-[#AFB1AE] opacity-40 md:text-xl leading-[21px] md:leading-[27px]  ">
         <span className="text-red-500"></span>
         </label>
       )}
@@ -165,13 +165,13 @@ const PhoneInput: React.FC<PhoneInputProps> = ({ value, onChange, hideLabel = fa
       <div className="relative bg-[#fdfdfd]" ref={dropdownRef}>
         <div
           ref={containerRef}
-          className="flex items-center border border-[#AFB1AE] rounded-[14px] h-[43px] md:h-[55px] px-3  transition-all"
+          className="flex items-center border rounded-[14px] h-[43px] md:h-[55px] px-3  transition-all"
         >
           {/* Country Selector Button */}
           <button
             type="button"
             onClick={() => setIsOpen(!isOpen)}
-            className="flex items-center gap-2 bg-transparent p-2 outline-none text-[#AFB1AE] text-sm h-full cursor-pointer rounded-lg transition-colors"
+            className="flex items-center gap-2 bg-transparent p-2 outline-none text-[#AFB1AE]/40 text-sm h-full cursor-pointer rounded-lg transition-colors"
           >
             <span className="font-medium">{selectedCountry.dialCode}</span>
             <ChevronDown size={16} className={`transition-transform ${isOpen ? 'rotate-180' : ''}`} />
@@ -207,7 +207,7 @@ const PhoneInput: React.FC<PhoneInputProps> = ({ value, onChange, hideLabel = fa
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Search country..."
-                className="w-full px-3 py-2 text-sm bg-[#fdfdfd] border border-[#AFB1AE] rounded-lg outline-none focus:ring-1 focus:ring-[#98C1A9]"
+                className="w-full px-3 py-2 text-sm bg-[#fdfdfd] border border-[#AFB1AE] rounded-lg outline-none "
               />
             </div>
 

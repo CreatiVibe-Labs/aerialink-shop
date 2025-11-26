@@ -132,14 +132,14 @@ const VerifyCodeForm = () => {
       <BackButton
         href="/forgot-password"
         label="Change Email Address"
-        className="mb-5 max-md:static max-md:mb-5 max-md:-ml-2 font-albert-sans font-[500] text-[12px] lg:text-[14px] leading-[100%] tracking-[0%] text-[#313131]"
+        className="mb-5 max-md:static max-md:mb-5 max-md:-ml-2 font-albert-sans font-[500] text-[12px] lg:text-[14px] leading-[100%] tracking-[0%] text-[#AFB1AE]"
       />
 
       <div className="center-col items-start space-y-3">
-        <h1 className="font-albert-sans font-semibold lg:text-[40px] text-[28px]  leading-[100%] tracking-[0] text-[#313131]">
+        <h1 className="font-albert-sans font-semibold lg:text-[40px] text-[28px]  leading-[100%] tracking-[0] text-[#AFB1AE]">
           Verify Code
         </h1>
-        <p className="font-albert-sans opacity-75 font-[400]  lg:text-[16px] text-[12px] leading-[100%] tracking-[0] text-[#313131]">
+        <p className="font-albert-sans opacity-75 font-[400]  lg:text-[16px] text-[12px] leading-[100%] tracking-[0] text-[#AFB1AE]">
           An authentication code has been sent to your email.
         </p>
       </div>
@@ -149,7 +149,7 @@ const VerifyCodeForm = () => {
         className="w-full max-w-[100%] max-md:max-w-full space-y-5 mt-10"
       >
         <div className="space-y-3">
-          <label className="block text-sm font-medium text-[#313131] capitalize">
+          <label className="block text-sm font-medium text-[#AFB1AE] capitalize">
             Enter Code
           </label>
           <div className="flex gap-2 md:gap-3">
@@ -182,7 +182,7 @@ const VerifyCodeForm = () => {
           )}
         </div>
 
-        <p className="text-sm text-[#313131]  font-[500] ">
+        <p className="text-sm text-[#AFB1AE]  font-[500] ">
           Didn&apos;t get a code?{" "}
           <button
             type="button"

@@ -29,23 +29,23 @@ const OrderFailedPage = () => {
           </div>
         </div>
 
-        <div className="p-6 text-center mt-12 flex flex-col items-center text-min-gray">
+        <div className="p-6 text-center mt-12 flex flex-col items-center text-[#AFB1AE]">
           <h2 className="text-2xl font-semibold mb-1 text-red-600">
             Payment Failed
           </h2>
-          <p className="text-gray-600 mb-6">
+          <p className="text-[#AFB1AE] mb-6">
             We couldn't process your payment. Please try again.
           </p>
 
           <hr className="border-[#EDEDED] w-1/2 mb-6" />
 
           <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-6 w-[80%] max-md:w-[90%] max-sm:w-full">
-            <p className="text-sm text-gray-700 text-left">
+            <p className="text-sm text-[#AFB1AE] text-left">
               <strong className="text-red-600">⚠️ What happened?</strong>
               <br />
               Your payment could not be completed. This could be due to:
             </p>
-            <ul className="text-sm text-gray-700 text-left mt-3 space-y-1 list-disc list-inside">
+            <ul className="text-sm text-[#AFB1AE] text-left mt-3 space-y-1 list-disc list-inside">
               <li>Insufficient funds</li>
               <li>Card declined by bank</li>
               <li>Network connection issue</li>
@@ -62,13 +62,13 @@ const OrderFailedPage = () => {
             </button>
             <button
               onClick={handleGoHome}
-              className="flex-1 bg-gray-200 text-gray-800 px-6 py-3 rounded-lg hover:bg-gray-300 font-semibold transition-colors"
+              className="flex-1 bg-gray-200 text-[#AFB1AE] px-6 py-3 rounded-lg hover:bg-gray-300 font-semibold transition-colors"
             >
               Back to Home
             </button>
           </div>
 
-          <p className="text-xs text-gray-500 mt-6">
+          <p className="text-xs text-[#AFB1AE] mt-6">
             Need help? Contact our support team at support@aerialinkshop.jp
           </p>
         </div>

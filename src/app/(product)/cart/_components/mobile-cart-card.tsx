@@ -55,14 +55,14 @@ const MobileCartCard: React.FC<MobileCartCardProps> = ({
         </div>
         <div className="flex flex-col">
           <span className="text-sm font-medium">{name}</span>
-          <span className="text-xs text-gray-600">¥{Number(price).toLocaleString()}</span>
+          <span className="text-xs text-[#AFB1AE]">¥{Number(price).toLocaleString()}</span>
         </div>
       </div>
 
       {/* Quantity & Size */}
       <div className="flex justify-between  items-end">
         {/* Subtotal */}
-        <div className="text-right text-gray-700 font-medium text-sm">
+        <div className="text-right text-[#AFB1AE] font-medium text-sm">
           Subtotal: ¥{(Number(price) * quantity).toLocaleString()}
         </div>
         <div className="flex flex-col gap-2 items-end">

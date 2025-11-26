@@ -166,13 +166,13 @@ const PhoneInput: React.FC<PhoneInputProps> = ({ value, onChange, hideLabel = fa
       <div className="relative" ref={dropdownRef}>
         <div
           ref={containerRef}
-          className="flex items-center border border-[#C2C2C1] rounded-[14px] h-[43px] md:h-[55px] px-3 bg-white transition-all"
+          className="flex items-center border  rounded-[14px] h-[43px] md:h-[55px] px-3 bg-white transition-all"
         >
           {/* Country Selector Button */}
           <button
             type="button"
             onClick={() => setIsOpen(!isOpen)}
-            className="flex items-center gap-2 bg-transparent p-2 outline-none text-[#AFB1AE] text-sm h-full cursor-pointer rounded-lg transition-colors"
+            className="flex items-center gap-2 bg-transparent p-2 outline-none text-[#AFB1AE]/40 text-[18px] text-sm h-full cursor-pointer rounded-lg transition-colors"
           >
             <span className="font-medium">{selectedCountry.dialCode}</span>
             <ChevronDown size={16} className={`transition-transform ${isOpen ? 'rotate-180' : ''}`} />
@@ -189,7 +189,7 @@ const PhoneInput: React.FC<PhoneInputProps> = ({ value, onChange, hideLabel = fa
             onFocus={handleFocus}
             onBlur={handleBlur}
             placeholder=""
-            className="flex-1 h-full text-sm text-[#AFB1AE]/40 bg-transparent outline-none"
+            className="flex-1 h-full placeholder:text-[#AFB1AE]/40  text-[18px] font-medium text-sm text-[#AFB1AE]/40 bg-transparent outline-none"
             required
             maxLength={15}
           />
@@ -197,15 +197,15 @@ const PhoneInput: React.FC<PhoneInputProps> = ({ value, onChange, hideLabel = fa
 
         {/* Dropdown Menu */}
         {isOpen && (
-          <div className="absolute z-50 w-full mt-2 bg-white border border-[#C2C2C1] rounded-[14px] shadow-lg max-h-[300px] overflow-hidden">
+          <div className="absolute z-50 w-full mt-2 bg-white border  rounded-[14px] shadow-lg max-h-[300px] overflow-hidden">
             {/* Search Input */}
-            <div className="p-3 border-b border-[#C2C2C1]">
+            <div className="p-3 border-b ">
               <input
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Search country..."
-                className="w-full px-3 py-2 text-sm border border-[#C2C2C1] rounded-lg outline-none focus:ring-1 focus:ring-[#98C1A9]"
+                className="w-full px-3 py-2 text-sm border rounded-lg outline-none "
               />
             </div>
 
@@ -222,12 +222,12 @@ const PhoneInput: React.FC<PhoneInputProps> = ({ value, onChange, hideLabel = fa
                     }`}
                   >
                     <span className="text-xs font-bold">{country.code}</span>
-                    <span className="flex-1 text-sm text-[#666664]">{country.name}</span>
-                    <span className="text-sm font-medium text-[#666664]">{country.dialCode}</span>
+                    <span className="flex-1 text-sm text-[#AFB1AE]">{country.name}</span>
+                    <span className="text-sm font-medium text-[#AFB1AE]">{country.dialCode}</span>
                   </button>
                 ))
               ) : (
-                <div className="px-4 py-6 text-center text-sm text-[#666664] opacity-60">
+                <div className="px-4 py-6 text-center text-sm text-[#AFB1AE] opacity-60">
                   No countries found
                 </div>
               )}

@@ -78,7 +78,7 @@ export default function AddressModal({ open, onClose, onSave, initialData }: Mod
       >
         <DialogHeader>
           <DialogTitle className="flex justify-between items-center ">
-            <h3 className="text-[18.86px] leading-[15.72px] font-albert-sans tracking-[4%] lg:text-[36px] font-[500] text-[#666664]">
+            <h3 className="text-[18.86px] leading-[15.72px] font-albert-sans tracking-[4%] lg:text-[36px] font-[500] text-[#AFB1AE]">
               Add Address
             </h3>
             <button
@@ -99,14 +99,11 @@ export default function AddressModal({ open, onClose, onSave, initialData }: Mod
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-[10.96px] lg:gap-[20px] w-full ">
           {/* Full Name */}
           <div className="flex flex-col">
-            <label className="text-[#666664]/40 text-[17px] font-medium mb-1 hidden lg:block">
-              Full Name<span className="text-red-500/40">*</span>
-            </label>
             <input
               type="text"
               placeholder="Full Name"
               {...register("name", { required: "Full name is required" })}
-              className="border text-[#666664] bg-[#F5F5F5] placeholder:text-gray-400 lg:placeholder-transparent w-full h-[52px] rounded-[14px] px-4 py-2 text-sm focus:outline-none"
+              className="border text-[#AFB1AE] placeholder:text-[#AFB1AE] w-full h-[52px] rounded-[14px] px-4 py-2 text-sm focus:outline-none"
             />
             {errors.name && (
               <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
@@ -124,9 +121,6 @@ export default function AddressModal({ open, onClose, onSave, initialData }: Mod
               }}
               render={({ field }) => (
                 <div>
-                  <label className="text-[#666664]/40 text-[17px] font-medium mb-1 hidden lg:block">
-                    Phone Number<span className="text-red-500/40">*</span>
-                  </label>
                   <PhoneInput
                     hideLabel
                     value={field.value || ""}
@@ -142,14 +136,11 @@ export default function AddressModal({ open, onClose, onSave, initialData }: Mod
 
           {/* Address */}
           <div className="flex flex-col">
-            <label className="text-[#666664]/40 text-[17px] font-medium mb-1 hidden lg:block">
-              Street Address<span className="text-red-500/40">*</span>
-            </label>
             <input
               type="text"
               placeholder="Street Address"
               {...register("address1", { required: "Address is required" })}
-              className="border text-[#666664] bg-[#F5F5F5] placeholder:text-gray-400 lg:placeholder-transparent w-full h-[52px] rounded-[14px] px-4 py-2 text-sm focus:outline-none"
+              className="border text-[#AFB1AE] placeholder:text-[#AFB1AE] w-full h-[52px] rounded-[14px] px-4 py-2 text-sm focus:outline-none"
             />
             {errors.address1 && (
               <p className="text-red-500 text-sm mt-1">{errors.address1.message}</p>
@@ -158,35 +149,26 @@ export default function AddressModal({ open, onClose, onSave, initialData }: Mod
 
           {/* Address 2 (Optional) */}
           <div className="flex flex-col">
-            <label className="text-[#666664]/40 text-[17px] font-medium mb-1 hidden lg:block">
-              Apartment, suite, etc. (optional)
-            </label>
             <input
               type="text"
               placeholder="Apartment, suite, etc."
               {...register("address2")}
-              className="border text-[#666664] bg-[#F5F5F5] placeholder:text-gray-400 lg:placeholder-transparent w-full h-[52px] rounded-[14px] px-4 py-2 text-sm focus:outline-none"
+              className="border text-[#AFB1AE] placeholder:text-[#AFB1AE] w-full h-[52px] rounded-[14px] px-4 py-2 text-sm focus:outline-none"
             />
           </div>
 
           {/* Prefecture (Optional) */}
           <div className="flex flex-col">
-            <label className="text-[#666664]/40 text-[17px] font-medium mb-1 hidden lg:block">
-              Prefecture / State (optional)
-            </label>
             <input
               type="text"
               placeholder="Prefecture / State"
               {...register("prefecture")}
-              className="border text-[#666664] bg-[#F5F5F5] placeholder:text-gray-400 lg:placeholder-transparent w-full h-[52px] rounded-[14px] px-4 py-2 text-sm focus:outline-none"
+              className="border text-[#AFB1AE] placeholder:text-[#AFB1AE] w-full h-[52px] rounded-[14px] px-4 py-2 text-sm focus:outline-none"
             />
           </div>
 
           {/* Postal Code */}
           <div className="flex flex-col">
-            <label className="text-[#666664]/40 text-[17px] font-medium mb-1 hidden lg:block">
-              Postal Code<span className="text-red-500/40">*</span>
-            </label>
             <input
               type="text"
               placeholder="Postal Code"
@@ -197,7 +179,7 @@ export default function AddressModal({ open, onClose, onSave, initialData }: Mod
                   message: "Enter a valid postal code",
                 },
               })}
-              className="border text-[#666664] bg-[#F5F5F5] placeholder:text-gray-400 lg:placeholder-transparent w-full h-[52px] rounded-[14px] px-4 py-2 text-sm focus:outline-none"
+              className="border text-[#AFB1AE] placeholder:text-[#AFB1AE] w-full h-[52px] rounded-[14px] px-4 py-2 text-sm focus:outline-none"
             />
             {errors.postal_code && (
               <p className="text-red-500 text-sm mt-1">{errors.postal_code.message}</p>
@@ -206,14 +188,11 @@ export default function AddressModal({ open, onClose, onSave, initialData }: Mod
 
           {/* Delivery Instruction (Optional) */}
           <div className="flex flex-col">
-            <label className="text-[#666664]/40 text-[17px] font-medium mb-1 hidden lg:block">
-              Delivery Instruction (optional)
-            </label>
             <textarea
               placeholder="Special delivery instructions..."
               {...register("delivery_instruction")}
               rows={3}
-              className="border text-[#666664] bg-[#F5F5F5] placeholder:text-gray-400 lg:placeholder-transparent w-full rounded-[14px] px-4 py-2 text-sm focus:outline-none resize-none"
+              className="border text-[#AFB1AE] placeholder:text-[#AFB1AE] w-full rounded-[14px] px-4 py-2 text-sm focus:outline-none resize-none"
             />
           </div>
 
@@ -223,9 +202,9 @@ export default function AddressModal({ open, onClose, onSave, initialData }: Mod
               type="checkbox"
               id="default_address"
               {...register("default")}
-              className="accent-light-gray size-4"
+              className="accent-[#AFB1AE] size-4"
             />
-            <label htmlFor="default_address" className="text-sm text-[#666664]">
+            <label htmlFor="default_address" className="text-sm text-[#AFB1AE]">
               Set as default address
             </label>
           </div>

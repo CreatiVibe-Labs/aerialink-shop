@@ -59,19 +59,19 @@ const Footer = () => {
 
           {/* Links */}
           <div className="flex flex-col gap-2 items-center  md:items-start ">
-            <a href="#" className="text-gray-700 hover:text-primary">
+            <a href="#" className="text-[#AFB1AE] hover:text-primary">
               Terms of service
             </a>
-            <a href="#" className="text-gray-700 hover:text-primary">
+            <a href="#" className="text-[#AFB1AE] hover:text-primary">
               Privacy policy
             </a>
-            <Link href="/policy" className="text-gray-700 hover:text-primary">
+            <Link href="/policy" className="text-[#AFB1AE] hover:text-primary">
               Shipping & Returns Policy
             </Link>
-            <Link href="/installation-guide" className="text-gray-700 hover:text-primary">
+            <Link href="/installation-guide" className="text-[#AFB1AE] hover:text-primary">
               Installation Guide
             </Link>
-            <Link href="/free-samples" className="text-gray-700 hover:text-primary">
+            <Link href="/free-samples" className="text-[#AFB1AE] hover:text-primary">
               Free Samples
             </Link>
           </div>
@@ -79,7 +79,7 @@ const Footer = () => {
           {/* Socials + Payments */}
           <div className="flex flex-col gap-4 items-center md:items-end mt-1.5">
             {/* Social icons */}
-            <div className="flex gap-4 text-gray-600">
+            <div className="flex gap-4 text-[#AFB1AE]">
               {socialLinks.map((item, i) => (
                 <Link key={i} href={item.href}>
                   <div className="hover:bg-primary border border-primary group cursor-pointer rounded-full size-10 center">
@@ -103,7 +103,7 @@ const Footer = () => {
               })}
             </div>
             {/* Bottom Section */}
-            <div className="  pt-4 text-center text-sm text-gray-500">
+            <div className="  pt-4 text-center text-sm text-[#AFB1AE]">
               Aerialink © 2000–2023, All Rights Reserved
             </div>
           </div>
@@ -114,3 +114,4 @@ const Footer = () => {
 };
 
 export default Footer;
+  

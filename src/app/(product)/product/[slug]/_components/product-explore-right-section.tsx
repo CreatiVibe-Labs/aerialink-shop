@@ -495,7 +495,7 @@ const ProductExploreRightSection: React.FC<Props> = ({ variants, onSizeSelect })
               inWishlist ? (
                 <GoHeartFill
                   size={24}
-                  className=" rounded-full text-red-500 "
+                  className=" rounded-full text-[#CCCCFF] "
                 />
               ) : (
                 <GoHeart size={24} className=" rounded-full   " />
@@ -566,7 +566,7 @@ const ProductExploreRightSection: React.FC<Props> = ({ variants, onSizeSelect })
               <h3 className="text-xl font-semibold text-[#AFB1AE]">Check Delivery Availability</h3>
               <button
                 onClick={handleClosePostalModal}
-                className="text-[#AFB1AE] hover:text-gray-600 transition-colors cursor-pointer"
+                className="text-[#AFB1AE] hover:text-[#98C1A9] transition-colors cursor-pointer"
               >
                 <svg
                   width="24"

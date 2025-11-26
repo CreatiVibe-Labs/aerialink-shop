@@ -187,7 +187,7 @@ const Profile: React.FC = () => {
             value={formData.fullname}
             onChange={handleChange}
             disabled={isSubmitting}
-            className="w-full lg:px-4 px-[19px] py-2 border border-[#AFB1AE] text-[#AFB1AE] font-[500] placeholder:text-[#AFB1AE]/40 lg:text-[20px] text-[16px] lg:leading-[24px] leading-[18.86px] font-albert-sans lg:rounded-[14px] rounded-[11px] lg:h-[55px] h-[40px] focus:outline-none  pr-12 disabled:opacity-60"
+            className="w-full lg:px-4 px-[19px] py-2 border  text-[#AFB1AE] font-[500] placeholder:text-[#AFB1AE]/40 lg:text-[20px] text-[16px] lg:leading-[24px] leading-[18.86px] font-albert-sans lg:rounded-[14px] rounded-[11px] lg:h-[55px] h-[40px] focus:outline-none  pr-12 disabled:opacity-60"
           />
         </div>
         {/* Phone Number */}
@@ -205,7 +205,7 @@ const Profile: React.FC = () => {
             value={formData.email}
             onChange={handleChange}
             disabled={isSubmitting}
-            className="w-full lg:px-4 px-[19px] py-2 border border-[#AFB1AE] text-[#AFB1AE] font-[500] placeholder:text-[#AFB1AE]/40 lg:text-[20px] text-[16px] lg:leading-[24px] leading-[18.86px] font-albert-sans lg:rounded-[14px] rounded-[11px] lg:h-[55px] h-[40px] focus:outline-none  pr-12 disabled:opacity-60"
+            className="w-full lg:px-4 px-[19px] py-2 border  text-[#AFB1AE] font-[500] placeholder:text-[#AFB1AE]/40 lg:text-[20px] text-[16px] lg:leading-[24px] leading-[18.86px] font-albert-sans lg:rounded-[14px] rounded-[11px] lg:h-[55px] h-[40px] focus:outline-none  pr-12 disabled:opacity-60"
           />
         </div>
         {/* Password */}
@@ -219,7 +219,7 @@ const Profile: React.FC = () => {
               value={formData.password}
               onChange={handleChange}
               disabled={isSubmitting}
-              className="w-full lg:px-4 px-[19px] py-2 border border-[#AFB1AE] text-[#AFB1AE] font-[500] placeholder:text-[#AFB1AE]/40 lg:text-[20px] text-[16px] lg:leading-[24px] leading-[18.86px] font-albert-sans lg:rounded-[14px] rounded-[11px] lg:h-[55px] h-[40px] focus:outline-none  pr-12 disabled:opacity-60"
+              className="w-full lg:px-4 px-[19px] py-2 border  text-[#AFB1AE] font-[500] placeholder:text-[#AFB1AE]/40 lg:text-[20px] text-[16px] lg:leading-[24px] leading-[18.86px] font-albert-sans lg:rounded-[14px] rounded-[11px] lg:h-[55px] h-[40px] focus:outline-none  pr-12 disabled:opacity-60"
             />
             <button
               type="button"
@@ -241,7 +241,7 @@ const Profile: React.FC = () => {
               value={formData.password_confirmation}
               onChange={handleChange}
               disabled={isSubmitting}
-              className="w-full lg:px-4 px-[19px] py-2 border border-[#AFB1AE] text-[#AFB1AE] font-[500] placeholder:text-[#AFB1AE]/40 lg:text-[20px] text-[16px] lg:leading-[24px] leading-[18.86px] font-albert-sans lg:rounded-[14px] rounded-[11px] lg:h-[55px] h-[40px] focus:outline-none  pr-12 disabled:opacity-60"
+              className="w-full lg:px-4 px-[19px] py-2 border  text-[#AFB1AE] font-[500] placeholder:text-[#AFB1AE]/40 lg:text-[20px] text-[16px] lg:leading-[24px] leading-[18.86px] font-albert-sans lg:rounded-[14px] rounded-[11px] lg:h-[55px] h-[40px] focus:outline-none  pr-12 disabled:opacity-60"
             />
             <button
               type="button"

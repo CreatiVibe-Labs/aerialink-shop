@@ -25,7 +25,7 @@ export default function LoginAlertModal({ open, onClose }: LoginAlertModalProps)
           </DialogTitle>
         </DialogHeader>
 
-        <div className="text-center text-sm text-gray-600 px-4 font-font-albert-sans">
+        <div className="text-center text-sm text-[#AFB1AE] px-4 font-font-albert-sans">
           You must be logged in to perform this action.
         </div>
 
