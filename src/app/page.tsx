@@ -7,7 +7,7 @@ import React from "react";
 const HomePage = () => {
   return (
     <>
-      <div className="flex xl:flex-row lg:flex-row md:flex-row flex-col-reverse gap-5 items-stretch bg-[#fdfdfd]">
+      <div className="flex xl:flex-row lg:flex-row md:flex-row flex-col-reverse gap-5 max-sm:pt-10 items-stretch bg-[#fdfdfd]">
         {/* left */}
         <div className="xl:w-[20%] lg:w-[20%] md:w-[30%] flex">
           <HomeLeftSection />

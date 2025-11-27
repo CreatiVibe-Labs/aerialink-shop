@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <div className="px-4 pt-8 md:pt-10 pb-16 md:pb-20">
+    <div className="px-4 pt-8 md:pt-10 pb-16  md:pb-20 max-sm:pt-10 max-sm:pb-10">
       {/* Breadcrumb */}
       <div className="w-full max-w-7xl mx-auto mb-6 ">
         <nav className="text-sm md:text-[14px] text-[#9AA09D]">
@@ -17,22 +17,22 @@ export default function NotFound() {
       <div className="w-full max-w-7xl mx-auto flex flex-col items-center text-center">
         {/* Illustration */}
         <div className="mb-8">
-        <Image
-          src="/assets/error/error-image.png" // 👉 replace with your image path
-          alt="Lost illustration"
-          width={350}
-          height={300}
-          className="mx-auto"
-        />
+          <Image
+            src="/assets/error/error-image.png" // 👉 replace with your image path
+            alt="Lost illustration"
+            width={350}
+            height={300}
+            className="mx-auto w-full max-w-[280px] md:max-w-[350px] h-auto"
+          />
         </div>
 
         {/* Title */}
-        <h1 className="xl:text-[60px] lg:text-[60px] md:text-4xl font-extrabold text-[#AFB1AE] mb-2">
+        <h1 className="text-2xl md:text-4xl lg:text-[60px] xl:text-[60px] font-extrabold text-[#AFB1AE] mb-2">
           Looks like you are lost.
         </h1>
 
         {/* Subtitle */}
-        <p className="font-extrabold text-lg text-[#AFB1AE]">
+        <p className="font-extrabold text-sm md:text-lg text-[#AFB1AE] max-w-md mx-auto">
           Oops! The page you are looking for does not exist. It might have been
           moved or deleted.
         </p>
@@ -40,7 +40,7 @@ export default function NotFound() {
         {/* Button */}
         <Link
           href="/"
-          className="bg-primary text-white font-extrabold text-[20px] mt-10 px-14 py-3 rounded-2xl flex items-center justify-center gap-3"
+          className="bg-primary text-white font-extrabold text-base md:text-[20px] mt-10 px-10 md:px-14 py-3 rounded-2xl flex items-center justify-center gap-3"
         >
           Go Back To Homepage
           <svg

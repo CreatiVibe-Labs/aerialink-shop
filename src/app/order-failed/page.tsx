@@ -16,7 +16,7 @@ const OrderFailedPage = () => {
   };
 
   return (
-    <div className="flex flex-col pt-10 pb-20 items-center justify-center p-4 max-sm:p-2 relative ">
+    <div className="flex flex-col pt-10 pb-20 items-center justify-center  max-sm:pt-10 max-sm:pb-10 relative ">
       <div
         className="w-full max-w-2xl bg-white relative rounded-lg"
         style={{

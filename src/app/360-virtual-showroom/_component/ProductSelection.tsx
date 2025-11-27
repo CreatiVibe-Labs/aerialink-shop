@@ -18,6 +18,7 @@ export default function ShowroomProductSelection() {
     null,
     null,
     null,
+    null,
   ]);
   const [openPopup, setOpenPopup] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(0);
@@ -76,7 +77,7 @@ export default function ShowroomProductSelection() {
         // Convert response to blob and create object URL
         const blob = await response.blob();
         const blobUrl = URL.createObjectURL(blob);
-        
+
         console.log("CORS floor image loaded:", blobUrl);
         setCorsFloorImage(blobUrl);
 
@@ -147,9 +148,9 @@ export default function ShowroomProductSelection() {
   }, [openPopup]);
   return (
     <>
-      <div className="w-full">
+      <div className="w-full px-4 md:px-0">
         <div
-          className={`max-w-[500px] flex flex-col items-center mx-auto p-5 ${selectedProduct != 0 ? "" : "pt-15 gap-5"
+          className={`max-w-[500px] w-full flex flex-col items-center mx-auto p-5 ${selectedProduct != 0 ? "" : "pt-15 gap-5"
             } mt-10 bg-[#FFFDFA] rounded-lg shadow-[0px_1px_2px_0px_rgba(60,64,67,0.3),0px_2px_6px_2px_rgba(60,64,67,0.15)]`}
         >
           {selectedProduct == 0 && (
@@ -161,7 +162,7 @@ export default function ShowroomProductSelection() {
                 alt="logo"
                 className="w-24 h-auto object-cover"
               />
-              <p className="xl:text-5xl text-3xl xl:mt-4 text-center text-[#AFB1AE] font-bold">
+              <p className="xl:text-5xl md:text-4xl text-3xl xl:mt-4 text-center text-[#AFB1AE] font-bold">
                 Select a Product
               </p>
             </>
@@ -192,9 +193,9 @@ export default function ShowroomProductSelection() {
         </div>
       </div>
       {/* Media Uploader */}
-      <div className="flex xl:flex-row md:flex-row flex-col xl:gap-10 gap-5 xl:mt-20 mt-10">
+      <div className="flex flex-row xl:gap-10 gap-2 xl:mt-20 mt-10 px-4 md:px-0">
         {Array.from({ length: 3 }).map((_, index) => (
-          <div key={index} className="relative w-full h-60">
+          <div key={index} className="relative w-full xl:h-60 h-28">
             {/* Remove Button */}
             {selectedImages[index] && (
               <button
@@ -205,13 +206,13 @@ export default function ShowroomProductSelection() {
                   updatedImages[index] = null;
                   setSelectedImages(updatedImages);
                 }}
-                className="absolute top-2 right-2 w-6 h-6 bg-white rounded-full flex items-center justify-center text-black z-10 shadow cursor-pointer"
+                className="absolute top-1 right-1 w-5 h-5 xl:top-2 xl:right-2 xl:w-6 xl:h-6 bg-white rounded-full flex items-center justify-center text-black z-10 shadow cursor-pointer"
               >
-                ×
+                <span className="text-sm xl:text-base">×</span>
               </button>
             )}
 
-            <label className="w-full h-full border-2 border-dashed border-[#98C1A9] rounded-lg cursor-pointer flex flex-col items-center justify-center text-center transition gap-3">
+            <label className="w-full h-full border-2 border-dashed border-[#98C1A9] rounded-lg cursor-pointer flex flex-col items-center justify-center text-center transition gap-1 xl:gap-3 p-1">
               {selectedImages[index] ? (
                 <img
                   src={URL.createObjectURL(selectedImages[index]!)}
@@ -226,6 +227,7 @@ export default function ShowroomProductSelection() {
                     viewBox="0 0 22 22"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
+                    className="w-4 h-4 xl:w-6 xl:h-6"
                   >
                     <g clipPath="url(#clip0_3133_26078)">
                       <path
@@ -257,8 +259,8 @@ export default function ShowroomProductSelection() {
                     </defs>
                   </svg>
 
-                  <h3 className="text-3xl text-primary">Upload photo</h3>
-                  <p className="text-base text-primary">
+                  <h3 className="text-xs xl:text-3xl text-primary font-bold xl:font-normal">Upload</h3>
+                  <p className="text-[10px] xl:text-base text-primary hidden xl:block">
                     {index === 0 && <span>(left side wall)</span>}
                     {index === 1 && <span>(right side wall)</span>}
                     {index === 2 && <span>(back side wall)</span>}
@@ -278,7 +280,7 @@ export default function ShowroomProductSelection() {
       </div>
 
       {/* 360 Preview */}
-      <div>
+      <div className="px-4 md:px-0">
         {selectedProduct != 0 &&
           selectedImages.length === 3 &&
           selectedImages.every((image) => image !== null) && (
@@ -314,18 +316,19 @@ export default function ShowroomProductSelection() {
         <>
           <div className="background bg-[#666664]/60 fixed top-0 left-0 w-full h-screen z-[12000]"></div>
 
-          <div className="popupWrapper fixed top-0 left-0 w-full h-screen z-[12001] overflow-auto flex items-center justify-center py-10">
+          <div className="popupWrapper fixed top-0 left-0 w-full h-screen z-[12001] overflow-auto flex items-center justify-center py-10 px-4">
             <div className="popupContent max-w-[700px] w-full relative rounded-lg p-5 bg-[#FFFDFA] shadow-lg max-h-[90vh] overflow-auto">
               <div
                 onClick={() => setOpenPopup(false)}
                 className="close cursor-pointer absolute top-3 right-3"
               >
                 <svg
-                  width="65"
-                  height="65"
+                  width="40"
+                  height="40"
                   viewBox="0 0 65 65"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
+                  className="md:w-[65px] md:h-[65px]"
                 >
                   <circle
                     cx="32.0855"
@@ -343,13 +346,13 @@ export default function ShowroomProductSelection() {
                   />
                 </svg>
               </div>
-              <div className="popupBody mt-20">
+              <div className="popupBody mt-16 md:mt-20">
                 {products.length === 0 ? (
                   <div className="text-center py-10">
                     <p className="text-[#AFB1AE]">No products available</p>
                   </div>
                 ) : (
-                  <div className="grid xl:grid-cols-3 grid-cols-2  gap-4">
+                  <div className="grid xl:grid-cols-3 md:grid-cols-3 grid-cols-2 gap-4">
                     {products.map((product) => (
                       <div
                         key={product.id}

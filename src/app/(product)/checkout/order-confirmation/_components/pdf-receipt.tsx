@@ -43,7 +43,7 @@ const PDFReceipt = forwardRef<HTMLDivElement, PDFReceiptProps>(
 
           <hr className="border-gray-300 w-3/4 mb-6" />
 
-          <h3 className="text-xl font-semibold mb-4 text-[#AFB1AE]">Total Payment</h3> 
+          <h3 className="text-xl font-semibold mb-4 text-[#AFB1AE]">Total Payment</h3>
           <p className="text-4xl font-bold text-[#AFB1AE] mb-6">{totalPayment}</p>
 
           <div className="grid grid-cols-2 gap-4 text-left text-base w-[80%]">

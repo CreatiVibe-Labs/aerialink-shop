@@ -65,7 +65,7 @@ const OrderConfirmationPage = () => {
 
   // Clear cart when order is successful (runs after getting items)
   useEffect(() => {
-    if (status === "success" && clearCart === "true" ) {
+    if (status === "success" && clearCart === "true") {
       localStorage.removeItem("cart_items");
       window.dispatchEvent(new Event("storage"));
     }
@@ -149,7 +149,7 @@ const OrderConfirmationPage = () => {
   };
 
   return (
-    <div className="py-10 pb-20 flex flex-col items-center justify-center p-4 max-sm:p-2 relative">
+    <div className="py-10 pb-20 flex flex-col items-center justify-center max-sm:p-2 max-sm:pt-10 max-sm:pb-10 relative">
       {/* Error Message Display */}
       {status === "error" && errorMessage && (
         <div className="w-full max-w-4xl mb-6 bg-red-50 border-2 border-red-500 rounded-lg p-6">
