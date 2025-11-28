@@ -186,7 +186,7 @@ export default function AboutPage() {
             <img
               src="/assets/about/product.jpg"
               alt="Product 2"
-              className="rounded-2xl border-0 md:w-[603px] md:h-[432px]"
+              className="rounded-2xl border-0 w-full md:h-[432px] object-cover"
             />
           </div>
 
@@ -213,7 +213,8 @@ export default function AboutPage() {
       </section>
 
       {/* Contact Info Section */}
-      <section className="w-full max-w-7xl py-10 flex flex-col-reverse md:flex-row items-center md:items-start gap-[16px] lg:gap-[215px] ">
+      {/* Contact Info Section */}
+      <section className="w-full max-w-7xl py-10 flex flex-col-reverse md:flex-row items-center md:items-start gap-[16px] lg:gap-10 xl:gap-[215px]  ">
         <div className="flex-1 order-1 md:order-1 my-auto gap-[17px] flex flex-col w-full">
           <h2 className=" lg:text-[40px] text-[28px] font-[800] text-[#AFB1AE] leading-[27.17px]">
             Contact Information
@@ -269,7 +270,7 @@ export default function AboutPage() {
             allowFullScreen
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
-            className="rounded-2xl border-0 md:w-[603px] md:h-[432px]"
+            className="rounded-2xl border-0 w-full md:h-[432px]"
           ></iframe>
         </div>
       </section>
@@ -286,7 +287,7 @@ export default function AboutPage() {
           >
             {/* Full Name */}
             <div className="flex flex-col gap-[8.85px]">
-              
+
               <input
                 name="name"
                 type="text"
@@ -303,7 +304,7 @@ export default function AboutPage() {
 
             {/* Email */}
             <div className="flex flex-col gap-[8.85px]">
-              
+
               <input
                 name="email"
                 type="email"
@@ -317,7 +318,7 @@ export default function AboutPage() {
 
             {/* Order Number / Date */}
             <div className="flex flex-col gap-[8.85px]">
-             
+
               <input
                 name="order"
                 type="text"
@@ -330,7 +331,7 @@ export default function AboutPage() {
 
             {/* Message */}
             <div className="flex flex-col gap-[8.85px] md:col-span-2">
-            
+
               <textarea
                 name="message"
                 value={formData.message}
@@ -365,25 +366,25 @@ export default function AboutPage() {
             Our Products Info
           </h2>
         </div>
-        <div className="w-full grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 py-10 gap-3 md:gap-6">
+        <div className="w-full grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 py-10 gap-3 md:gap-6 lg:gap-4 xl:gap-6">
           {cardData.map((card, idx) => (
             <div
               key={idx}
-              className="bg-white rounded-[14px] aspect-square px-3 md:px-[25px] py-4 md:py-[50px]
+              className="bg-white rounded-[14px] aspect-[153/130] md:aspect-square px-2 py-3 md:px-[25px] md:py-[50px] lg:px-4 lg:py-6 xl:px-[25px] xl:py-[50px]
            shadow-[0px_2.25px_11.26px_2.25px_#00000033]
             border border-[#0000004D] flex flex-col items-center text-center justify-between"
             >
-              <h1 className="text-[20px] sm:text-[22px] md:text-[36px] text-[#AFB1AE] font-bold leading-[1.1]  mt-1 md:mt-0">
+              <h1 className="text-[16px] sm:text-[22px] md:text-[36px] lg:text-[24px] xl:text-[36px] text-[#AFB1AE] font-bold leading-[1.1]  mt-1 md:mt-0">
                 {card.title}
               </h1>
-              <p className="text-[#AFB1AE] text-[8px] leading-[12px] md:text-[16px] md:leading-[19px] font-[400] px-1 md:px-0">
+              <p className="text-[#AFB1AE] text-[9px] leading-[11px] md:text-[16px] md:leading-[19px] lg:text-[12px] lg:leading-[16px] xl:text-[16px] xl:leading-[19px] font-[400] px-1 md:px-0 line-clamp-3 md:line-clamp-none">
                 {card.text}
               </p>
               <button
                 type="button"
-                className="bg-[#98C1A9] text-white px-4 md:px-[51px] py-2.5 md:py-[13px]
-              rounded-[14px] text-[14px] md:text-[17.14px] leading-[20px] md:leading-[25.71px] font-[500] cursor-pointer
-              h-[38px] md:h-[52px] w-[70%] md:w-[195px] hover:bg-[#8ab49a] transition-all mb-1 md:mb-0"
+                className="bg-[#98C1A9] text-white px-4 md:px-[51px] py-1 md:py-[13px] lg:px-6 lg:py-2 xl:px-[51px] xl:py-[13px]
+              rounded-[14px] text-[10px] md:text-[17.14px] lg:text-[14px] xl:text-[17.14px] leading-[20px] md:leading-[25.71px] xl:leading-[25.71px] font-[500] cursor-pointer
+              h-[30px] md:h-[52px] lg:h-[40px] xl:h-[52px] w-[80%] md:w-[195px] lg:w-auto xl:w-[195px] hover:bg-[#8ab49a] transition-all mb-0 md:mb-0"
               >
                 {card.btnText}
               </button>

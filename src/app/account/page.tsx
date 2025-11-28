@@ -78,7 +78,7 @@ const AccountPage: React.FC = () => {
         </div>
 
 
-        <div className="w-full max-w-6xl mx-auto">
+        <div className="w-full max-w-6xl mb-10 mx-auto">
           {" "}
           <ProfileCardsSection />
         </div>

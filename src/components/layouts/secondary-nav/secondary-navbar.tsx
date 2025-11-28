@@ -13,6 +13,8 @@ import { useProfile } from "@/contexts/profile-context";
 import { PiSpinnerGapBold } from "react-icons/pi";
 import { useLanguage } from "@/contexts/language-context";
 import { useCart } from "@/contexts/cart-context";
+import { AiOutlineHome, AiOutlineShoppingCart, AiOutlineUser } from "react-icons/ai";
+import { PiCoinsLight } from "react-icons/pi";
 
 const SecondaryNavbar = () => {
   const { language, setLanguage } = useLanguage();
@@ -102,6 +104,35 @@ const SecondaryNavbar = () => {
           </Link>
         </div>
       )}
+
+      {/* Mobile Bottom Navigation */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-white border-t border-gray-200 shadow-[0_-2px_8px_rgba(0,0,0,0.06)]">
+        <div className="mx-auto max-w-7xl px-6 py-2 flex items-center justify-between">
+          {/* Home */}
+          <Link href="/" className="flex flex-col items-center text-gray-700">
+            <AiOutlineHome size={22} />
+            <span className="text-[11px] mt-1">Home</span>
+          </Link>
+
+          {/* Points Management */}
+          <Link href="/points-management" className="flex flex-col items-center text-gray-700">
+            <PiCoinsLight size={22} />
+            <span className="text-[11px] mt-1">Points</span>
+          </Link>
+
+          {/* Cart */}
+          <Link href="/product/cart" className="relative flex flex-col items-center text-gray-700">
+            <AiOutlineShoppingCart size={22} />
+            <span className="text-[11px] mt-1">Cart</span>
+          </Link>
+
+          {/* Profile */}
+          <Link href={user ? "/account" : "/login"} className="flex flex-col items-center text-gray-700">
+            <AiOutlineUser size={22} />
+            <span className="text-[11px] mt-1">Profile</span>
+          </Link>
+        </div>
+      </div>
     </div>
   );
 };

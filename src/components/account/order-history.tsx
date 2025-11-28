@@ -84,11 +84,9 @@ const OrderHistory = () => {
     // </div>
     <>
       <div className="flex mt-10">
-        <section
-          className="w-full max-w-6xl mx-auto rounded-[14px] overflow-x-auto scrollbar-green"
-        >
+        <section className="w-full max-w-6xl mx-auto rounded-[14px]">
           <div className="w-full max-w-6xl mx-auto">
-            {/* Header Row */}
+            {/* Desktop Header Row */}
             <div className="hidden md:grid grid-cols-4 items-center h-[69px] bg-[#98C1A9] text-white font-medium text-[20px] rounded-[14px] py-3 px-6">
               <span>Invoice No</span>
               <span>Date</span>
@@ -96,17 +94,70 @@ const OrderHistory = () => {
               <span>Status</span>
             </div>
 
-            {/* Orders List */}
-            <div className="flex flex-col gap-5 pt-2">
+            {/* Mobile View (Single Scroll Container) */}
+            <div className="md:hidden w-full overflow-x-auto scrollbar-green pb-4">
+              <div className="min-w-[500px]">
+                {/* Mobile Header */}
+                <div className="grid grid-cols-4 items-center h-[50px] bg-[#98C1A9] text-white font-medium text-[16px] rounded-[10px] px-4 mb-4">
+                  <span>Invoice No</span>
+                  <span>Date</span>
+                  <span>Amount</span>
+                  <span>Status</span>
+                </div>
+
+                {/* Mobile Rows */}
+                <div className="flex flex-col gap-4">
+                  {loading && orders.length === 0 ? (
+                    <div className="text-center py-8 text-[#AFB1AE]">
+                      Loading orders...
+                    </div>
+                  ) : orders.length === 0 ? (
+                    <div className="text-center py-8 text-[#AFB1AE]">
+                      No orders found
+                    </div>
+                  ) : (
+                    orders.map((order, index) => (
+                      <div
+                        key={`mobile-${order.id}-${index}`}
+                        className="grid grid-cols-4 items-center bg-white text-[#AFB1AE] rounded-[10px] h-[50px] px-4 shadow-sm text-[15px]"
+                      >
+                        <span className="font-medium">#{order.id}</span>
+                        <span>{formatDate(order.created_at)}</span>
+                        <span className="text-[#98C1A9] font-semibold">
+                          {formatAmount(order.total)}
+                        </span>
+                        <span
+                          className={`font-[500] ${formatStatus(order.status) === "Delivered"
+                            ? "text-[#AFB1AE]"
+                            : formatStatus(order.status) === "Cancelled"
+                              ? "text-red-500"
+                              : "text-[#98C1A9]"
+                            }`}
+                        >
+                          {formatStatus(order.status)}
+                        </span>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Desktop Orders List */}
+            <div className="hidden md:flex flex-col gap-5 pt-2">
               {loading && orders.length === 0 ? (
-                <div className="text-center py-8 text-[#AFB1AE]">Loading orders...</div>
+                <div className="text-center py-8 text-[#AFB1AE]">
+                  Loading orders...
+                </div>
               ) : orders.length === 0 ? (
-                <div className="text-center py-8 text-[#AFB1AE]">No orders found</div>
+                <div className="text-center py-8 text-[#AFB1AE]">
+                  No orders found
+                </div>
               ) : (
                 orders.map((order, index) => (
                   <div
-                    key={`${order.id}-${index}`}
-                    className="grid grid-cols-4 items-center  text-[#AFB1AE] rounded-[14px] h-[84px] py-4 px-6 shadow-sm text-2xl"
+                    key={`desktop-${order.id}-${index}`}
+                    className="grid grid-cols-4 items-center text-[#AFB1AE] rounded-[14px] h-[84px] py-4 px-6 shadow-sm text-2xl bg-white"
                   >
                     <span className="font-medium">#{order.id}</span>
                     <span>{formatDate(order.created_at)}</span>
@@ -114,13 +165,12 @@ const OrderHistory = () => {
                       {formatAmount(order.total)}
                     </span>
                     <span
-                      className={`font-[500] text-[24px] ${
-                        formatStatus(order.status) === "Delivered"
-                          ? "text-[#AFB1AE]"
-                          : formatStatus(order.status) === "Cancelled"
+                      className={`font-[500] text-[24px] ${formatStatus(order.status) === "Delivered"
+                        ? "text-[#AFB1AE]"
+                        : formatStatus(order.status) === "Cancelled"
                           ? "text-red-500"
                           : "text-[#98C1A9]"
-                      }`}
+                        }`}
                     >
                       {formatStatus(order.status)}
                     </span>
