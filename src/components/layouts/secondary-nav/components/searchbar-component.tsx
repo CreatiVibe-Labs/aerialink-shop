@@ -5,6 +5,7 @@ import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useLanguage } from "@/contexts/language-context";
+import { getProductTitle } from "@/lib/language-helpers";
 
 interface Product {
   id: number;
@@ -139,10 +140,7 @@ const SearchbarComponent = () => {
           ) : searchResults.length > 0 ? (
             <div className="space-y-1 p-2">
               {searchResults.map((item) => {
-                const title =
-                  language === "EN"
-                    ? item.title_en || "No name"
-                    : item.title_jp || "No name";
+                const title = getProductTitle(item.title_en, item.title_jp, language);
 
                 const imageUrl = item.images?.[0]?.url || "/placeholder.png";
                 const prices = item?.variants?.map(v => parseFloat(v.price)) || [];

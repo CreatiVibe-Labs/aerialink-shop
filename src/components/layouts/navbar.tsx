@@ -3,10 +3,23 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { FiShoppingCart } from "react-icons/fi";
+import { useCart } from "@/contexts/cart-context";
 import { IoIosMenu } from "react-icons/io";
+import { useProfile } from "@/contexts/profile-context";
+import { PiSpinnerGapBold } from "react-icons/pi";
+import { useLanguage } from "@/contexts/language-context";
+
+
+import { BiUser } from "react-icons/bi";
+import { TfiWorld } from "react-icons/tfi";
+import { useRouter } from "next/navigation";
+
+
+
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { cartItems } = useCart();
 
   const handleToggle = () => {
     setIsOpen(!isOpen);
@@ -48,11 +61,15 @@ const Navbar = () => {
         </div>
         {/* shoping cart for mobile */}
         <div className="md:hidden relative">
-          <FiShoppingCart size={32} strokeWidth={1} color="white" />
-          {/* count */}
-          <div className="bg-white center absolute rounded-full size-4 text-xs top-0 -right-2 text-black">
-            12
-          </div>
+          <Link href="/cart" aria-label="View cart" className="relative inline-block" onClick={(e)=>{e.preventDefault(); window.location.href='/cart';}}>
+            <FiShoppingCart size={32} strokeWidth={1} color="white" />
+            {/* count */}
+            {cartItems.length > 0 && (
+              <div className="bg-white center absolute rounded-full size-4 text-[10px] top-0 -right-2 text-primary">
+                {cartItems.length}
+              </div>
+            )}
+          </Link>
         </div>
         {/* Desktop Navigation */}
         <ul className="hidden md:flex xl:space-x-16 lg:space-x-16 md:space-x-10 font-semibold xl:text-2xl lg:text-xl md:text-lg">
@@ -164,6 +181,7 @@ const Navbar = () => {
           </div>
         </div>
       </div>
+      
     </nav>
   );
 };

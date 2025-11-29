@@ -19,6 +19,7 @@ import { PiCoinsLight } from "react-icons/pi";
 const SecondaryNavbar = () => {
   const { language, setLanguage } = useLanguage();
   const { user, loading, logout } = useProfile();
+  const { cartItems } = useCart();
 
   const router = useRouter();
 
@@ -95,7 +96,7 @@ const SecondaryNavbar = () => {
           onChange={(val: string) => console.log("Dropdown changed:", val)}
         />
       ) : (
-        <div className="max-md:hidden relative max-w-fit z-[30] flex flex-col items-center">
+        <div className="max-md:hidden relative max-w-fit z-[30] flex flex-col items-center p">
           <Link
             href="/login"
             className="text-white bg-primary rounded-2xl px-10 py-2 flex items-center justify-center space-x-2 cursor-pointer select-none"
@@ -105,34 +106,7 @@ const SecondaryNavbar = () => {
         </div>
       )}
 
-      {/* Mobile Bottom Navigation */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-white border-t border-gray-200 shadow-[0_-2px_8px_rgba(0,0,0,0.06)]">
-        <div className="mx-auto max-w-7xl px-6 py-2 flex items-center justify-between">
-          {/* Home */}
-          <Link href="/" className="flex flex-col items-center text-gray-700">
-            <AiOutlineHome size={22} />
-            <span className="text-[11px] mt-1">Home</span>
-          </Link>
-
-          {/* Points Management */}
-          <Link href="/points-management" className="flex flex-col items-center text-gray-700">
-            <PiCoinsLight size={22} />
-            <span className="text-[11px] mt-1">Points</span>
-          </Link>
-
-          {/* Cart */}
-          <Link href="/product/cart" className="relative flex flex-col items-center text-gray-700">
-            <AiOutlineShoppingCart size={22} />
-            <span className="text-[11px] mt-1">Cart</span>
-          </Link>
-
-          {/* Profile */}
-          <Link href={user ? "/account" : "/login"} className="flex flex-col items-center text-gray-700">
-            <AiOutlineUser size={22} />
-            <span className="text-[11px] mt-1">Profile</span>
-          </Link>
-        </div>
-      </div>
+      {/* Mobile Bottom Navigation removed — now separate component */}
     </div>
   );
 };

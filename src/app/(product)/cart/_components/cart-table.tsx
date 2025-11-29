@@ -280,7 +280,7 @@ const CartTable: React.FC<CartTableProps> = ({
               <tr key={item.id} className="shadow-xs rounded-xl text-[#AFB1AE]">
                 {/* Product Column */}
                 <td className="py-3 pl-6 flex items-center gap-3">
-                  <div className="relative w-16 h-16 p-0.5 border-2 border-primary rounded-xl">
+                  <div className="relative w-16 h-16 p-0.5 border-2 border-gray-300 rounded-xl">
                     <img
                       src={hasEnrichedData ? enrichedItem.images?.[0]?.url || "/fallback-image.png" : "/fallback-image.png"}
                       alt={hasEnrichedData ? (language === "EN" ? enrichedItem.title_en || enrichedItem.title_jp || "Product" : enrichedItem.title_jp || enrichedItem.title_en || "Product") : "Product"}
@@ -330,7 +330,7 @@ const CartTable: React.FC<CartTableProps> = ({
                 {/* Room Type Dropdown */}
                 <td className="py-3 text-sm">
                   <Dropdown
-                    className="bg-transparent border border-light-gray text-[#AFB1AE]! max-md:py-1.5 text-sm px-5 rounded-xl"
+                    className="bg-transparent border border-gray-300 text-[#AFB1AE]! max-md:py-1.5 text-sm px-5 rounded-xl"
                     DropDownclassName={`bg-white text-[#AFB1AE]! !z-[${50 + index}]`}
                     hideLabelOnMobile={false}
                     label={item.room_type || "Select Room"}
@@ -360,7 +360,7 @@ const CartTable: React.FC<CartTableProps> = ({
                 {/* Size Dropdown */}
                 <td className="py-3 text-sm">
                   <Dropdown
-                    className="bg-transparent border border-light-gray text-[#AFB1AE]! max-md:py-1.5 text-sm px-5 rounded-xl"
+                    className="bg-transparent border border-gray-300 text-[#AFB1AE]! max-md:py-1.5 text-sm px-5 rounded-xl"
                     DropDownclassName={`bg-white text-min-gray! !z-[${40 + index}]`}
                     hideLabelOnMobile={false}
                     label={item.size || "Select Size"}

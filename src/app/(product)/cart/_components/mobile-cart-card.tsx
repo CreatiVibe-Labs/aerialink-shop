@@ -149,7 +149,7 @@ const MobileCartCard: React.FC<MobileCartCardProps> = ({
         <div className="grid grid-cols-2 gap-3">
           {/* Room Type */}
           <Dropdown
-            className="bg-transparent border border-light-gray text-[#AFB1AE]! text-xs px-3 py-2 rounded-lg w-full"
+            className="bg-transparent border border-gray-300 text-[#AFB1AE]! text-xs px-3 py-2 rounded-lg w-full"
             DropDownclassName={`bg-white text-[#AFB1AE]! !z-[${50 + index}]`}
             hideLabelOnMobile={false}
             label={roomType || "Room Type"}
@@ -159,7 +159,7 @@ const MobileCartCard: React.FC<MobileCartCardProps> = ({
 
           {/* Size */}
           <Dropdown
-            className="bg-transparent border border-light-gray text-[#AFB1AE]! text-xs px-3 py-2 rounded-lg w-full"
+            className="bg-transparent border border-gray-300 text-[#AFB1AE]! text-xs px-3 py-2 rounded-lg w-full"
             DropDownclassName={`bg-white text-[#AFB1AE]! !z-[${40 + index}]`}
             hideLabelOnMobile={false}
             label={size || "Size"}

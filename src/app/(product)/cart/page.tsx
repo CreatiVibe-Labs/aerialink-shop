@@ -151,6 +151,18 @@ const CartPage = () => {
         })}
       </div>
 
+      {/* Info: review before payment (placed under product list) */}
+      <div className="w-full mt-4">
+        {/* Mobile */}
+        <p className="md:hidden text-red-500 text-base">
+          Don’t worry you will be able to review your order before payment
+        </p>
+        {/* Desktop */}
+        <p className="hidden md:block text-red-500 text-base">
+          Don’t worry you will be able to review your order before payment
+        </p>
+      </div>
+
       {/* Summary */}
       <CartSummary
         subtotal={subtotal}
