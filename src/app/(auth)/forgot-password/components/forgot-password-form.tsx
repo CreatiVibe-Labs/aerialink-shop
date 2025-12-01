@@ -64,6 +64,7 @@ const ForgotPasswordForm = () => {
       >
         <div className="space-y-0.5">
           <Input
+            className="text-[#AFB1AE] border border-gray-300"
             type="email"
             label="email"
             placeholder=""

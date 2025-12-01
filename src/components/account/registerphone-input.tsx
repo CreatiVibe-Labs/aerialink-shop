@@ -157,7 +157,7 @@ const PhoneInput: React.FC<PhoneInputProps> = ({ value, onChange, hideLabel = fa
   return (
     <div className="flex flex-col w-full relative">
       {!hideLabel && (
-        <label className="absolute -top-2 left-4 bg-white px-1 text-[14px] leading-[100%] tracking-[0] text-[#AFB1AE] font-[Albert_Sans] font-normal z-10 capitalize">
+        <label className="absolute -top-2 left-4  bg-[#fdfdfd] px-1 text-[14px] leading-[100%] tracking-[0] text-[#AFB1AE] font-[Albert_Sans] font-normal z-10 capitalize">
           {label}
         </label>
       )}
@@ -165,7 +165,7 @@ const PhoneInput: React.FC<PhoneInputProps> = ({ value, onChange, hideLabel = fa
       <div className="relative w-full" ref={dropdownRef}>
         <div
           ref={containerRef}
-          className="height w-full flex items-center border border-[#79747E] opacity-75 rounded-[14px] bg-white px-3 transition-all focus-within:border-gray-900"
+          className="height w-full flex items-center border border-gray-300 opacity-75 rounded-[14px] bg-[#fdfdfd] px-3 transition-all focus-within:border-gray-900"
         >
           {/* Country Selector Button */}
           <button

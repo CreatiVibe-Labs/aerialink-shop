@@ -15,7 +15,7 @@ const PointsManagementPage = () => {
   >("tier-summary");
 
   return (
-    <div className="max-w-7xl mx-auto min-h-screen py-5">
+    <div className="max-w-7xl mx-auto min-h-screen py-5 max-sm:pb-5 max-sm:pt-0">
       <BreadCrumbs className="max-md:hidden" />
 
       {/* Points bar */}

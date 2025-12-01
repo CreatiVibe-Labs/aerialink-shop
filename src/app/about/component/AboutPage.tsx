@@ -371,7 +371,7 @@ export default function AboutPage() {
             <div
               key={idx}
               className="bg-white rounded-[14px] aspect-[153/130] md:aspect-square px-2 py-3 md:px-[25px] md:py-[50px] lg:px-4 lg:py-6 xl:px-[25px] xl:py-[50px]
-           shadow-[0px_2.25px_11.26px_2.25px_#00000033]
+           shadow-sm
             border border-[#0000004D] flex flex-col items-center text-center justify-between"
             >
               <h1 className="text-[16px] sm:text-[22px] md:text-[36px] lg:text-[24px] xl:text-[36px] text-[#AFB1AE] font-bold leading-[1.1]  mt-1 md:mt-0">

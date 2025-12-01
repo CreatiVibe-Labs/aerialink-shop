@@ -361,7 +361,7 @@ const CartTable: React.FC<CartTableProps> = ({
                 <td className="py-3 text-sm">
                   <Dropdown
                     className="bg-transparent border border-gray-300 text-[#AFB1AE]! max-md:py-1.5 text-sm px-5 rounded-xl"
-                    DropDownclassName={`bg-white text-min-gray! !z-[${40 + index}]`}
+                    DropDownclassName={`bg-white text-[#AFB1AE]! !z-[${40 + index}]`}
                     hideLabelOnMobile={false}
                     label={item.size || "Select Size"}
                     forceClose={openDropdown !== null && openDropdown !== `size-${index}`}

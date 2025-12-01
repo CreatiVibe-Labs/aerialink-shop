@@ -146,7 +146,7 @@ const VerifyCodeForm = () => {
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-full max-w-[100%] max-md:max-w-full space-y-5 mt-10"
+        className="w-full max-w-[100%] max-md:max-w-full space-y-5 mt-10 "
       >
         <div className="space-y-3">
           <label className="block text-sm font-medium text-[#AFB1AE] capitalize">
@@ -162,7 +162,7 @@ const VerifyCodeForm = () => {
                 type="text"
                 inputMode="numeric"
                 maxLength={1}
-                className="lg:w-12 w-10 h-10 lg:h-12 xl:w-20 xl:h-20 md:w-10 md:h-10 text-center md:text-[14px] lg:text-lg xl:text-2xl font-semibold border-2 border-[#E8E8E8] rounded-lg focus:border-primary focus:outline-none transition-colors"
+                className="lg:w-12 w-10 h-10 lg:h-12 xl:w-20 xl:h-20 md:w-10 md:h-10 text-center md:text-[14px] text-[#AFB1AE] lg:text-lg xl:text-2xl font-semibold border-2 border-[#E8E8E8] rounded-lg focus:border-primary focus:outline-none transition-colors"
                 onChange={(e) => handleInputChange(index, e.target.value)}
                 onKeyDown={(e) => handleKeyDown(index, e)}
                 onPaste={index === 0 ? handlePaste : undefined}

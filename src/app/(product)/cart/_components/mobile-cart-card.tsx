@@ -125,7 +125,7 @@ const MobileCartCard: React.FC<MobileCartCardProps> = ({
     <div className="w-full rounded-xl border border-gray-200 p-4 flex flex-col gap-4 shadow-sm bg-white">
       {/* Row 1: Product Info */}
       <div className="flex items-start gap-4 relative">
-        <div className="relative w-20 h-20 p-0.5 border-2 border-primary rounded-xl flex-shrink-0">
+        <div className="relative w-20 h-20 p-0.5 border-2 border-gray-300 rounded-xl flex-shrink-0">
           <img
             src={image}
             alt={name}
@@ -139,7 +139,7 @@ const MobileCartCard: React.FC<MobileCartCardProps> = ({
           </button>
         </div>
         <div className="flex flex-col gap-1 pt-1">
-          <span className="text-base font-semibold text-gray-800 line-clamp-2">{name}</span>
+          <span className="text-base font-semibold text-[#AFB1AE] line-clamp-2">{name}</span>
           <span className="text-sm text-[#AFB1AE] font-medium">¥{Number(price).toLocaleString()}</span>
         </div>
       </div>
@@ -184,7 +184,7 @@ const MobileCartCard: React.FC<MobileCartCardProps> = ({
             >
               –
             </button>
-            <span className="text-sm w-4 text-center font-medium text-gray-700">{quantity}</span>
+            <span className="text-sm w-4 text-center font-medium text-[#AFB1AE]">{quantity}</span>
             <button
               onClick={() => onQuantityChange(index, "inc")}
               className="text-[#AFB1AE] text-lg cursor-pointer hover:text-primary transition-colors"

@@ -26,7 +26,7 @@ const Input: React.FC<InputProps> = ({
   return (
     <div className="flex flex-col w-full relative ">
       {label && (
-        <label className="absolute -top-2 left-4 bg-white px-1 text-[14px] leading-[100%] tracking-[0] text-[#AFB1AE] font-[Albert_Sans] font-normal z-10 capitalize">
+        <label className="absolute -top-2 left-4 bg-[#fdfdfd] px-1 text-[14px] leading-[100%] tracking-[0] text-[#AFB1AE] font-[Albert_Sans] font-normal z-10 capitalize">
           {label}
         </label>
       )}

@@ -142,40 +142,40 @@ const Navbar = () => {
             </button>
             <ul className="space-y-4">
               <li>
-                <a
-                  href="#home"
+                <Link
+                  href="/"
                   className="text-white hover:text-gray-200 block"
                   onClick={handleClose}
                 >
                   Home
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#forum"
+                <Link
+                  href="/community-forum"
                   className="text-white hover:text-gray-200 block"
                   onClick={handleClose}
                 >
                   Community Forum
-                </a>
+                </Link>
               </li>
               <li>
-                <a
+                <Link
                   href="/360-virtual-showroom"
                   className="text-white hover:text-gray-200 block"
                   onClick={handleClose}
                 >
                   360 virtual showroom
-                </a>
+                </Link>
               </li>
               <li>
-                <a
+                <Link
                   href="/about"
                   className="text-white hover:text-gray-200 block"
                   onClick={handleClose}
                 >
                   About us
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

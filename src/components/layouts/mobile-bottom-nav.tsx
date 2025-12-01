@@ -8,7 +8,7 @@ const MobileBottomNav = () => {
   const { user } = useProfile();
 
   return (
-    <div className="md:hidden fixed bottom-0 left-0 right-0 z-30 pb-[env(safe-area-inset-bottom)]">
+    <div className="md:hidden  left-0 right-0 z-30 pb-[env(safe-area-inset-bottom)]">
       <div className="mx-auto max-w-7xl px-6 py-3 flex items-center justify-between">
         {/* Home */}
         <Link href="/" className="flex flex-col items-center text-gray-700" aria-label="Home">
