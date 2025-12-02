@@ -166,7 +166,7 @@ const PhoneInput: React.FC<PhoneInputProps> = ({ value, onChange, hideLabel = fa
       <div className="relative" ref={dropdownRef}>
         <div
           ref={containerRef}
-          className="flex items-center border  rounded-[14px] h-[43px] md:h-[55px] px-3 bg-white transition-all"
+          className="flex items-center border border-gray-300 rounded-[14px] h-[43px] md:h-[55px] px-3  transition-all"
         >
           {/* Country Selector Button */}
           <button

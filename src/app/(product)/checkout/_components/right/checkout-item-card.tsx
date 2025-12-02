@@ -24,7 +24,7 @@ const CheckoutItemCard: FC<CheckoutItemCardProps> = ({
   onRemove = () => {},
 }) => {
   return (
-    <div className="flex items-center justify-between border border-primary max-md:border-transparent max-md:p-0 rounded-xl p-2">
+    <div className="flex items-center justify-between border border-gray-300 max-md:border-transparent max-md:p-0 rounded-xl p-2">
       <div className="flex items-center gap-3 max-md:hidden">
         <Image alt={title} src={image} width={500} height={500} className="w-14 h-14 object-cover rounded-md" />
         <div className="flex flex-col">
@@ -66,7 +66,7 @@ const CheckoutItemCard: FC<CheckoutItemCardProps> = ({
           <span className="text-xs text-[#AFB1AE]">¥{Number(price).toLocaleString()}</span>
         </div>
       </div>
-      <p className=" text-light-gray ">¥{Number(price).toLocaleString()}</p>
+      <p className=" text-[#AFB1AE] ">¥{Number(price).toLocaleString()}</p>
     </div>
   );
 };
