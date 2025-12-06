@@ -71,7 +71,7 @@ const ProductDetailTab3 = () => {
   const Harmfull = harmfulContent ? parse(harmfulContent) : "N/A";
 
   return (
-    <div className="rounded-2xl border border-[#666664] overflow-hidden w-full md:max-w-[66%]">
+    <div className="rounded-2xl border border-[#AFB1AE] overflow-hidden w-full md:max-w-[66%]">
       {/* Colors Row */}
       <div className="grid md:grid-cols-[200px_1fr] grid-cols-[150px_1fr] border-b border-[#AFB1AE]">
         <div className="px-4 py-3 bg-white font-medium text-[#AFB1AE] border-r border-[#AFB1AE]">Color</div>

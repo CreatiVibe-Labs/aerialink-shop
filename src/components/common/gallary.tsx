@@ -10,7 +10,7 @@ const Gallery = () => {
     "/assets/about/gallaryimage6.jpg",
     "/assets/about/gallaryimage7.jpg",
     "/assets/about/gallaryimage8.png",
-    "/assets/about/gallaryimage1.jpg", // Added 9th image as placeholder
+  
   ];
 
   return (
