@@ -120,7 +120,7 @@ const OrderConfirmationModal: React.FC<OrderConfirmationModalProps> = ({
       >
         <DialogHeader>
           <DialogTitle className="flex justify-between items-center gap-2">
-            <h3 className="text-[16px] leading-[20px] font-albert-sans tracking-[4%] lg:text-[36px] lg:leading-[40px] font-[500] text-[#666664]">
+            <h3 className="text-[16px] leading-[20px] font-albert-sans tracking-[4%] lg:text-[36px] lg:leading-[40px] font-[500] text-[#AFB1AE]">
               Confirm Your Order
             </h3>
             <button
@@ -141,10 +141,10 @@ const OrderConfirmationModal: React.FC<OrderConfirmationModalProps> = ({
         <div className="flex flex-col gap-[15px] lg:gap-[30px] w-full">
           {/* Shipping Details Section */}
           <div className="bg-[#F5F5F5] rounded-[14px] p-3 lg:p-6">
-            <h4 className="text-[14px] lg:text-[24px] font-semibold text-[#666664] mb-2 lg:mb-4">
+            <h4 className="text-[14px] lg:text-[24px] font-semibold text-[#AFB1AE] mb-2 lg:mb-4">
               Shipping Details
             </h4>
-            <div className="space-y-1.5 lg:space-y-2 text-[12px] lg:text-[17px] text-[#666664]">
+            <div className="space-y-1.5 lg:space-y-2 text-[12px] lg:text-[17px] text-[#AFB1AE]">
               <div className="flex gap-2 flex-wrap">
                 <span className="font-medium min-w-[80px] lg:min-w-[120px]">Name:</span>
                 <span className="break-words flex-1">{shippingDetails.fullName}</span>
@@ -170,12 +170,12 @@ const OrderConfirmationModal: React.FC<OrderConfirmationModalProps> = ({
 
           {/* Order Items Section */}
           <div className="bg-[#F5F5F5] rounded-[14px] p-3 lg:p-6">
-            <h4 className="text-[14px] lg:text-[24px] font-semibold text-[#666664] mb-2 lg:mb-4">
+            <h4 className="text-[14px] lg:text-[24px] font-semibold text-[#AFB1AE] mb-2 lg:mb-4">
               Order Items
             </h4>
             {loading ? (
               <div className="flex justify-center items-center py-8">
-                <div className="text-gray-500 text-sm lg:text-base">Loading product details...</div>
+                <div className="text-[#AFB1AE] text-sm lg:text-base">Loading product details...</div>
               </div>
             ) : (
               <div className="space-y-3">
@@ -187,7 +187,7 @@ const OrderConfirmationModal: React.FC<OrderConfirmationModalProps> = ({
                   return (
                     <div
                       key={index}
-                      className="flex gap-2 lg:gap-4 items-start text-[12px] lg:text-[17px] text-[#666664] pb-2 lg:pb-3 border-b border-gray-300 last:border-0"
+                      className="flex gap-2 lg:gap-4 items-start text-[12px] lg:text-[17px] text-[#AFB1AE] pb-2 lg:pb-3 border-b border-gray-300 last:border-0"
                     >
                       {/* Product Image */}
                       <div className="relative w-[50px] h-[50px] lg:w-[80px] lg:h-[80px] flex-shrink-0 rounded-lg overflow-hidden bg-white">
@@ -201,20 +201,20 @@ const OrderConfirmationModal: React.FC<OrderConfirmationModalProps> = ({
 
                       {/* Product Details */}
                       <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-[#666664] text-xs lg:text-base line-clamp-2">
+                        <p className="font-semibold text-[#AFB1AE] text-xs lg:text-base line-clamp-2">
                           {(language === "EN" ? item.title_en || item.title_jp : item.title_jp || item.title_en) || `Product #${item.id}`}
                         </p>
-                        <p className="text-[10px] lg:text-sm text-gray-500 mt-0.5 lg:mt-1">
+                        <p className="text-[10px] lg:text-sm text-[#AFB1AE] mt-0.5 lg:mt-1">
                           Size: {item.size} | Room: {item.room_type}
                         </p>
-                        <p className="text-[10px] lg:text-sm text-gray-500 mt-0.5">
+                        <p className="text-[10px] lg:text-sm text-[#AFB1AE] mt-0.5">
                           Qty: {item.quantity}
                         </p>
                       </div>
 
                       {/* Price */}
                       <div className="text-right flex-shrink-0">
-                        <p className="font-semibold text-[#666664] text-xs lg:text-base">
+                        <p className="font-semibold text-[#AFB1AE] text-xs lg:text-base">
                           ¥{Number(item.price).toLocaleString()}
                         </p>
                       </div>
@@ -227,10 +227,10 @@ const OrderConfirmationModal: React.FC<OrderConfirmationModalProps> = ({
 
           {/* Order Summary Section */}
           <div className="bg-[#F5F5F5] rounded-[14px] p-3 lg:p-6">
-            <h4 className="text-[14px] lg:text-[24px] font-semibold text-[#666664] mb-2 lg:mb-4">
+            <h4 className="text-[14px] lg:text-[24px] font-semibold text-[#AFB1AE] mb-2 lg:mb-4">
               Order Summary
             </h4>
-            <div className="space-y-1.5 lg:space-y-2 text-[12px] lg:text-[17px] text-[#666664]">
+            <div className="space-y-1.5 lg:space-y-2 text-[12px] lg:text-[17px] text-[#AFB1AE]">
               <div className="flex justify-between">
                 <span>Subtotal:</span>
                 <span>¥{Number(subtotal).toLocaleString()}</span>
@@ -254,7 +254,7 @@ const OrderConfirmationModal: React.FC<OrderConfirmationModalProps> = ({
           <div className="flex flex-col sm:flex-row justify-center gap-2 lg:gap-5 pt-2">
             <button
               onClick={onClose}
-              className="bg-gray-300 hover:bg-gray-400 text-[#666664] w-full sm:w-[200px] lg:w-[300px] 
+              className="bg-gray-200 hover:bg-gray-300 text-[#AFB1AE] w-full sm:w-[200px] lg:w-[300px] 
                 h-[38px] lg:h-[53px] px-4 lg:px-8 py-2 rounded-[14px]
                 text-[13px] uppercase lg:text-[20px] cursor-pointer transition"
             >

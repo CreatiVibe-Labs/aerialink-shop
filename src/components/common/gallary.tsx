@@ -10,6 +10,7 @@ const Gallery = () => {
     "/assets/about/gallaryimage6.jpg",
     "/assets/about/gallaryimage7.jpg",
     "/assets/about/gallaryimage8.png",
+  
   ];
 
   return (
@@ -19,31 +20,33 @@ const Gallery = () => {
         <div className="w-[22.22px] h-[44.44px] rounded-[4.44px] bg-[#98C1A9] "></div>
 
         {/* Heading */}
-        <h2 className="text-[24px] font-semibold leading-[22.22px] text-[#666664] font-poppins">
+        <h2 className="text-[24px] font-semibold leading-[22.22px] text-[#AFB1AE] font-poppins">
           Our Gallery
         </h2>
       </div>
 
-      {/* Masonry layout using Tailwind columns */}
-      <div className="flex flex-wrap justify-start gap-5">
-        {images.map((src, i) => (
-          <div
-            key={i}
-            className={`overflow-hidden rounded-lg sm: ${
-              i === 0 || i === 1 || i === 4 || i === 5 || i === 6 || i === 7
-                ? "w-[29%]"
-                : "w-[39%]"
-            }`}
-          >
-            <Image
-              src={src}
-              alt={`Gallery ${i + 1}`}
-              width={1000}
-              height={1000}
-              className="h-[321px] object-cover rounded-lg w-full object-center"
-            />
-          </div>
-        ))}
+      {/* Gallery Layout */}
+      <div className="w-full">
+        {/* Unified Flex Layout for all screens */}
+        <div className="flex flex-wrap justify-center gap-1.5 md:gap-5">
+          {images.map((src, i) => (
+            <div
+              key={`gallery-${i}`}
+              className={`overflow-hidden rounded-lg relative ${i === 0 || i === 1 || i === 4 || i === 5 || i === 6 || i === 7
+                ? "w-[28%]"
+                : "w-[38%]"
+                }`}
+            >
+              <Image
+                src={src}
+                alt={`Gallery ${i + 1}`}
+                width={1000}
+                height={1000}
+                className="h-[120px] sm:h-[200px] md:h-[321px] object-cover rounded-lg w-full object-center"
+              />
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

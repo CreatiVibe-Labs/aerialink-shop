@@ -26,7 +26,7 @@ const Input: React.FC<InputProps> = ({
   return (
     <div className="flex flex-col w-full relative ">
       {label && (
-        <label className="absolute -top-2 left-4 bg-white px-1 text-[14px] leading-[100%] tracking-[0] text-[#1C1B1F] font-[Albert_Sans] font-normal z-10 capitalize">
+        <label className="absolute -top-2 left-4 bg-[#fdfdfd] px-1 text-[14px] leading-[100%] tracking-[0] text-[#AFB1AE] font-[Albert_Sans] font-normal z-10 capitalize">
           {label}
         </label>
       )}
@@ -48,8 +48,8 @@ const Input: React.FC<InputProps> = ({
             onClick={() => setShowPassword((prev) => !prev)}
             className={`absolute inset-y-0 right-3 flex items-center ${
               showPassword
-                ? "text-[#666664]"
-                : "text-[#666664] cursor-pointer hover:text-[#98C1A9]"
+                ? "text-[#AFB1AE]"
+                : "text-[#AFB1AE] cursor-pointer hover:text-[#98C1A9]"
             }`}
           >
             {showPassword ? <IoEyeOff size={20} /> : <IoEye size={20} />}

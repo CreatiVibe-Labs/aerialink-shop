@@ -49,7 +49,7 @@ const TierSummaryTab: React.FC<{ currentTier: keyof typeof tierData }> = ({
 
         {/* Tier Progress */}
         <div className="flex flex-col w-full space-y-2">
-          <h3 className="font-semibold text-light-gray max-md:text-sm">{tier.name}</h3>
+          <h3 className="font-semibold text-[#AFB1AE] max-md:text-sm">{tier.name}</h3>
 
           <div
             className={`border-2  rounded-xl h-11 w-full overflow-hidden p-0.5 ${

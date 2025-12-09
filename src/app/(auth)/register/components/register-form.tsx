@@ -80,7 +80,7 @@ const RegisterForm = () => {
       />
       {/* header */}
       <div className="center-col items-start space-y-3  mt-0 " >
-        <h1 className="font-albert-sans font-semibold text-[28px] lg:text-[40px] leading-[100%] tracking-[0] text-[#313131]">
+        <h1 className="font-albert-sans font-semibold text-[28px] lg:text-[40px] leading-[100%] tracking-[0] text-[#AFB1AE]">
           Register
         </h1>
         {/* <p className="text-light-gray">Create your new account</p> */}
@@ -93,10 +93,11 @@ const RegisterForm = () => {
           "
       >
         {/* First and Last name */}
-        <div className="grid grid-cols-2 gap-3 max-md:grid-cols-1">
+        <div className="grid grid-cols-2 max-md:grid-cols-1 md:gap-3 gap-5">
           <div className="space-y-0.5">
             <Input
               type="text"
+              className="text-[#AFB1AE] border border-gray-300"
               label="first name"
               placeholder=""
               {...register("firstName", { required: "First name is required" })}
@@ -110,6 +111,7 @@ const RegisterForm = () => {
           <div className="space-y-0.5">
             <Input
               type="text"
+              className="text-[#AFB1AE] border border-gray-300"
               label="Last Name"
               placeholder=""
               {...register("lastName")}
@@ -118,9 +120,10 @@ const RegisterForm = () => {
         </div>
 
         {/* Email and Phone */}
-        <div className="grid grid-cols-2 gap-3 max-md:grid-cols-1">
+        <div className="grid grid-cols-2 max-md:grid-cols-1 md:gap-3 gap-5">
           <div className="space-y-0.5">
             <Input
+            className="text-[#AFB1AE] border border-gray-300"
               type="email"
               label="email"
               placeholder=""
@@ -140,6 +143,7 @@ const RegisterForm = () => {
           </div>
           <div className="space-y-0.5">
             <Controller
+          
               name="phone"
               control={control}
               rules={{
@@ -164,6 +168,7 @@ const RegisterForm = () => {
         {/* Password */}
         <div className="space-y-0.5">
           <Input
+            className="text-[#AFB1AE] border border-gray-300"
             type="password"
             label="password"
             placeholder=""
@@ -185,6 +190,7 @@ const RegisterForm = () => {
         {/* Confirm Password */}
         <div className="space-y-0.5">
           <Input
+            className="text-[#AFB1AE] border border-gray-300"
             type="password"
             label="confirm password"
             placeholder=""
@@ -240,7 +246,7 @@ const RegisterForm = () => {
             {isSubmitting ? "Creating account..." : "Create account"}
           </PrimaryButton>
 
-          <p className="text-sm text-[#313131]  font-[600] ">
+          <p className="text-sm text-[#AFB1AE]  font-[600] ">
             Already have an account?{" "}
             <Link
               href={"/login"}

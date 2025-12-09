@@ -15,8 +15,8 @@ const PointsManagementPage = () => {
   >("tier-summary");
 
   return (
-    <div className="max-w-7xl mx-auto max-2xl:px-10 max-md:px-5 max-sm:px-3 min-h-screen py-5">
-      <BreadCrumbs className="max-md:hidden"/>
+    <div className="max-w-7xl mx-auto min-h-screen py-5 max-sm:pb-5 max-sm:pt-0">
+      <BreadCrumbs className="max-md:hidden" />
 
       {/* Points bar */}
       <PointsBar />
@@ -25,33 +25,30 @@ const PointsManagementPage = () => {
       <div className="flex justify-between w-[60%] max-2xl:w-[90%] max-md:w-full max-sm:gap-1 max-sm:mt-5 max-md:mt-10 mx-auto gap-3 mt-14">
         <PrimaryButton
           onClick={() => setActiveTab("tier-summary")}
-          className={`cursor-pointer w-full max-md:min-h-10 max-sm:text-xs ${
-            activeTab === "tier-summary"
-              ? "text-white"
-              : "bg-transparent border-2 border-primary text-primary! hover:text-white!"
-          }`}
+          className={`cursor-pointer w-full max-md:min-h-10 max-sm:text-xs ${activeTab === "tier-summary"
+            ? "text-white"
+            : "bg-transparent border-2 border-primary text-primary! hover:text-white!"
+            }`}
         >
           Tier Summary
         </PrimaryButton>
 
         <PrimaryButton
           onClick={() => setActiveTab("points-history-tab")}
-          className={`cursor-pointer w-full max-md:min-h-10  max-sm:text-xs ${
-            activeTab === "points-history-tab"
-              ? "text-white"
-              : "bg-transparent border-2 border-primary text-primary! hover:text-white!"
-          }`}
+          className={`cursor-pointer w-full max-md:min-h-10  max-sm:text-xs ${activeTab === "points-history-tab"
+            ? "text-white"
+            : "bg-transparent border-2 border-primary text-primary! hover:text-white!"
+            }`}
         >
           Points History
         </PrimaryButton>
 
         <PrimaryButton
           onClick={() => setActiveTab("earn-points")}
-          className={`cursor-pointer w-full max-md:min-h-10 max-sm:text-xs ${
-            activeTab === "earn-points"
-              ? "text-white"
-              : "bg-transparent border-2 border-primary text-primary! hover:text-white!"
-          }`}
+          className={`cursor-pointer w-full max-md:min-h-10 max-sm:text-xs ${activeTab === "earn-points"
+            ? "text-white"
+            : "bg-transparent border-2 border-primary text-primary! hover:text-white!"
+            }`}
         >
           How to Earn Points
         </PrimaryButton>

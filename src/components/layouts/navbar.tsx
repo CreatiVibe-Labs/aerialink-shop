@@ -3,10 +3,23 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { FiShoppingCart } from "react-icons/fi";
+import { useCart } from "@/contexts/cart-context";
 import { IoIosMenu } from "react-icons/io";
+import { useProfile } from "@/contexts/profile-context";
+import { PiSpinnerGapBold } from "react-icons/pi";
+import { useLanguage } from "@/contexts/language-context";
+
+
+import { BiUser } from "react-icons/bi";
+import { TfiWorld } from "react-icons/tfi";
+import { useRouter } from "next/navigation";
+
+
+
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { cartItems } = useCart();
 
   const handleToggle = () => {
     setIsOpen(!isOpen);
@@ -32,7 +45,7 @@ const Navbar = () => {
   }, [isOpen]);
 
   return (
-    <nav className="z-[9999] sticky top-5 xl:px-4 lg:px-4 md:px-4 px-4">
+    <nav className="z-[9999] sticky top-5 xl:px-4 lg:px-4 md:px-4 px-4 ">
       <div className="bg-primary rounded-full max-w-7xl w-full mx-auto flex justify-between items-center py-3 px-8">
         {/* Mobile Menu Button */}
         <div className="center">
@@ -48,18 +61,22 @@ const Navbar = () => {
         </div>
         {/* shoping cart for mobile */}
         <div className="md:hidden relative">
-          <FiShoppingCart size={32} strokeWidth={1} color="white" />
-          {/* count */}
-          <div className="bg-white center absolute rounded-full size-4 text-xs top-0 -right-2 text-black">
-            12
-          </div>
+          <Link href="/cart" aria-label="View cart" className="relative inline-block" onClick={(e)=>{e.preventDefault(); window.location.href='/cart';}}>
+            <FiShoppingCart size={32} strokeWidth={1} color="white" />
+            {/* count */}
+            {cartItems.length > 0 && (
+              <div className="bg-white center absolute rounded-full size-4 text-[10px] top-0 -right-2 text-primary">
+                {cartItems.length}
+              </div>
+            )}
+          </Link>
         </div>
         {/* Desktop Navigation */}
         <ul className="hidden md:flex xl:space-x-16 lg:space-x-16 md:space-x-10 font-semibold xl:text-2xl lg:text-xl md:text-lg">
           <li>
             <Link
               href="/"
-              className="text-white hover:text-gray-200"
+              className="text-white "
               onClick={handleClose}
             >
               Home
@@ -68,7 +85,7 @@ const Navbar = () => {
           <li>
             <Link
               href="/community-forum/"
-              className="text-white hover:text-gray-200"
+              className="text-white "
               onClick={handleClose}
             >
               Community Forum
@@ -77,7 +94,7 @@ const Navbar = () => {
           <li>
             <Link
               href="/360-virtual-showroom/"
-              className="text-white hover:text-gray-200"
+              className="text-white "
               onClick={handleClose}
             >
               360 virtual showroom
@@ -86,7 +103,7 @@ const Navbar = () => {
           <li>
             <Link
               href="/about"
-              className="text-white hover:text-gray-200"
+              className="text-white "
               onClick={handleClose}
             >
               About us
@@ -125,45 +142,46 @@ const Navbar = () => {
             </button>
             <ul className="space-y-4">
               <li>
-                <a
-                  href="#home"
+                <Link
+                  href="/"
                   className="text-white hover:text-gray-200 block"
                   onClick={handleClose}
                 >
                   Home
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#forum"
+                <Link
+                  href="/community-forum"
                   className="text-white hover:text-gray-200 block"
                   onClick={handleClose}
                 >
                   Community Forum
-                </a>
+                </Link>
               </li>
               <li>
-                <a
+                <Link
                   href="/360-virtual-showroom"
                   className="text-white hover:text-gray-200 block"
                   onClick={handleClose}
                 >
                   360 virtual showroom
-                </a>
+                </Link>
               </li>
               <li>
-                <a
+                <Link
                   href="/about"
                   className="text-white hover:text-gray-200 block"
                   onClick={handleClose}
                 >
                   About us
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
         </div>
       </div>
+      
     </nav>
   );
 };

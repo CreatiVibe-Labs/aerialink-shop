@@ -62,8 +62,8 @@ export default function CommunityForumComponent() {
   };
 
   return (
-    <div className="mb-10 max-2xl:px-5 gap-x-1 min-h-screen max-w-7xl w-full mx-auto max-md:px-5 mt-7">
-      <h1 className="text-[#666664] text-center font-bold xl:text-5xl lg:text-5xl md:text-5xl text-3xl w-full">
+    <div className="mb-10 max-2xl: gap-x-1 min-h-screen max-w-7xl w-full mx-auto mt-7  ">
+      <h1 className="text-[#AFB1AE] text-center font-bold xl:text-5xl lg:text-5xl md:text-5xl text-3xl w-full">
         Welcome to our community
       </h1>
 
@@ -90,7 +90,7 @@ export default function CommunityForumComponent() {
 
       {/* Select Products */}
       <div className="selectProducts">
-        <h2 className="capitalize text-center text-[#666664] text-2xl mt-10">
+        <h2 className="capitalize text-center text-[#AFB1AE] text-2xl mt-10">
           Select a product
         </h2>
         <div className="mt-7">
@@ -103,7 +103,7 @@ export default function CommunityForumComponent() {
               selectedProduct={selectedProduct}
             />
           ) : (
-            <div className="text-center py-10 text-[#666664]">
+            <div className="text-center py-10 text-[#AFB1AE]">
               No products found matching "{searchTerm}"
             </div>
           )}
@@ -133,7 +133,7 @@ export default function CommunityForumComponent() {
                 )}
               </div>
               <div className="productMeta flex flex-col gap-2">
-                <span className="productTitle font-medium text-[#666664] text-lg line-clamp-1 xl:pr-5">
+                <span className="productTitle font-medium text-[#AFB1AE] text-lg line-clamp-1 xl:pr-5">
                   {language === "EN"
                     ? activeProduct?.title_en || activeProduct?.title_jp || "Product"
                     : activeProduct?.title_jp || activeProduct?.title_en || "Product"}
@@ -143,7 +143,7 @@ export default function CommunityForumComponent() {
                     {Array.from({ length: 5 }).map((_, i) => (
                       <PiStarFill 
                         key={i} 
-                        className={i < (activeProduct?.average_rating || 0) ? "text-amber-300" : "text-gray-300"} 
+                        className={i < (activeProduct?.average_rating || 0) ? "text-amber-300" : "text-[#AFB1AE]"} 
                         size={18} 
                       />
                     ))}
@@ -156,8 +156,8 @@ export default function CommunityForumComponent() {
             </div>
             <div className="border-l-1 xl:border-t-0 lg:border-t-0 border-[#D9D9D9] xl:max-w-[4%] lg:max-w-[4%] w-full min-[360px]:max-w-[100%] min-[360px]:border-t-1 min-[360px]:my-3"></div>
             <div className="productDesc max-w-[66%] min-[360px]:max-w-[100%] w-full flex justify-center flex-col gap-2">
-              <span className="font-medium text-sm text-[#666664]">Description</span>
-              <span className="font-medium text-sm text-[#666664] line-clamp-2">
+              <span className="font-medium text-sm text-[#AFB1AE]">Description</span>
+              <span className="font-medium text-sm text-[#AFB1AE] line-clamp-2">
                 {language === "EN"
                   ? parse(activeProduct?.detailed_description_en || activeProduct?.detailed_description_jp || "No description available")
                   : parse(activeProduct?.detailed_description_jp || activeProduct?.detailed_description_en || "No description available")}
@@ -193,7 +193,7 @@ export default function CommunityForumComponent() {
             </div>
           </div>
         ) : (
-          <div className="text-center py-10 text-[#666664]">
+          <div className="text-center py-10 text-[#AFB1AE]">
             Please select a product to view details.
           </div>
         )}

@@ -83,14 +83,14 @@ export default function PageComponent() {
       <div className="flex justify-between xl:items-center lg:items-center md:items-center min-[360px]:items-start gap-5 mt-10 xl:flex-row lg:flex-row md:flex-row min-[360px]:flex-col">
         <div className="w-full flex gap-5 items-stretch">
           <div className="p-2 bg-[#98C1A9] rounded-sm"></div>
-          <h1 className="font-black text-3xl text-[#666664] uppercase min-[360px]:text-2xl">
+          <h1 className="font-black text-3xl text-[#AFB1AE] uppercase min-[360px]:text-2xl">
             360° virtual preview
           </h1>
         </div>
         <div className="w-full text-right flex justify-end">
           <span
             onClick={() => handleClickBack()}
-            className="cursor-pointer flex items-center justify-end gap-3 text-[#666664] text-[20px] text-right w-full"
+            className="cursor-pointer flex items-center justify-end gap-3 text-[#AFB1AE] text-[20px] text-right w-full"
           >
             <svg
               width="20"

@@ -1,5 +1,6 @@
 import AppProvider from "@/components/common/app-provider";
 import Footer from "@/components/layouts/footer";
+import MobileBottomNav from "@/components/layouts/mobile-bottom-nav";
 import SecondaryNavbar from "@/components/layouts/secondary-nav/secondary-navbar";
 import NewsLetterBanner from "@/components/news-letter-banner/news-letter-banner";
 import type { Metadata } from "next";
@@ -40,13 +41,14 @@ export default function RootLayout({
           <Navbar />
           {/* <SecondaryNavbar /> */}
           <ConditionalSecondaryNav />
-          <div className="app max-w-7xl w-full mx-auto xl:px-4 lg:px-4 md:px-4 px-4">
+          <div className="app max-w-7xl w-full lg:px-4 max-sm:px-4 mx-auto bg-[#fdfdfd]">
             {children}
           </div>
           {/* <ToastContainer /> */}
 
           <NewsLetterBanner />
           <Footer />
+          <MobileBottomNav />
         </AppProvider>
       </body>
     </html>

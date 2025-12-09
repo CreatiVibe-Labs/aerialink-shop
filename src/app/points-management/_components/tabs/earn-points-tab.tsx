@@ -3,7 +3,7 @@ import React from "react";
 
 const EarnPointsTab = () => {
   return (
-    <div className="text-center text-gray-700 max-w-[70%] mx-auto max-2xl:max-w-full overflow-hidden">
+    <div className="text-center text-[#AFB1AE] max-w-[70%] mx-auto max-2xl:max-w-full overflow-hidden">
       <div className="w-full min-h-[20rem] max-md:min-h-[10rem] center border-2 border-light-gray rounded-2xl max-md:rounded-none max-md:border overflow-hidden">
         <img
           src="/assets/poster/earn-points.png"

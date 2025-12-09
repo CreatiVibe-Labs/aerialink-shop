@@ -48,12 +48,12 @@ const NewsLetterForm = () => {
     >
       {/* email input field */}
       <div className="bg-white rounded-full center justify-start px-3 height w-full max-md:min-h-10">
-        <LuMail size={20} className="text-light-gray" />
+        <LuMail size={20} className="text-[#AFB1AE]" />
         <input
           type="email"
           required
           placeholder="Enter your email address"
-          className="outline-none px-3 placeholder:text-light-gray w-full max-sm:text-sm"
+          className="outline-none px-3 placeholder:text-[#AFB1AE] w-full max-sm:text-sm"
           {...register("email", {
             required: "Email is required",
             pattern: {

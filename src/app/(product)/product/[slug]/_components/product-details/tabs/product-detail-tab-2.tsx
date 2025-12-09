@@ -33,18 +33,18 @@ const ProductDetailTab2 = () => {
       : (product?.detailed_description_jp || product?.detailed_description_en),
   };
 
-  if (!product) return <p className="text-gray-500">No product data.</p>;
+  if (!product) return <p className="text-[#AFB1AE]">No product data.</p>;
   const description = productFinal.productDescription;
 
   if (!description || description.trim() === "") {
-    return <p className="text-gray-500">No description available.</p>;
+    return <p className="text-[#AFB1AE]">No description available.</p>;
   }
 
   return (
-    <div className="flex flex-col text-min-gray space-y-8">
+    <div className="flex flex-col text-[#AFB1AE] space-y-8">
       {/* Description HTML */}
       <div
-        className="prose prose-sm max-w-none text-gray-700 leading-relaxed"
+        className="prose prose-sm max-w-none text-[#AFB1AE] leading-relaxed"
         dangerouslySetInnerHTML={{
           __html: description,
         }}

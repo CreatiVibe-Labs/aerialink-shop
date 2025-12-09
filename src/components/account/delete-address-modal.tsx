@@ -40,12 +40,12 @@ const DeleteAddressModal: React.FC<DeleteAddressModalProps> = ({
       <DialogContent className="rounded-2xl w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl p-6">
         <DialogHeader>
           <DialogTitle className="flex justify-between items-center">
-            <h3 className="text-[18.86px] leading-[15.72px] font-albert-sans tracking-[4%] lg:text-[28px] font-[500] text-[#666664]">
+            <h3 className="text-[18.86px] leading-[15.72px] font-albert-sans tracking-[4%] lg:text-[28px] font-[500] text-[#AFB1AE]">
               Delete Address
             </h3>
             <button
               onClick={onClose}
-              className="p-2 rounded-full cursor-pointer hover:bg-gray-100 transition"
+              className="p-2 rounded-full cursor-pointer transition"
             >
               <Image
                 src="/assets/account/icon-cancel.png"
@@ -59,7 +59,7 @@ const DeleteAddressModal: React.FC<DeleteAddressModalProps> = ({
         </DialogHeader>
 
         <div className="py-6">
-          <p className="text-[#666664] text-[16px] lg:text-[18px] text-center">
+          <p className="text-[#AFB1AE] text-[16px] lg:text-[18px] text-center">
             Are you sure you want to delete this address?
           </p>
           {addressName && (
@@ -67,7 +67,7 @@ const DeleteAddressModal: React.FC<DeleteAddressModalProps> = ({
               {addressName}
             </p>
           )}
-          <p className="text-[#666664] text-[14px] lg:text-[16px] text-center mt-4 opacity-70">
+          <p className="text-[#AFB1AE] text-[14px] lg:text-[16px] text-center mt-4 opacity-70">
             This action cannot be undone.
           </p>
         </div>
@@ -78,7 +78,7 @@ const DeleteAddressModal: React.FC<DeleteAddressModalProps> = ({
             onClick={onClose}
             disabled={loading}
             className="w-[140px] lg:w-[180px] h-[42px] lg:h-[50px] border-[1.5px] border-[#98C1A9] text-[#98C1A9] 
-              rounded-[14px] text-[15px] lg:text-[17px] font-semibold hover:bg-[#98C1A9]/10 transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+              rounded-[14px] text-[15px] lg:text-[17px] font-semibold hover:bg-[#98C1A9]/5 transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Cancel
           </button>

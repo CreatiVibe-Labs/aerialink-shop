@@ -48,23 +48,23 @@ const TotalSection = () => {
 
   return (
     <div className="w-full mt-5 max-md:border max-md:border-min-gray max-md:px-4 max-md:py-5 max-md:rounded-xl max-md:mt-3">
-      <div className="flex justify-between text-sm text-min-gray mb-4 max-md:mb-3 font-medium">
+      <div className="flex justify-between text-sm text-[#AFB1AE] mb-4 max-md:mb-3 font-medium">
         <span>Subtotal:</span>
         <span>¥{Number(subtotal).toLocaleString()}</span>
       </div>
 
-      <div className="flex justify-between text-sm border-t font-medium border-min-gray pt-4 max-md:pt-3 text-min-gray mb-2">
+      <div className="flex justify-between text-sm border-t font-medium border-[#AFB1AE] pt-4 max-md:pt-3 text-[#AFB1AE] mb-2">
         <span>Shipping:</span>
         <span>{shippingDisplay}</span>
       </div>
 
-      <div className="flex justify-between text-sm border-t font-medium border-min-gray pt-4 max-md:pt-3 text-min-gray mb-2">
+      <div className="flex justify-between text-sm border-t font-medium border-[#AFB1AE] pt-4 max-md:pt-3 text-[#AFB1AE] mb-2">
         <span>Consumer Tax:</span>
         <span>{consumerTaxDisplay}</span>
       </div>
 
 
-      <div className="flex justify-between text-sm font-semibold text-min-gray mt-3 border-t border-min-gray pt-2">
+      <div className="flex justify-between text-sm font-semibold text-[#AFB1AE] mt-3 border-t border-[#AFB1AE] pt-2">
         <span>Total:</span>
         <span>¥{Number(total).toLocaleString()}</span>
       </div>

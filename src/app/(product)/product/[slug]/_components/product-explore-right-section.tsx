@@ -296,7 +296,7 @@ const ProductExploreRightSection: React.FC<Props> = ({ variants, onSizeSelect })
     if (hasHalfStar) {
       stars.push(
         <div key="half" className="relative">
-          <PiStarHalfFill className="text-gray-300" size={16} />
+          <PiStarHalfFill className="text-[#AFB1AE]" size={16} />
           <div className="absolute inset-0 overflow-hidden w-1/2">
             <PiStarHalfFill className="text-amber-400" size={16} />
           </div>
@@ -306,7 +306,7 @@ const ProductExploreRightSection: React.FC<Props> = ({ variants, onSizeSelect })
 
     for (let i = 0; i < emptyStars; i++) {
       stars.push(
-        <PiStarFill key={`empty-${i}`} className="text-gray-300" size={16} />
+        <PiStarFill key={`empty-${i}`} className="text-[#AFB1AE]" size={16} />
       );
     }
 
@@ -397,7 +397,7 @@ const ProductExploreRightSection: React.FC<Props> = ({ variants, onSizeSelect })
   return (
     <div className="flex flex-col gap-2 max-md:mt-2 h-full">
       <Toaster position="top-right" />
-      <h2 className="text-2xl font-semibold text-min-gray">
+      <h2 className="text-2xl font-semibold text-[#AFB1AE]">
         {language === "EN" 
           ? product.title_en || product.title_jp || "Product"
           : product.title_jp || product.title_en || "Product"}
@@ -407,24 +407,24 @@ const ProductExploreRightSection: React.FC<Props> = ({ variants, onSizeSelect })
         <div className="flex items-center">
           <div className="flex items-center gap-1">
             {renderStars(product.average_rating)}
-            <span className="text-light-gray text-sm font-medium pl-1">
+            <span className="text-[#AFB1AE] text-sm font-medium pl-1">
               ({product.reviews?.length || 0} Reviews)
             </span>
           </div>
         </div>
       </div>
 
-      <p className="text-3xl font-bold text-min-gray">{priceToShow}</p>
+      <p className="text-3xl font-bold text-[#AFB1AE]">{priceToShow}</p>
 
       <div className="flex flex-col max-md:flex-col-reverse">
 
         <div className="space-y-3 w-full mt-2 flex gap-2">
           {/* Category Dropdown */}
           <div className="flex flex-col gap-1 w-[50%]">
-            <label className="text-sm font-medium text-min-gray">Room Type:</label>
+            <label className="text-sm font-medium text-[#AFB1AE]">Room Type:</label>
             <Dropdown
               mainParentClass="max-w-full!"
-              className="bg-transparent border border-light-gray text-min-gray! max-md:py-1.5 text-sm px-5 rounded-xl min-w-[150px]"
+              className="bg-transparent border border-[#AFB1AE] text-[#AFB1AE]! max-md:py-1.5 text-sm px-5 rounded-xl min-w-[150px]"
               DropDownclassName="bg-white text-min-gray!"
               hideLabelOnMobile={false}
               label={category || "Select Room Type"}
@@ -439,10 +439,10 @@ const ProductExploreRightSection: React.FC<Props> = ({ variants, onSizeSelect })
           {/* Sizes Dropdown - Only show if category is selected */}
           {category && sizes.length > 0 && (
             <div className="flex flex-col gap-1 w-[50%]">
-              <label className="text-sm font-medium text-min-gray">Size:</label>
+              <label className="text-sm font-medium text-[#AFB1AE]">Size:</label>
               <Dropdown
                 mainParentClass="max-w-full!"
-                className="bg-transparent border border-light-gray text-min-gray! max-md:py-1.5 text-sm px-5 rounded-xl min-w-[150px]"
+                className="bg-transparent border border-[#AFB1AE] text-[#AFB1AE]! max-md:py-1.5 text-sm px-5 rounded-xl min-w-[150px]"
                 DropDownclassName="bg-white text-min-gray!"
                 hideLabelOnMobile={false}
                 label={selectedSize || "Select Size"}
@@ -456,21 +456,21 @@ const ProductExploreRightSection: React.FC<Props> = ({ variants, onSizeSelect })
           )}
           {category && sizes.length === 0 && (
             <div className="flex flex-col gap-1 w-[50%]">
-              <label className="text-sm font-medium text-min-gray">Size:</label>
-              <p className="text-xs text-gray-500">No sizes available for {category}</p>
+              <label className="text-sm font-medium text-[#AFB1AE]">Size:</label>
+              <p className="text-xs text-[#AFB1AE]">No sizes available for {category}</p>
             </div>
           )}
         </div>
 
         <div className="flex items-center gap-3 mt-2 max-md:flex-wrap">
-          <div className="border border-light-gray rounded-xl flex items-center overflow-hidden">
+          <div className="border border-[#AFB1AE] rounded-xl flex items-center overflow-hidden">
             <button
               onClick={decreaseQty}
-              className="px-3 py-1 border-r border-light-gray cursor-pointer hover:bg-gray-50"
+              className="px-3 py-1 border-r border-[#AFB1AE] cursor-pointer text-[#AFB1AE] hover:bg-gray-50"
             >
               −
             </button>
-            <input type="text" value={quantity} onChange={adjustQuantity} className="outline-0 font-medium min-w-12 text-center text-min-gray max-w-12" />
+            <input type="text" value={quantity} onChange={adjustQuantity} className="outline-0 font-medium min-w-12 text-center text-[#AFB1AE] max-w-12" />
             <button
               onClick={increaseQty}
               className="px-3 py-1 border-l bg-primary text-white cursor-pointer hover:bg-primary/90"
@@ -480,7 +480,7 @@ const ProductExploreRightSection: React.FC<Props> = ({ variants, onSizeSelect })
           </div>
           {/* Show selected info */}
           {category && selectedSize && (
-            <div className="text-xs text-gray-600 bg-gray-50 p-2 rounded">
+            <div className="text-xs text-[#AFB1AE] bg-gray-50 p-2 rounded">
               Selected: <span className="font-medium">{category}</span> - <span className="font-medium">{selectedSize}</span>
             </div>
           )}
@@ -489,16 +489,16 @@ const ProductExploreRightSection: React.FC<Props> = ({ variants, onSizeSelect })
         <div className="flex items-center mt-2 space-x-2">
           <button
             onClick={handleHeartClick}
-            className="border border-light-gray rounded-xl p-2 h-full cursor-pointer hover:bg-gray-50"
+            className="border border-[#AFB1AE] rounded-xl p-2 h-full cursor-pointer "
           >
             {!loading ? (
               inWishlist ? (
                 <GoHeartFill
                   size={24}
-                  className="hover:bg-red-100 rounded-full text-red-500"
+                  className=" rounded-full text-[#CCCCFF] "
                 />
               ) : (
-                <GoHeart size={24} className="hover:bg-gray-200 rounded-full " />
+                <GoHeart size={24} className=" rounded-full   " />
               )
             ) : (
               <PiSpinnerGapBold className="animate-spin w-5 h-5 " />
@@ -517,12 +517,12 @@ const ProductExploreRightSection: React.FC<Props> = ({ variants, onSizeSelect })
 
       <button
         onClick={handleVisitShowroom}
-        className="mt-2 p-3 text-white text-center bg-[#CCCCFF] rounded-md w-full hover:bg-[#b8b8ff] transition-colors cursor-pointer"
+        className="mt-2 p-3  text-white text-center bg-[#CCCCFF] rounded-md w-full hover:bg-[#b8b8ff] transition-colors cursor-pointer"
       >
-        Visit the 360° virtual showroom to see how it fits your room. It's fun!
+        Visit the 360° virtual showroom to see how it fits your room. It s fun!
       </button>
 
-      <div className="border border-light-gray rounded-xl mt-2 space-y-3 text-sm text-min-gray">
+      <div className="w-full border border-[#AFB1AE] rounded-xl mt-2 space-y-3 text-sm text-[#AFB1AE]">
         <div className="flex items-center gap-3 my-3 border-b p-3 pb-4">
           <TbTruckDelivery className="size-7" strokeWidth={1} />
           <p className="flex flex-col">
@@ -563,10 +563,10 @@ const ProductExploreRightSection: React.FC<Props> = ({ variants, onSizeSelect })
 
           <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[12001] bg-white rounded-xl p-6 w-full max-w-md mx-4 shadow-2xl">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-xl font-semibold text-min-gray">Check Delivery Availability</h3>
+              <h3 className="text-xl font-semibold text-[#AFB1AE]">Check Delivery Availability</h3>
               <button
                 onClick={handleClosePostalModal}
-                className="text-gray-400 hover:text-gray-600 transition-colors cursor-pointer"
+                className="text-[#AFB1AE] hover:text-[#98C1A9] transition-colors cursor-pointer"
               >
                 <svg
                   width="24"
@@ -588,7 +588,7 @@ const ProductExploreRightSection: React.FC<Props> = ({ variants, onSizeSelect })
 
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-min-gray mb-2">
+                <label className="block text-sm font-medium text-[#AFB1AE] mb-2">
                   Postal Code
                 </label>
                 <Input

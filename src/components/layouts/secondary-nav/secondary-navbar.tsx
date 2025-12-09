@@ -13,15 +13,18 @@ import { useProfile } from "@/contexts/profile-context";
 import { PiSpinnerGapBold } from "react-icons/pi";
 import { useLanguage } from "@/contexts/language-context";
 import { useCart } from "@/contexts/cart-context";
+import { AiOutlineHome, AiOutlineShoppingCart, AiOutlineUser } from "react-icons/ai";
+import { PiCoinsLight } from "react-icons/pi";
 
 const SecondaryNavbar = () => {
   const { language, setLanguage } = useLanguage();
   const { user, loading, logout } = useProfile();
+  const { cartItems } = useCart();
 
   const router = useRouter();
 
   return (
-    <div className="my-8 max-w-7xl w-full mx-auto xl:px-9 lg:px-10 md:px-10 px-5 flex justify-between items-center xl:gap-5 lg:gap-5 md:gap-5 gap-2 ">
+    <div className="mt-8 max-w-7xl w-full mx-auto xl:px-9 lg:px-10 md:px-10 px-5 flex justify-between items-center xl:my-8 lg:my-8 md:my-8 xl:gap-5 lg:gap-5 md:gap-5 gap-2 bg-[#fdfdfd] ">
       {/* Language Selector */}
       <Dropdown
         prefixIcon={<TfiWorld size={20} />}
@@ -93,7 +96,7 @@ const SecondaryNavbar = () => {
           onChange={(val: string) => console.log("Dropdown changed:", val)}
         />
       ) : (
-        <div className="max-md:hidden relative max-w-fit z-[30] flex flex-col items-center">
+        <div className="max-md:hidden relative max-w-fit z-[30] flex flex-col items-center p">
           <Link
             href="/login"
             className="text-white bg-primary rounded-2xl px-10 py-2 flex items-center justify-center space-x-2 cursor-pointer select-none"
@@ -102,6 +105,8 @@ const SecondaryNavbar = () => {
           </Link>
         </div>
       )}
+
+      {/* Mobile Bottom Navigation removed — now separate component */}
     </div>
   );
 };

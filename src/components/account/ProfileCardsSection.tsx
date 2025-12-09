@@ -54,7 +54,7 @@ export default function ProfileCardsSection() {
           <div
             key={card.id}
             className="
-              bg-[#FFFDFA] rounded-[14px] 
+              bg-[#fdfdfd] rounded-[14px] 
               flex flex-col justify-between p-4 lg:p-[18px]
               transition-all duration-200 shadow-lg
             "
@@ -80,7 +80,7 @@ export default function ProfileCardsSection() {
               </div>
               <p
                 className="
-                  font-albert-sans text-[13px] leading-[17px] text-[#666664]
+                  font-albert-sans text-[13px] leading-[17px] text-[#AFB1AE]
                 
                 "
               >

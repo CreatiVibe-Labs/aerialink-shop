@@ -25,7 +25,7 @@ interface WishlistContextType {
   wishlist: WishlistItem[];
   wishlistProductIds: number[]; // Quick check for isInWishlist
   isInWishlist: (productId: number) => boolean;
-  toggleWishlist: (productId: number) => Promise<void>;
+  toggleWishlist: (productId: number, product?: Product) => Promise<void>;
   loading: boolean;
   error: string | null;
 }
@@ -45,7 +45,29 @@ export const WishlistProvider = ({ children }: { children: ReactNode }) => {
   const token =
     typeof window !== "undefined" ? Cookies.get("token") : null;
   useEffect(() => {
-    if (!token) return;
+    if (!token) {
+      // Load local wishlist (unauthenticated)
+      try {
+        const raw = localStorage.getItem("wishlist");
+        const localProducts: Product[] = raw ? JSON.parse(raw) : [];
+        setWishlistProductIds(localProducts.map(p => p.id));
+        // Populate wishlist array for UI that relies on `wishlist`
+        const mapped: WishlistItem[] = localProducts.map((p) => ({
+          id: p.id,
+          user_id: 0,
+          product_id: p.id,
+          created_at: "",
+          updated_at: "",
+          product: p,
+        }));
+        setWishlist(mapped);
+      } catch (e) {
+        // ignore malformed local data
+        setWishlistProductIds([]);
+        setWishlist([]);
+      }
+      return;
+    }
     fetchWishlist();
   }, []);
 
@@ -74,21 +96,51 @@ export const WishlistProvider = ({ children }: { children: ReactNode }) => {
     return wishlistProductIds.includes(productId);
   };
 
-  const toggleWishlist = async (productId: number) => {
+  const toggleWishlist = async (productId: number, product?: Product) => {
     setLoading(true);
     try {
-      if (isInWishlist(productId)) {
-        // Remove from wishlist
-        await api.delete(`/wishlist/${productId}`);
-        setWishlist((prev) =>
-          prev.filter((item) => item.product.id !== productId)
-        );
-        setWishlistProductIds((prev) => prev.filter((id) => id !== productId));
+      if (!token) {
+        // Local wishlist flow
+        const raw = localStorage.getItem("wishlist");
+        const localProducts: Product[] = raw ? JSON.parse(raw) : [];
+
+        if (isInWishlist(productId)) {
+          const updated = localProducts.filter(p => p.id !== productId);
+          localStorage.setItem("wishlist", JSON.stringify(updated));
+          setWishlistProductIds(prev => prev.filter(id => id !== productId));
+          setWishlist(prev => prev.filter(item => item.product.id !== productId));
+        } else {
+          if (product) {
+            const updated = [...localProducts, product];
+            localStorage.setItem("wishlist", JSON.stringify(updated));
+            setWishlistProductIds(prev => [...prev, productId]);
+            setWishlist(prev => ([...prev, {
+              id: product.id,
+              user_id: 0,
+              product_id: product.id,
+              created_at: "",
+              updated_at: "",
+              product,
+            }]))
+          } else {
+            // If product data is missing, skip add to avoid broken UI
+            toast.error("Unable to add wishlist item");
+          }
+        }
       } else {
-        // Add to wishlist
-        await api.post("/wishlist", { product_id: productId });
-        // Refetch to get updated data (or you can add manually if you have product data)
-        await fetchWishlist();
+        if (isInWishlist(productId)) {
+          // Remove from wishlist
+          await api.delete(`/wishlist/${productId}`);
+          setWishlist((prev) =>
+            prev.filter((item) => item.product.id !== productId)
+          );
+          setWishlistProductIds((prev) => prev.filter((id) => id !== productId));
+        } else {
+          // Add to wishlist
+          await api.post("/wishlist", { product_id: productId });
+          // Refetch to get updated data (or you can add manually if you have product data)
+          await fetchWishlist();
+        }
       }
       setError(null);
     } catch (err: any) {

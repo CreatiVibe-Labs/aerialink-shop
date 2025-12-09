@@ -28,7 +28,7 @@ const ProductDetailTab1 = () => {
       : parse(product?.usage_information_jp || product?.usage_information_en || 'No Instructions'),
   };
 
-  if (!product) return <p className="text-gray-500">No product data.</p>;
+  if (!product) return <p className="text-[#AFB1AE]">No product data.</p>;
 
   const instructions = productFinal.instructions;
 

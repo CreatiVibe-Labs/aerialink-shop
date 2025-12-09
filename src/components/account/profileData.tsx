@@ -170,7 +170,7 @@ const Profile: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center space-y-7 ">
+    <div className="min-h-screen flex flex-col items-center justify-center space-y-7 bg-[#fdfdfd]">
       <Toaster position="top-right" />
       {/* Profile Form */}
       <form
@@ -179,14 +179,15 @@ const Profile: React.FC = () => {
       >
         {/* Full Name */}
         <div className="flex flex-col gap-2 pt-8">
-          <label className="text-sm font-medium text-[#666664]/40 md:text-xl">Full Name</label>
+          
           <input
             type="text"
             name="fullname"
+            placeholder="Full Name"
             value={formData.fullname}
             onChange={handleChange}
             disabled={isSubmitting}
-            className="w-full lg:px-4 px-[19px] py-2 border border-[#EBECF0] text-[#666664] font-[500] placeholder:text-[#666664] lg:text-[20px] text-[16px] lg:leading-[24px] leading-[18.86px] font-albert-sans lg:rounded-[14px] rounded-[11px] lg:h-[55px] h-[40px] focus:outline-none bg-[#F5F5F5] pr-12 disabled:opacity-60"
+            className="w-full lg:px-4 px-[19px] py-2 border  text-[#AFB1AE] font-[500] placeholder:text-[#AFB1AE]/40 lg:text-[20px] text-[16px] lg:leading-[24px] leading-[18.86px] font-albert-sans lg:rounded-[14px] rounded-[11px] lg:h-[55px] h-[40px] focus:outline-none  pr-12 disabled:opacity-60"
           />
         </div>
         {/* Phone Number */}
@@ -197,32 +198,33 @@ const Profile: React.FC = () => {
         </div>
         {/* Email Address */}
         <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium text-[#666664]/40 md:text-xl">Email Address</label>
           <input
             type="email"
             name="email"
+            placeholder="Email Address"
             value={formData.email}
             onChange={handleChange}
             disabled={isSubmitting}
-            className="w-full lg:px-4 px-[19px] py-2 border border-[#EBECF0] text-[#666664] font-[500] placeholder:text-[#666664] lg:text-[20px] text-[16px] lg:leading-[24px] leading-[18.86px] font-albert-sans lg:rounded-[14px] rounded-[11px] lg:h-[55px] h-[40px] focus:outline-none bg-[#F5F5F5] pr-12 disabled:opacity-60"
+            className="w-full lg:px-4 px-[19px] py-2 border  text-[#AFB1AE] font-[500] placeholder:text-[#AFB1AE]/40 lg:text-[20px] text-[16px] lg:leading-[24px] leading-[18.86px] font-albert-sans lg:rounded-[14px] rounded-[11px] lg:h-[55px] h-[40px] focus:outline-none  pr-12 disabled:opacity-60"
           />
         </div>
         {/* Password */}
         <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium text-[#666664]/40 md:text-xl">Password</label>
+         
           <div className="relative">
             <input
+            placeholder="Password"
               type={showPassword ? "text" : "password"}
               name="password"
               value={formData.password}
               onChange={handleChange}
               disabled={isSubmitting}
-              className="w-full lg:px-4 px-[19px] py-2 border border-[#EBECF0] text-[#666664] font-[500] placeholder:text-[#666664] lg:text-[20px] text-[16px] lg:leading-[24px] leading-[18.86px] font-albert-sans lg:rounded-[14px] rounded-[11px] lg:h-[55px] h-[40px] focus:outline-none bg-[#F5F5F5] pr-12 disabled:opacity-60"
+              className="w-full lg:px-4 px-[19px] py-2 border  text-[#AFB1AE] font-[500] placeholder:text-[#AFB1AE]/40 lg:text-[20px] text-[16px] lg:leading-[24px] leading-[18.86px] font-albert-sans lg:rounded-[14px] rounded-[11px] lg:h-[55px] h-[40px] focus:outline-none  pr-12 disabled:opacity-60"
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-[#666664] hover:text-[#98C1A9]"
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-[#AFB1AE] hover:text-[#98C1A9]"
             >
               {showPassword ? <IoEyeOff size={20} /> : <IoEye size={20} />}
             </button>
@@ -230,20 +232,21 @@ const Profile: React.FC = () => {
         </div>
         {/* Confirm Password */}
         <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium text-[#666664]/40 md:text-xl">Confirm Password</label>
+         
           <div className="relative">
             <input
+            placeholder="Confirm Password"
               type={showConfirmPassword ? "text" : "password"}
               name="password_confirmation"
               value={formData.password_confirmation}
               onChange={handleChange}
               disabled={isSubmitting}
-              className="w-full lg:px-4 px-[19px] py-2 border border-[#EBECF0] text-[#666664] font-[500] placeholder:text-[#666664] lg:text-[20px] text-[16px] lg:leading-[24px] leading-[18.86px] font-albert-sans lg:rounded-[14px] rounded-[11px] lg:h-[55px] h-[40px] focus:outline-none bg-[#F5F5F5] pr-12 disabled:opacity-60"
+              className="w-full lg:px-4 px-[19px] py-2 border  text-[#AFB1AE] font-[500] placeholder:text-[#AFB1AE]/40 lg:text-[20px] text-[16px] lg:leading-[24px] leading-[18.86px] font-albert-sans lg:rounded-[14px] rounded-[11px] lg:h-[55px] h-[40px] focus:outline-none  pr-12 disabled:opacity-60"
             />
             <button
               type="button"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-[#666664] hover:text-[#98C1A9]"
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-[#AFB1AE] hover:text-[#98C1A9]"
             >
               {showConfirmPassword ? <IoEyeOff size={20} /> : <IoEye size={20} />}
             </button>
@@ -264,10 +267,10 @@ const Profile: React.FC = () => {
 
         <h3 className="text-2xl font-bold text-[#98C1A9]">Login & Security</h3>
 
-        <p className="text-[#666664] text-[17px] leading-relaxed mb-2 ">
+        <p className="text-[#AFB1AE] text-[17px] leading-relaxed mb-2 ">
           Manage and log out your active sessions on other browsers and devices.
         </p>
-        <p className="text-[#666664] text-[17px] leading-relaxed ">
+        <p className="text-[#AFB1AE] text-[17px] leading-relaxed ">
           If necessary, you may log out of all of your other browser sessions across all of your devices.
           Some of your recent sessions are listed below; however, this list may not be exhaustive.
           If you feel your account has been compromised, you should also update your password.
@@ -280,7 +283,7 @@ const Profile: React.FC = () => {
               return (
                 <div
                   key={session.id}
-                  className="h-[80px] max-w-[644px] bg-[#F5F5F5] text-[#666664] text-[16px] font-medium transition flex items-center justify-start px-4"
+                  className="h-[80px] max-w-[644px] bg-[#F5F5F5] text-[#AFB1AE] text-[16px] font-medium transition flex items-center justify-start px-4"
                 >
                   <div className="w-10 h-10 bg-[#F5F5F5] rounded-full mr-4 flex items-center justify-center">
                     <Image
@@ -293,13 +296,13 @@ const Profile: React.FC = () => {
                   </div>
                   <div className="flex flex-col items-start">
                     <span>{title}</span>
-                    <span className="text-sm text-[#666664] mt-1">Last active: {lastActive}</span>
+                    <span className="text-sm text-[#AFB1AE] mt-1">Last active: {lastActive}</span>
                   </div>
                 </div>
               );
             })
           ) : (
-            <div className="h-[80px] max-w-[644px] bg-[#F5F5F5] text-[#666664] text-[16px] flex items-center px-4">
+            <div className="h-[80px] max-w-[644px] bg-[#F5F5F5] text-[#AFB1AE] text-[16px] flex items-center px-4">
               No other active sessions found.
             </div>
           )}

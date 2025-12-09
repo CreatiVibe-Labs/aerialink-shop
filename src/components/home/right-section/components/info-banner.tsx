@@ -18,7 +18,7 @@ const InfoBanner = () => {
         {/* Right side text */}
         <div className="xl:p-20 lg:p-20 md:p-10 p-5 !pl-2 !pr-3 space-y-2 max-sm:space-y-1 text-light-gray">
           <h2 className="text-[4vmax] font-semibold max-md:text-[3vmax]">MDF</h2>
-          <p className="text-xl text-gray-600 max-2xl:text-base max-md:text-sm max-sm:text-xs">
+          <p className="text-xl text-[#AFB1AE] max-2xl:text-base max-md:text-sm max-sm:text-xs">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent
             tincidunt euismod ante. Vivamus placerat at enim non condimentum.
             Donec sit amet mauris purus. 

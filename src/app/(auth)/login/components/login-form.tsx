@@ -63,10 +63,10 @@ const LoginForm = () => {
       />
       {/* Header */}
       <div className="center-col items-start space-y-[16px]">
-        <h1 className="font-albert-sans font-semibold lg:text-[40px] text-[28px] leading-[100%] tracking-[0] text-[#313131]">
+        <h1 className="font-albert-sans font-semibold lg:text-[40px] text-[28px] leading-[100%] tracking-[0] text-[#AFB1AE]">
           Login
         </h1>
-        <p className="font-albert-sans opacity-75 font-[400] lg:text-[16px] text-[12px] leading-[100%] tracking-[0] text-[#313131]">
+        <p className="font-albert-sans opacity-75 font-[400] lg:text-[16px] text-[12px] leading-[100%] tracking-[0] text-[#AFB1AE]">
           Login to access your account
         </p>
       </div>
@@ -79,6 +79,7 @@ const LoginForm = () => {
         {/* Email */}
         <div className="space-y-0.5">
           <Input
+           className="text-[#AFB1AE] border border-gray-300"
             label="email"
             type="email"
             placeholder=""
@@ -98,6 +99,7 @@ const LoginForm = () => {
         {/* Password */}
         <div className="space-y-0.5">
           <Input
+          className="text-[#AFB1AE] border border-gray-300"
             type="password"
             label="password"
             placeholder=""
@@ -137,7 +139,7 @@ const LoginForm = () => {
             {isSubmitting ? "Logging in..." : "Login"}
           </PrimaryButton>
 
-          <p className="text-sm text-[#313131] font-[500] ">
+          <p className="text-sm text-[#AFB1AE] font-[500] ">
             Don&apos;t have an account?{" "}
             <Link
               href="/register"

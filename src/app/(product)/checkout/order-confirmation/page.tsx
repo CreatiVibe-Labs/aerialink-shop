@@ -65,7 +65,7 @@ const OrderConfirmationPage = () => {
 
   // Clear cart when order is successful (runs after getting items)
   useEffect(() => {
-    if (status === "success" && clearCart === "true" ) {
+    if (status === "success" && clearCart === "true") {
       localStorage.removeItem("cart_items");
       window.dispatchEvent(new Event("storage"));
     }
@@ -149,7 +149,7 @@ const OrderConfirmationPage = () => {
   };
 
   return (
-    <div className="py-10 pb-20 flex flex-col items-center justify-center p-4 max-sm:p-2 relative">
+    <div className="py-10 pb-20 flex flex-col items-center justify-center max-sm:p-2 max-sm:pt-10 max-sm:pb-10 relative">
       {/* Error Message Display */}
       {status === "error" && errorMessage && (
         <div className="w-full max-w-4xl mb-6 bg-red-50 border-2 border-red-500 rounded-lg p-6">
@@ -172,7 +172,7 @@ const OrderConfirmationPage = () => {
                       <p className="font-semibold text-red-600 mb-1">
                         Status: {errorData.status || 'N/A'} - {errorData.statusText || 'N/A'}
                       </p>
-                      <pre className="text-sm text-gray-800 whitespace-pre-wrap break-words mt-2">
+                      <pre className="text-sm text-[#AFB1AE] whitespace-pre-wrap break-words mt-2">
                         {typeof errorData.error === 'string'
                           ? errorData.error
                           : JSON.stringify(errorData.error, null, 2)}
@@ -185,7 +185,7 @@ const OrderConfirmationPage = () => {
                     <div className="bg-white rounded-lg p-4 mb-4 border border-blue-200">
                       <p className="text-blue-700 font-bold mb-2 text-lg">📦 Request Payload Sent:</p>
                       <div className="bg-blue-50 p-3 rounded border border-blue-300 max-h-96 overflow-y-auto">
-                        <pre className="text-xs text-gray-800 whitespace-pre-wrap break-words font-mono">
+                        <pre className="text-xs text-[#AFB1AE] whitespace-pre-wrap break-words font-mono">
                           {JSON.stringify(errorData.payload, null, 2)}
                         </pre>
                       </div>
@@ -195,7 +195,7 @@ const OrderConfirmationPage = () => {
                   {!errorData.payload && (
                     <div className="bg-orange-50 border border-orange-300 rounded-lg p-4 mb-4">
                       <p className="text-orange-700 font-semibold">⚠️ Payload not available in error data</p>
-                      <p className="text-sm text-gray-600 mt-1">Check console logs for full error details</p>
+                      <p className="text-sm text-[#AFB1AE] mt-1">Check console logs for full error details</p>
                     </div>
                   )}
                 </>
@@ -204,7 +204,7 @@ const OrderConfirmationPage = () => {
               return (
                 <div className="bg-white rounded p-4 mb-4">
                   <p className="text-red-600 font-semibold mb-2">Raw Error Details:</p>
-                  <pre className="text-sm text-gray-800 whitespace-pre-wrap break-words bg-gray-50 p-3 rounded border border-gray-200">
+                  <pre className="text-sm text-[#AFB1AE] whitespace-pre-wrap break-words bg-gray-50 p-3 rounded border border-gray-200">
                     {decodeURIComponent(errorMessage)}
                   </pre>
                 </div>
@@ -213,7 +213,7 @@ const OrderConfirmationPage = () => {
           })()}
 
           <div className="bg-yellow-50 border border-yellow-300 rounded-lg p-4 mb-4">
-            <p className="text-sm text-gray-700">
+            <p className="text-sm text-[#AFB1AE]">
               <strong className="text-yellow-700">⚡ Important:</strong> Your payment was successful, but we encountered an error while creating your order in the system. Please contact support with the error details above.
             </p>
           </div>
@@ -274,14 +274,14 @@ const OrderConfirmationPage = () => {
           <h2 className="text-2xl font-semibold mb-1">
             Thank you for your order!
           </h2>
-          <p className="text-gray-600 mb-6">
+          <p className="text-[#AFB1AE] mb-6">
             Your payment has been successfully done.
           </p>
 
           <hr className="border-[#EDEDED] w-1/2 mb-6" />
 
           <h3 className="text-lg font-medium mb-4">Total Payment</h3>
-          <p className="text-3xl font-bold text-gray-800 mb-6">
+          <p className="text-3xl font-bold text-[#AFB1AE] mb-6">
             ¥
             {totalAmount
               ? Math.floor(parseFloat(totalAmount.toString().replace(/,/g, ""))).toLocaleString()

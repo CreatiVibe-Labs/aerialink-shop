@@ -63,7 +63,7 @@ const ProductExploreLeftSection = () => {
   if (!product || imageUrls.length === 0) {
     return (
       <div className="col-span-2 flex h-full items-center justify-center">
-        <p className="text-gray-500">No images available</p>
+        <p className="text-[#AFB1AE]">No images available</p>
       </div>
     );
   }
@@ -118,7 +118,7 @@ const ProductExploreLeftSection = () => {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-5 h-5 text-gray-600"
+            className="w-5 h-5 text-[#AFB1AE]"
           >
             <path
               strokeLinecap="round"
@@ -151,7 +151,7 @@ const ProductExploreLeftSection = () => {
                   <button
                     type="button"
                     onClick={() => setSelectedIndex((i) => Math.max(0, i - 1))}
-                    className="absolute -left-12 top-1/2 -translate-y-1/2 z-20 bg-white/25 hover:bg-white/35 cursor-pointer text-white w-10 h-10 rounded-full flex items-center justify-center"
+                    className="absolute -left-12 top-1/2 -translate-y-1/2 z-20 bg-white/25 hover:bg-white/35 cursor-pointer text-white w-10 h-10 rounded-full flex items-center justify-center max-md:left-2 max-md:top-1/2 max-md:w-8 max-md:h-8 max-md:bg-black/40 max-md:hover:bg-black/50"
                     aria-label="Previous image"
                   >
                     ‹
@@ -162,7 +162,7 @@ const ProductExploreLeftSection = () => {
                   <button
                     type="button"
                     onClick={() => setSelectedIndex((i) => Math.min(imageUrls.length - 1, i + 1))}
-                    className="absolute -right-12 top-1/2 -translate-y-1/2 z-20 bg-white/25 cursor-pointer hover:bg-white/35 text-white w-10 h-10 rounded-full flex items-center justify-center"
+                    className="absolute -right-12 top-1/2 -translate-y-1/2 z-20 bg-white/25 cursor-pointer hover:bg-white/35 text-white w-10 h-10 rounded-full flex items-center justify-center max-md:right-2 max-md:top-1/2 max-md:w-8 max-md:h-8 max-md:bg-black/40 max-md:hover:bg-black/50"
                     aria-label="Next image"
                   >
                     ›
@@ -175,14 +175,14 @@ const ProductExploreLeftSection = () => {
             <button
               type="button"
               onClick={() => setLightboxOpen(false)}
-              className="absolute -top-11 right-0 z-20 bg-white/25 hover:bg-white/35 text-white w-9 h-9 rounded-full flex items-center justify-center text-xl cursor-pointer"
+              className="absolute -top-11 right-0 z-20 bg-white/25 hover:bg-white/35 text-white w-9 h-9 rounded-full flex items-center justify-center text-xl cursor-pointer max-md:top-2 max-md:right-2 max-md:w-8 max-md:h-8 max-md:bg-black/40 max-md:hover:bg-black/50"
               aria-label="Close preview"
             >
               ×
             </button>
 
             {/* Counter outside top-left of box */}
-            <div className="absolute -top-10 left-0 z-20 bg-white/25 text-white text-sm px-3 py-1 rounded-full">
+            <div className="absolute -top-10 left-0 z-20 bg-white/25 text-white text-sm px-3 py-1 rounded-full max-md:top-2 max-md:left-2 max-md:bg-black/40">
               {selectedIndex + 1} / {imageUrls.length}
             </div>
 

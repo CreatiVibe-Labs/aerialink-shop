@@ -9,7 +9,7 @@ const SmallHeading :FC<SmallHeadingProps> = ({label,className = ''}) => {
   return (
     <div className={`flex space-x-2 ${className}`}>
      <div className="bg-primary rounded w-3"></div>
-     <h2 className='font-medium text-min-gray'>{label}</h2></div>
+     <h2 className='font-medium text-[#AFB1AE]'>{label}</h2></div>
   );
 };
 

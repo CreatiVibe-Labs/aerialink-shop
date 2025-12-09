@@ -45,14 +45,14 @@ const ForgotPasswordForm = () => {
       <BackButton
         href="/login"
         label="back to login"
-        className="mb-5  max-md:static max-md:mb-5 max-md:-ml-2 font-albert-sans font-[500] text-[12px] lg:text-[14px] leading-[100%] tracking-[0%] text-[#313131]"
+        className="mb-5  max-md:static max-md:mb-5 max-md:-ml-2 font-albert-sans font-[500] text-[12px] lg:text-[14px] leading-[100%] tracking-[0%] text-[#AFB1AE]"
       />
 
       <div className="center-col items-start space-y-[16px]">
-        <h1 className="font-albert-sans font-semibold lg:text-[40px] text-[28px] leading-[100%] tracking-[0] text-[#313131]">
+        <h1 className="font-albert-sans font-semibold lg:text-[40px] text-[28px] leading-[100%] tracking-[0] text-[#AFB1AE]">
           Forgot your password?
         </h1>
-        <p className="w-full lg:max-w-[512px] font-albert-sans opacity-75 font-[400] lg:text-[16px] text-[12px] leading-[120%] tracking-[0%] text-[#313131]">
+        <p className="w-full lg:max-w-[512px] font-albert-sans opacity-75 font-[400] lg:text-[16px] text-[12px] leading-[120%] tracking-[0%] text-[#AFB1AE]">
           Don&apos;t worry, happens to all of us. Enter your email below to
           recover your password.
         </p>
@@ -64,6 +64,7 @@ const ForgotPasswordForm = () => {
       >
         <div className="space-y-0.5">
           <Input
+            className="text-[#AFB1AE] border border-gray-300"
             type="email"
             label="email"
             placeholder=""

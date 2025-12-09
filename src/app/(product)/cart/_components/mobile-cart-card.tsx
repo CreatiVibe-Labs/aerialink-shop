@@ -3,6 +3,14 @@ import React from "react";
 import { RxCross1 } from "react-icons/rx";
 import Dropdown from "@/components/common/dropdown";
 
+interface Size {
+  id: number;
+  size_name: string;
+  size_value: string;
+  size_value_jp?: string;
+  price?: string;
+}
+
 interface MobileCartCardProps {
   id: number;
   image: string;
@@ -12,6 +20,7 @@ interface MobileCartCardProps {
   size: string;
   roomType: string;
   index: number;
+  productData?: any;
   onRemove: (index: number) => void;
   onQuantityChange: (index: number, action: "inc" | "dec") => void;
   onSizeChange: (index: number, size: string) => void;
@@ -29,6 +38,7 @@ const MobileCartCard: React.FC<MobileCartCardProps> = ({
   size,
   roomType,
   index,
+  productData,
   onRemove,
   onQuantityChange,
   onSizeChange,
@@ -36,11 +46,86 @@ const MobileCartCard: React.FC<MobileCartCardProps> = ({
   openDropdown,
   onDropdownToggle,
 }) => {
+
+  // Function to get available room types from product variants
+  const getAvailableRoomTypes = (productData: any): string[] => {
+    if (!productData?.variants) return ["Edoma", "Danchima"]; // fallback
+
+    const roomTypes = new Set<string>();
+    productData.variants.forEach((variant: any) => {
+      if ('attributes' in variant && variant.attributes) {
+        const categoryAttr = variant.attributes.find((attr: any) =>
+          attr.attribute_name.toLowerCase().includes('category') ||
+          attr.attribute_name.toLowerCase().includes('type')
+        );
+        if (categoryAttr?.attribute_value) {
+          roomTypes.add(categoryAttr.attribute_value);
+        }
+      } else if ('sizes' in variant && variant.sizes) {
+        Object.keys(variant.sizes).forEach(roomType => {
+          if (variant.sizes[roomType]?.length > 0) {
+            roomTypes.add(roomType);
+          }
+        });
+      }
+    });
+
+    return Array.from(roomTypes).length > 0 ? Array.from(roomTypes) : ["Edoma", "Danchima"];
+  };
+
+  // Function to get sizes for a specific room type from product variants
+  const getSizesForRoomType = (productData: any, roomType: string): Size[] => {
+    if (!productData?.variants) return [];
+
+    const sizes: Size[] = [];
+    productData.variants.forEach((variant: any) => {
+      if ('attributes' in variant && variant.attributes) {
+        const categoryAttr = variant.attributes.find((attr: any) =>
+          attr.attribute_name.toLowerCase().includes('category') ||
+          attr.attribute_name.toLowerCase().includes('type')
+        );
+
+        if (categoryAttr?.attribute_value === roomType) {
+          const sizeAttr = variant.attributes.find((attr: any) =>
+            attr.attribute_name.toLowerCase().includes('size')
+          );
+
+          if (sizeAttr) {
+            const sizeObj: Size = {
+              id: variant.id,
+              size_name: sizeAttr.attribute_value,
+              size_value: sizeAttr.attribute_value,
+              price: variant.price
+            };
+
+            if (!sizes.find(s => s.size_value === sizeObj.size_value)) {
+              sizes.push(sizeObj);
+            }
+          }
+        }
+      } else if ('sizes' in variant && variant.sizes) {
+        const categorySizes = variant.sizes[roomType as keyof typeof variant.sizes];
+        if (categorySizes) {
+          categorySizes.forEach((size: Size) => {
+            if (!sizes.find(s => s.size_value === size.size_value)) {
+              sizes.push(size);
+            }
+          });
+        }
+      }
+    });
+
+    return sizes;
+  };
+
+  const availableRoomTypes = getAvailableRoomTypes(productData);
+  const availableSizes = getSizesForRoomType(productData, roomType);
+
   return (
-    <div className="w-full rounded-xl border border-gray-200 p-3 flex flex-col gap-1 shadow-xs">
-      {/* Product Info */}
-      <div className="flex items-center gap-3">
-        <div className="relative w-16 h-16 p-0.5 border-2 border-primary rounded-xl flex-shrink-0">
+    <div className="w-full rounded-xl border border-gray-200 p-4 flex flex-col gap-4 shadow-sm bg-white">
+      {/* Row 1: Product Info */}
+      <div className="flex items-start gap-4 relative">
+        <div className="relative w-20 h-20 p-0.5 border-2 border-gray-300 rounded-xl flex-shrink-0">
           <img
             src={image}
             alt={name}
@@ -48,52 +133,71 @@ const MobileCartCard: React.FC<MobileCartCardProps> = ({
           />
           <button
             onClick={() => onRemove(index)}
-            className="absolute -top-1.5 -left-2 bg-red-600 text-white rounded-full p-1 text-xs"
+            className="absolute -top-2 -left-2 bg-red-600 text-white rounded-full p-1.5 text-xs shadow-md z-10"
           >
-            <RxCross1 strokeWidth={1.5} size={9} />
+            <RxCross1 strokeWidth={1.5} size={10} />
           </button>
         </div>
-        <div className="flex flex-col">
-          <span className="text-sm font-medium">{name}</span>
-          <span className="text-xs text-gray-600">¥{Number(price).toLocaleString()}</span>
+        <div className="flex flex-col gap-1 pt-1">
+          <span className="text-base font-semibold text-[#AFB1AE] line-clamp-2">{name}</span>
+          <span className="text-sm text-[#AFB1AE] font-medium">¥{Number(price).toLocaleString()}</span>
         </div>
       </div>
 
-      {/* Quantity & Size */}
-      <div className="flex justify-between  items-end">
-        {/* Subtotal */}
-        <div className="text-right text-gray-700 font-medium text-sm">
-          Subtotal: ¥{(Number(price) * quantity).toLocaleString()}
+      {/* Row 2: Controls & Subtotal */}
+      <div className="flex flex-col gap-3">
+        <div className="grid grid-cols-2 gap-3">
+          {/* Room Type */}
+          <Dropdown
+            className="bg-transparent border border-gray-300 text-[#AFB1AE]! text-xs px-3 py-2 rounded-lg w-full"
+            DropDownclassName={`bg-white text-[#AFB1AE]! !z-[${50 + index}]`}
+            hideLabelOnMobile={false}
+            label={roomType || "Room Type"}
+            list={availableRoomTypes.map(rt => ({ key: rt, val: rt }))}
+            onChange={(val) => onRoomTypeChange(index, val)}
+          />
+
+          {/* Size */}
+          <Dropdown
+            className="bg-transparent border border-gray-300 text-[#AFB1AE]! text-xs px-3 py-2 rounded-lg w-full"
+            DropDownclassName={`bg-white text-[#AFB1AE]! !z-[${40 + index}]`}
+            hideLabelOnMobile={false}
+            label={size || "Size"}
+            list={availableSizes.length > 0
+              ? availableSizes.map(s => ({ key: s.size_value, val: s.size_value }))
+              : [
+                { key: "small", val: "Small" },
+                { key: "medium", val: "Medium" },
+                { key: "large", val: "Large" },
+              ]
+            }
+            onChange={(val) => onSizeChange(index, val)}
+          />
         </div>
-        <div className="flex flex-col gap-2 items-end">
-          <div className="flex items-center gap-3 ">
+
+        <div className="flex justify-between items-center pt-2 border-t border-gray-100">
+          {/* Quantity */}
+          <div className="flex items-center gap-3 bg-gray-50 rounded-lg px-3 py-1">
             <button
               onClick={() => onQuantityChange(index, "dec")}
-              className="text-min-gray text-lg cursor-pointer"
+              className="text-[#AFB1AE] text-lg cursor-pointer hover:text-primary transition-colors"
             >
               –
             </button>
-            <span className="text-sm w-3 text-center">{quantity}</span>
+            <span className="text-sm w-4 text-center font-medium text-[#AFB1AE]">{quantity}</span>
             <button
               onClick={() => onQuantityChange(index, "inc")}
-              className="text-min-gray text-lg cursor-pointer"
+              className="text-[#AFB1AE] text-lg cursor-pointer hover:text-primary transition-colors"
             >
               +
             </button>
           </div>
 
-          <Dropdown
-            className="bg-transparent border border-light-gray text-min-gray! text-sm px-3 py-1 rounded-xl"
-            DropDownclassName={`bg-white text-min-gray! !z-[${40 + index}]`}
-            hideLabelOnMobile={false}
-            label="Size"
-            list={[
-              { key: "small", val: "Small" },
-              { key: "medium", val: "Medium" },
-              { key: "large", val: "Large" },
-            ]}
-            onChange={(val) => onSizeChange(index, val)}
-          />
+          {/* Subtotal */}
+          <div className="text-right">
+            <span className="text-xs text-gray-400 block">Subtotal</span>
+            <span className="text-primary font-bold text-base">¥{(Number(price) * quantity).toLocaleString()}</span>
+          </div>
         </div>
       </div>
     </div>

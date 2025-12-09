@@ -8,7 +8,7 @@ import parse from 'html-react-parser';
 const VariantsSkeleton = () => (
   <div className="rounded-xl border border-gray-200 overflow-hidden max-w-2xl animate-pulse">
     {/* Header */}
-    <div className="bg-gray-50 grid grid-cols-4 text-sm font-medium text-gray-700 border-b border-gray-200">
+    <div className="bg-gray-50 grid grid-cols-4 text-sm font-medium text-[#AFB1AE] border-b border-gray-200">
       <div className="p-3">Variant</div>
       <div className="p-3">Color</div>
       <div className="p-3">Price</div>
@@ -43,7 +43,7 @@ const ProductDetailTab3 = () => {
   if (productLoading) return <VariantsSkeleton />;
 
   // No product
-  if (!product) return <p className="text-gray-500">No product data.</p>;
+  if (!product) return <p className="text-[#AFB1AE]">No product data.</p>;
 
   // Parse colors, sizes, weight from specifications with fallback
   const color = language === 'EN' 
@@ -71,22 +71,22 @@ const ProductDetailTab3 = () => {
   const Harmfull = harmfulContent ? parse(harmfulContent) : "N/A";
 
   return (
-    <div className="rounded-2xl border border-[#666664] overflow-hidden max-w-[66%]">
+    <div className="rounded-2xl border border-[#AFB1AE] overflow-hidden w-full md:max-w-[66%]">
       {/* Colors Row */}
-      <div className="grid grid-cols-[200px_1fr] border-b border-[#666664]">
-        <div className="px-4 py-3 bg-white font-medium text-gray-700 border-r border-[#666664]">Color</div>
-        <div className="px-4 py-3 bg-white text-gray-600">{color}</div>
+      <div className="grid md:grid-cols-[200px_1fr] grid-cols-[150px_1fr] border-b border-[#AFB1AE]">
+        <div className="px-4 py-3 bg-white font-medium text-[#AFB1AE] border-r border-[#AFB1AE]">Color</div>
+        <div className="px-4 py-3 bg-white text-[#AFB1AE]">{color}</div>
       </div>
 
       {/* Sizes Row */}
-      <div className="grid grid-cols-[200px_1fr] border-b border-[#666664]">
-        <div className="px-4 py-3 bg-white font-medium text-gray-700 border-r border-[#666664]">New Weight</div>
-        <div className="px-4 py-3 bg-white text-gray-600">{NetWeight}</div>
+      <div className="grid md:grid-cols-[200px_1fr] grid-cols-[150px_1fr] border-b border-[#AFB1AE]">
+        <div className="px-4 py-3 bg-white font-medium text-[#AFB1AE] border-r border-[#AFB1AE]">New Weight</div>
+        <div className="px-4 py-3 bg-white text-[#AFB1AE]">{NetWeight}</div>
       </div>
 
-      <div className="grid grid-cols-[200px_1fr] border-b border-[#666664]">
-        <div className="px-4 py-3 bg-white font-medium text-gray-700 border-r border-[#666664]">Packing</div>
-        <div className="px-4 py-3 bg-white text-gray-600">
+      <div className="grid md:grid-cols-[200px_1fr] grid-cols-[150px_1fr] border-b border-[#AFB1AE]">
+        <div className="px-4 py-3 bg-white font-medium text-[#AFB1AE] border-r border-[#AFB1AE]">Packing</div>
+        <div className="px-4 py-3 bg-white text-[#AFB1AE]">
           <div>{packing}</div>
           <div>{packingRemarks}</div>
         </div>
@@ -94,9 +94,9 @@ const ProductDetailTab3 = () => {
 
 
       {/* Weight Row */}
-      <div className="grid grid-cols-[200px_1fr]">
-        <div className="px-4 py-3 bg-white font-medium text-gray-700 border-r border-[#666664]">Harmfull Content</div>
-        <div className="px-4 py-3 bg-white text-gray-600">{Harmfull}</div>
+      <div className="grid md:grid-cols-[200px_1fr] grid-cols-[150px_1fr]">
+        <div className="px-4 py-3 bg-white font-medium text-[#AFB1AE] border-r border-[#AFB1AE]">Harmfull Content</div>
+        <div className="px-4 py-3 bg-white text-[#AFB1AE]">{Harmfull}</div>
       </div>
 
 

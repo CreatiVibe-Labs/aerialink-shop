@@ -319,7 +319,7 @@ const CheckoutLeft = () => {
       )}
       {/* ================== DESKTOP VIEW ================== */}
       <div className="hidden md:block">
-        <h2 className="text-3xl font-medium text-min-gray mb-6">Shipping Details</h2>
+        <h2 className="text-3xl font-medium text-[#AFB1AE] mb-6">Shipping Details</h2>
 
         {/* Show saved addresses for logged-in users */}
         {isLoggedIn && hasAddresses && (
@@ -339,7 +339,7 @@ const CheckoutLeft = () => {
         {/* Show empty state if logged in but no addresses */}
         {isLoggedIn && !hasAddresses && (
           <>
-            <div className="mb-5 border-1 border-[#666664] rounded-xl p-6 bg-white">
+            <div className="mb-5 border-1 border-gray-300 rounded-xl p-6 bg-white">
               <h3 className="text-[#98C1A9] font-bold text-2xl mb-4">Saved address</h3>
               <button
                 type="button"
@@ -364,10 +364,11 @@ const CheckoutLeft = () => {
           <div className={`${isLoggedIn ? 'hidden' : 'space-y-5'}`}>
             {/* Full Name */}
             <div>
-              <label className="block text-sm text-gray-600 mb-1">
+              <label className="block text-sm text-[#AFB1AE] mb-1">
                 Full Name<span className="text-red-500">*</span>
               </label>
               <Input
+              className="text-[#AFB1AE] border border-gray-300 placeholder:text-[#AFB1AE]"
                 type="text"
                 placeholder="Enter your full name"
                 {...regDesktop("fullName", { required: "Full name is required" })}
@@ -379,10 +380,11 @@ const CheckoutLeft = () => {
 
             {/* Email */}
             <div>
-              <label className="block text-sm text-gray-600 mb-1">
+              <label className="block text-sm text-[#AFB1AE] mb-1">
                 Email<span className="text-red-500">*</span>
               </label>
               <Input
+              className="text-[#AFB1AE] border border-gray-300 placeholder:text-[#AFB1AE]"
                 type="email"
                 placeholder="Enter your email"
                 {...regDesktop("email", {
@@ -409,7 +411,7 @@ const CheckoutLeft = () => {
                 }}
                 render={({ field }) => (
                   <div>
-                    <label className="block text-sm text-gray-600 mb-1">
+                    <label className="block text-sm text-[#AFB1AE] mb-1">
                       Phone Number<span className="text-red-500">*</span>
                     </label>
                     <PhoneInput
@@ -427,10 +429,11 @@ const CheckoutLeft = () => {
 
             {/* Address */}
             <div>
-              <label className="block text-sm text-gray-600 mb-1">
+              <label className="block text-sm text-[#AFB1AE] mb-1">
                 Street Address<span className="text-red-500">*</span>
               </label>
               <Input
+              className="text-[#AFB1AE] border border-gray-300 placeholder:text-[#AFB1AE]"
                 type="text"
                 placeholder="Enter your address"
                 {...regDesktop("address", { required: "Address is required" })}
@@ -442,10 +445,11 @@ const CheckoutLeft = () => {
 
             {/* Postal Code */}
             <div>
-              <label className="block text-sm text-gray-600 mb-1">
+              <label className="block text-sm text-[#AFB1AE] mb-1">
                 Postal Code<span className="text-red-500">*</span>
               </label>
               <Input
+              className="text-[#AFB1AE] border border-gray-300 placeholder:text-[#AFB1AE]"
                 type="text"
                 placeholder="Postal Code"
                 {...regDesktop("postalCode", {
@@ -473,7 +477,7 @@ const CheckoutLeft = () => {
 
           {/* Payment */}
           <div className="pt-6">
-            <h3 className="font-semibold text-gray-800 mb-3">Payment Method</h3>
+            <h3 className="font-semibold text-[#AFB1AE] mb-3">Payment Method</h3>
             <div className="flex items-center gap-2">
               <input
                 type="radio"
@@ -481,7 +485,7 @@ const CheckoutLeft = () => {
                 {...regDesktop("payment")}
                 className="accent-light-gray"
               />
-              <label className="text-gray-700 font-medium">KOMOJU</label>
+              <label className="text-[#AFB1AE] font-medium">KOMOJU</label>
             </div>
           </div>
 
@@ -498,7 +502,7 @@ const CheckoutLeft = () => {
       {/* ================== MOBILE VIEW ================== */}
       <div className="md:hidden">
         <div className="flex justify-between items-center mb-5">
-          <h2 className="text-2xl font-medium text-min-gray">
+          <h2 className="text-2xl font-medium text-[#AFB1AE]">
             {mobileStep === 1 ? "Billing Details" : "Review & Pay"}
           </h2>
           {mobileStep === 2 && (
@@ -536,7 +540,7 @@ const CheckoutLeft = () => {
                   <button
                     type="button"
                     onClick={() => setShowAddAddressModal(true)}
-                    className="w-full border-2 border-dashed border-[#C5D3CE] rounded-xl py-16 bg-[#FAFBFA] text-[#C5D3CE] hover:bg-gray-50 transition-colors text-sm flex items-center justify-center gap-2"
+                    className="w-full border-2 border-dashed border-[#C5D3CE] rounded-xl py-16 bg-[#FAFBFA] text-[#AFB1AE] hover:bg-gray-50 transition-colors text-sm flex items-center justify-center gap-2"
                   >
                     <span className="text-2xl">+</span>
                     Add shipping address
@@ -570,6 +574,7 @@ const CheckoutLeft = () => {
                 {/* Email */}
                 <div>
                   <Input
+                  className="text-[#AFB1AE] border border-gray-300 placeholder:text-[#AFB1AE]"
                     type="email"
                     placeholder="Email"
                     {...regMobile("email", {
@@ -615,6 +620,7 @@ const CheckoutLeft = () => {
                 {/* Address */}
                 <div>
                   <Input
+                  className="text-[#AFB1AE] border border-gray-300 placeholder:text-[#AFB1AE]"
                     type="text"
                     placeholder="Street Address"
                     {...regMobile("address", { required: "Address is required" })}
@@ -624,11 +630,13 @@ const CheckoutLeft = () => {
                       {errMobile.address.message}
                     </p>
                   )}
+                  
                 </div>
 
                 {/* Postal Code */}
                 <div>
                   <Input
+                  className="text-[#AFB1AE] border border-gray-300 placeholder:text-[#AFB1AE]"
                     type="text"
                     placeholder="Postal Code"
                     {...regMobile("postalCode", {
@@ -674,9 +682,9 @@ const CheckoutLeft = () => {
                 value="komoju"
                 checked={mobileFormData?.payment === "komoju"}
                 readOnly
-                className="accent-light-gray size-5"
+                className="accent-[#AFB1AE] size-5"
               />
-              <label className="text-gray-700 font-medium">KOMOJU</label>
+              <label className="text-[#AFB1AE] font-medium">KOMOJU</label>
             </div>
 
             {/* <CouponSection /> */}

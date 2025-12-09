@@ -7,7 +7,7 @@ export default function Page() {
   const router = useRouter();
   return (
     <main
-      className="flex flex-col lg:mt-[40px] mt-[20px] lg:mb-[10px] mb-[5px] px-[18px] py-[21px] items-center w-full m-auto bg-[FFFFFF] opacity-500 
+      className="flex flex-col lg:mt-[40px] mt-[20px] lg:mb-[10px] mb-[5px]  py-[21px] items-center w-full m-auto bg-[FFFFFF] opacity-500 
       max-w-7xl"
     >
       <div className="w-full lg:h-[450px] h-[220px]">
@@ -16,11 +16,11 @@ export default function Page() {
           alt="Product"
           width={603}
           height={450}
-          className="rounded-[14px] w-full lg:h-[450px] h-[220px] border-2 border-[#666664]"
+          className="rounded-[14px] w-full lg:h-[450px] h-[220px] border-2 border-[#AFB1AE]"
         />
       </div>
 
-      <span className="lg:mt-8 mt-4 lg:text-[24px] text-[16px] lg:leading-[25.71px] leading-[20px] font-[400] text-[#666664] text-left">
+      <span className="lg:mt-8 mt-4 lg:text-[24px] text-[16px] lg:leading-[25.71px] leading-[20px] font-[400] text-[#AFB1AE] text-left">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent
         tincidunt euismod ante. Vivamus placerat at enim non condimentum. Donec
         sit amet mauris purus. Lorem ipsum dolor sit amet, consectetur Lorem.

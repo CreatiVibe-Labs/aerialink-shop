@@ -21,7 +21,7 @@ const CustomPhoneInput: FC<PhoneInputProps> = ({
   return (
     <div className="flex flex-col w-full relative">
       {label && (
-        <label className="mb-1 text-sm font-medium text-gray-700">{label}</label>
+        <label className="mb-1 text-sm font-medium text-[#AFB1AE]">{label}</label>
       )}
 
       <div className="relative w-full">

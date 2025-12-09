@@ -29,7 +29,7 @@ const renderStars = (rating: number, reviewCount: number) => {
       {/* Half Star */}
       {hasHalfStar && (
         <div className="relative">
-          <PiStarFill className="text-gray-300" size={16} />
+          <PiStarFill className="text-[#AFB1AE]" size={16} />
           <div className="absolute inset-0 overflow-hidden w-1/2">
             <PiStarFill className="text-amber-400" size={16} />
           </div>
@@ -38,11 +38,11 @@ const renderStars = (rating: number, reviewCount: number) => {
 
       {/* Empty Stars */}
       {Array.from({ length: emptyStars }).map((_, i) => (
-        <PiStarFill key={`empty-${i}`} className="text-gray-300" size={16} />
+        <PiStarFill key={`empty-${i}`} className="text-[#AFB1AE]" size={16} />
       ))}
 
       {/* Review Count */}
-      <span className="text-[#666664] text-base font-[600] pl-1 leading-[16px] font-font-albert-sans">
+      <span className="text-[#AFB1AE] text-base font-[600] pl-1 leading-[16px] font-font-albert-sans">
         ({reviewCount})
       </span>
     </div>
@@ -79,7 +79,6 @@ const ProductCard: FC<ProductCardI> = ({ product, onHeartOnClick }) => {
 
   const { addToCart, isInCart } = useCart();
   const { isInWishlist, toggleWishlist, loading } = useWishlist();
-  const { user } = useProfile();
 
   const [showLoginModal, setShowLoginModal] = useState(false);
 
@@ -121,12 +120,8 @@ const ProductCard: FC<ProductCardI> = ({ product, onHeartOnClick }) => {
     e.preventDefault();
     e.stopPropagation();
 
-    if (!user) {
-      setShowLoginModal(true);
-      return;
-    }
     onHeartOnClick();
-    await toggleWishlist(product.id);
+    await toggleWishlist(product.id, product);
   };
 
   // Dynamic values
@@ -136,7 +131,7 @@ const ProductCard: FC<ProductCardI> = ({ product, onHeartOnClick }) => {
   return (
     <>
       <Toaster position="top-right" />
-      <div className="bg-[#FFFDFA] cover-shadow relative rounded-[14px] grid grid-cols-1 p-4 max-sm:p-2 px-4 gap-2">
+      <div className="bg-[#FFFDFA] cover-shadow relative rounded-[14px] grid grid-cols-1 p-3 max-sm:p-2 px-3 gap-1.5">
         {/* Wishlist Icon */}
         <div
           className={`absolute top-1 right-1 max-sm:top-1 max-sm:right-1 cursor-pointer z-[1] transition-colors ${loading
@@ -157,7 +152,7 @@ const ProductCard: FC<ProductCardI> = ({ product, onHeartOnClick }) => {
 
         {/* Image + Link */}
         <Link href={productInnerLink} className="w-full" aria-label="View product details">
-          <div className="w-full h-full xl:min-h-[200px] lg:min-h-[200px] md:min-h-[200px] min-h-[150px] xl:max-h-[200px] lg:max-h-[200px] md:max-h-[200px] max-h-[150px] relative">
+          <div className="w-full h-full xl:min-h-[190px] lg:min-h-[190px] md:min-h-[190px] min-h-[140px] xl:max-h-[190px] lg:max-h-[190px] md:max-h-[190px] max-h-[140px] relative">
             <Image
               src={product?.images?.[0]?.url || "/fallback-image.png"}
               alt={getProductTitle(product.title_en, product.title_jp, language)}
@@ -168,18 +163,18 @@ const ProductCard: FC<ProductCardI> = ({ product, onHeartOnClick }) => {
         </Link>
 
         {/* Details */}
-        <div className="center-col items-start max-sm:text-xs gap-[6.23px]">
+        <div className="center-col items-start max-sm:text-xs gap-1.5 max-sm:gap-0">
           <Link href={productInnerLink}>
-            <h2 className="text-[#666664] font-[500] text-base leading-[19px] my-1 font-font-albert-sans line-clamp-1">
+            <h2 className="text-[#AFB1AE] font-[500] text-sm md:text-base leading-[18px] my-0.5 font-font-albert-sans line-clamp-1">
               {getProductTitle(product.title_en, product.title_jp, language)}
             </h2>
           </Link>
 
-          <h3 className="text-[#DB4444] font-[500] text-base leading-[19px] my-2 font-font-albert-sans">
+          <h3 className="text-[#DB4444] font-[500] text-sm md:text-base leading-[18px] my-1.5 font-font-albert-sans">
             {finalPrice}
           </h3>
 
-          <div className="my-1">
+          <div className="my-0.5">
             {/* Dynamic Rating */}
             {renderStars(avgRating, reviewCount)}
           </div>
@@ -193,14 +188,14 @@ const ProductCard: FC<ProductCardI> = ({ product, onHeartOnClick }) => {
                   disabled={addToCartLoading}
                   className={`capitalize 
               bg-primary hover:bg-primary/80 cursor-pointer
-              rounded-xl text-base leading-[19px] font-[500] min-h-[40px] w-full text-[#FFFAFA] center`}
+              rounded-xl text-sm md:text-base leading-[18px] font-[500] min-h-[36px] w-full text-[#FFFAFA] center`}
                 >
                   {addToCartLoading ? 'Adding...' : buttonText}
                 </button>) : (
                 <Link
                   className={`capitalize 
               bg-primary hover:bg-primary/80 cursor-pointer
-              rounded-xl text-base leading-[19px] font-[500] min-h-[40px] w-full text-[#FFFAFA] center`}
+              rounded-xl text-sm md:text-base leading-[18px] font-[500] min-h-[36px] w-full text-[#FFFAFA] center`}
                   href={productInnerLink}
                 >
                   Select Options
@@ -212,10 +207,7 @@ const ProductCard: FC<ProductCardI> = ({ product, onHeartOnClick }) => {
       </div>
 
       {/*Login Required Modal */}
-      <LoginAlertModal
-        open={showLoginModal}
-        onClose={() => setShowLoginModal(false)}
-      />
+      {/* Login modal no longer required for wishlist; keeping component for potential future use */}
     </>
   );
 };

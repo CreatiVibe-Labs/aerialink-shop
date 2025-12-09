@@ -10,7 +10,7 @@ interface TableListProps {
 const TableList: FC<TableListProps> = ({ id, date, points, description }) => {
   return (
     <div
-      className={`grid grid-cols-4 max-sm:grid-cols-3 gap-2 p-2 items-center max-md:py-1 shadow text-min-gray font-medium   hover:bg-gray-100 transition-colors rounded-lg`}
+      className={`grid grid-cols-4 max-sm:grid-cols-3 gap-2 p-2 items-center max-md:py-1 shadow text-[#AFB1AE] font-medium   hover:bg-gray-100 transition-colors rounded-lg`}
       style={{
        boxShadow: "0px 0px 6.8px 0px #00000040"
       }}

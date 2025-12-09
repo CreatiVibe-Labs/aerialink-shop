@@ -38,28 +38,24 @@ const CartSummary: React.FC<CartSummaryProps> = ({
         Update Cart
       </PrimaryButton> */}
 
-      {/* Mobile Text */}
-      <p className="text-sm text-red-500 md:hidden">
-        Don’t worry you will be able to review your order before payment
-      </p>
 
       {/* Cart Total Box */}
-      <div className="w-full md:w-[20rem] border border-light-gray rounded-xl p-3 shadow-sm">
-        <h3 className="text-center text-min-gray font-medium mb-4">
+      <div className="w-full md:w-[20rem] border-2 border-gray-300 rounded-3xl p-3 shadow-sm">
+        <h3 className="text-center text-[#AFB1AE] font-medium mb-4">
           Cart Total
         </h3>
 
-        <div className="flex justify-between text-sm text-min-gray mb-3 font-medium">
+        <div className="flex justify-between text-sm text-[#AFB1AE] mb-3 font-medium">
           <span>Subtotal:</span>
           <span>¥{Number(subtotal).toLocaleString()}</span>
         </div>
 
-        <div className="flex justify-between text-sm border-t font-medium border-light-gray pt-3 text-min-gray mb-2">
+        <div className="flex justify-between text-sm border-t font-medium border-gray-300 pt-3 text-[#AFB1AE] mb-2">
           <span>Shipping:</span>
           <span>Calculate on checkout</span>
         </div>
 
-        <div className="flex justify-between text-sm font-semibold text-min-gray mt-3 border-t border-light-gray pt-2">
+        <div className="flex justify-between text-sm font-semibold text-[#AFB1AE] mt-3 border-t border-gray-300 pt-2">
           <span>Total:</span>
           <span>¥{Number(subtotal).toLocaleString()}</span>
         </div>
@@ -75,9 +71,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({
           </PrimaryButton>
         </div>
 
-        <p className="text-sm text-red-500 max-md:hidden mt-3">
-          Don’t worry you will be able to review your order before payment
-        </p>
+        {/* Info text moved to page level under product list */}
       </div>
     </div>
   );

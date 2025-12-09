@@ -113,7 +113,7 @@ const AddAddressModal: React.FC<AddAddressModalProps> = ({
       >
         <DialogHeader>
           <DialogTitle className="flex justify-between items-center ">
-            <h3 className="text-[18.86px] leading-[15.72px] font-albert-sans tracking-[4%] lg:text-[36px] font-[500] text-[#666664]">
+            <h3 className="text-[18.86px] leading-[15.72px] font-albert-sans tracking-[4%] lg:text-[36px] font-[500] text-[#AFB1AE]">
               {editAddress ? "Edit Address" : "Add Address"}
             </h3>
             <button
@@ -140,14 +140,12 @@ const AddAddressModal: React.FC<AddAddressModalProps> = ({
 
           {/* Full Name */}
           <div className="flex flex-col">
-            <label className="text-[#666664]/40 text-[17px] font-medium mb-1 hidden lg:block">
-              Full Name<span className="text-red-500/40">*</span>
-            </label>
-            <input
+            
+           <input
               type="text"
               placeholder="Full Name"
               {...register("name", { required: "Full name is required" })}
-              className="border text-[#666664] bg-[#F5F5F5] placeholder:text-gray-400 lg:placeholder-transparent w-full h-[52px] rounded-[14px] px-4 py-2 text-sm focus:outline-none"
+              className="border text-[#AFB1AE] placeholder:text-[#AFB1AE]/40 w-full h-[52px] rounded-[14px] px-4 py-2 text-[18px] font-medium focus:outline-none"
             />
             {errors.name && (
               <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
@@ -165,9 +163,6 @@ const AddAddressModal: React.FC<AddAddressModalProps> = ({
               }}
               render={({ field }) => (
                 <div>
-                  <label className="text-[#666664]/40 text-[17px] font-medium mb-1 hidden lg:block">
-                    Phone Number<span className="text-red-500/40">*</span>
-                  </label>
                   <PhoneInput
                     hideLabel
                     value={field.value || ""}
@@ -183,14 +178,11 @@ const AddAddressModal: React.FC<AddAddressModalProps> = ({
 
           {/* Address */}
           <div className="flex flex-col">
-            <label className="text-[#666664]/40 text-[17px] font-medium mb-1 hidden lg:block">
-              Street Address<span className="text-red-500/40">*</span>
-            </label>
             <input
               type="text"
               placeholder="Street Address"
               {...register("address1", { required: "Address is required" })}
-              className="border text-[#666664] bg-[#F5F5F5] placeholder:text-gray-400 lg:placeholder-transparent w-full h-[52px] rounded-[14px] px-4 py-2 text-sm focus:outline-none"
+              className="border text-[#AFB1AE] placeholder:text-[#AFB1AE]/40 w-full h-[52px] rounded-[14px] px-4 py-2 text-[18px] font-medium focus:outline-none"
             />
             {errors.address1 && (
               <p className="text-red-500 text-sm mt-1">{errors.address1.message}</p>
@@ -199,9 +191,6 @@ const AddAddressModal: React.FC<AddAddressModalProps> = ({
 
           {/* Postal Code */}
           <div className="flex flex-col">
-            <label className="text-[#666664]/40 text-[17px] font-medium mb-1 hidden lg:block">
-              Postal Code<span className="text-red-500/40">*</span>
-            </label>
             <input
               type="text"
               placeholder="Postal Code"
@@ -212,7 +201,7 @@ const AddAddressModal: React.FC<AddAddressModalProps> = ({
                   message: "Enter a valid postal code",
                 },
               })}
-              className="border text-[#666664] bg-[#F5F5F5] placeholder:text-gray-400 lg:placeholder-transparent w-full h-[52px] rounded-[14px] px-4 py-2 text-sm focus:outline-none"
+              className="border text-[#AFB1AE] placeholder:text-[#AFB1AE]/40 w-full h-[52px] rounded-[14px] px-4 py-2 text-[18px] font-medium focus:outline-none"
             />
             {errors.postal_code && (
               <p className="text-red-500 text-sm mt-1">{errors.postal_code.message}</p>
@@ -227,7 +216,7 @@ const AddAddressModal: React.FC<AddAddressModalProps> = ({
               {...register("default")}
               className="accent-light-gray size-4"
             />
-            <label htmlFor="default_address" className="text-sm text-[#666664]">
+            <label htmlFor="default_address" className="text-sm text-[#AFB1AE]">
               Set as default address
             </label>
           </div>

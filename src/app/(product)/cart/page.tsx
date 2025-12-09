@@ -12,26 +12,25 @@ import api from "@/lib/api";
 import { CartItem } from "@/contexts/cart-context";
 
 interface EnrichedCartItem extends CartItem {
-
   productData?: any;
-  images?: Array<{url: string}>;
+  images?: Array<{ url: string }>;
   title_en?: string;
   title_jp?: string;
 }
 
 const CartPage = () => {
-  const { 
-    cartItems, 
-    updateQuantity, 
+  const {
+    cartItems,
+    updateQuantity,
     updateQuantityByIndex,
-    updateSize, 
+    updateSize,
     updateSizeByIndex,
-    updateRoomType, 
+    updateRoomType,
     updateRoomTypeByIndex,
     updatePriceByIndex,
     removeFromCart,
     removeFromCartByIndex,
-    getTotal 
+    getTotal
   } = useCart();
   const { language } = useLanguage();
   const [enrichedCartItems, setEnrichedCartItems] = useState<EnrichedCartItem[]>([]);
@@ -42,7 +41,7 @@ const CartPage = () => {
   useEffect(() => {
     const fetchProductDetails = async () => {
       if (cartItems.length === 0) return;
-      
+
       setLoading(true);
       try {
         const enrichedItems = await Promise.all(
@@ -51,14 +50,14 @@ const CartPage = () => {
               const res = await api.get(
                 `${process.env.NEXT_PUBLIC_API_URL}/products?slug=${cartItem.slug}`
               );
-              
+
               if (res.status === 200) {
                 const product = res.data.data.product;
                 return {
                   ...cartItem,
                   productData: product,
                   images: product?.images || [],
-                  title_en: product?.title_en ,
+                  title_en: product?.title_en,
                   title_jp: product?.title_jp,
                 };
               }
@@ -69,7 +68,7 @@ const CartPage = () => {
             }
           })
         );
-        
+
         setEnrichedCartItems(enrichedItems);
       } catch (error) {
         console.error('Failed to fetch product details:', error);
@@ -87,7 +86,7 @@ const CartPage = () => {
       <div className="w-full max-w-7xl mx-auto px-4 py-10">
         <BreadCrumbs />
         <div className="text-center py-16">
-          <p className="text-lg text-gray-500">Your cart is empty.</p>
+          <p className="text-lg text-[#AFB1AE]">Your cart is empty.</p>
         </div>
       </div>
     );
@@ -132,28 +131,42 @@ const CartPage = () => {
         {(loading ? cartItems : enrichedCartItems).map((item, index) => {
           const displayItem = loading ? item : (item as EnrichedCartItem);
           return (
-          <MobileCartCard
-            key={`${displayItem.id}-${displayItem.size}-${displayItem.room_type}`}
-            id={displayItem.id}
-            image={loading ? "/fallback-image.png" : (displayItem as EnrichedCartItem).images?.[0]?.url || "/fallback-image.png"}
-            name={loading ? "Loading..." : language === "EN" ? ((displayItem as EnrichedCartItem).title_en || (displayItem as EnrichedCartItem).title_jp || "Product Name") : ((displayItem as EnrichedCartItem).title_jp || (displayItem as EnrichedCartItem).title_en || "Product Name")}
-            price={displayItem.price}
-            quantity={displayItem.quantity}
-            size={displayItem.size}
-            roomType={displayItem.room_type}
-            index={index}
-            onRemove={removeFromCartByIndex}
-            onQuantityChange={handleQuantityChange}
-            onSizeChange={handleSizeChange}
-            onRoomTypeChange={handleRoomTypeChange}
-          />
-        )})}
+            <MobileCartCard
+              key={`${displayItem.id}-${displayItem.size}-${displayItem.room_type}`}
+              id={displayItem.id}
+              image={loading ? "/fallback-image.png" : (displayItem as EnrichedCartItem).images?.[0]?.url || "/fallback-image.png"}
+              name={loading ? "Loading..." : language === "EN" ? ((displayItem as EnrichedCartItem).title_en || (displayItem as EnrichedCartItem).title_jp || "Product Name") : ((displayItem as EnrichedCartItem).title_jp || (displayItem as EnrichedCartItem).title_en || "Product Name")}
+              price={displayItem.price}
+              quantity={displayItem.quantity}
+              size={displayItem.size}
+              roomType={displayItem.room_type}
+              index={index}
+              productData={(displayItem as EnrichedCartItem).productData}
+              onRemove={removeFromCartByIndex}
+              onQuantityChange={handleQuantityChange}
+              onSizeChange={handleSizeChange}
+              onRoomTypeChange={handleRoomTypeChange}
+            />
+          )
+        })}
+      </div>
+
+      {/* Info: review before payment (placed under product list) */}
+      <div className="w-full mt-4">
+        {/* Mobile */}
+        <p className="md:hidden text-red-500 text-base">
+          Don’t worry you will be able to review your order before payment
+        </p>
+        {/* Desktop */}
+        <p className="hidden md:block text-red-500 text-base">
+          Don’t worry you will be able to review your order before payment
+        </p>
       </div>
 
       {/* Summary */}
-      <CartSummary 
+      <CartSummary
         subtotal={subtotal}
-        onUpdateCart={() => {}} // Optional
+        onUpdateCart={() => { }} // Optional
         onCheckout={() => console.log("Proceed to checkout")}
       />
     </div>

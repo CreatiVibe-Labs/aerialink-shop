@@ -19,12 +19,12 @@ const OtherProductSection = () => {
 
       {/* Loading */}
       {loading ? (
-        <div className="grid grid-cols-4 mt-5 gap-4 max-sm:gap-3 max-2xl:grid-cols-3 max-xl:grid-cols-2 max-md:grid-cols-1 max-sm:grid-cols-2">
+        <div className="grid mt-5 gap-4 max-sm:gap-3 grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
           <ProductsSkeletonSections />
         </div>
       ) : relatedProducts.length > 0 ? (
         /* Show only 4 products */
-        <div className="grid grid-cols-4 mt-5 gap-4 max-sm:gap-3 max-2xl:grid-cols-3 max-xl:grid-cols-2 max-md:grid-cols-1 max-sm:grid-cols-2">
+        <div className="grid mt-5 gap-4 max-sm:gap-3 grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
           {relatedProducts.map((product) => (
             <ProductCard
               key={product.id}
@@ -35,7 +35,7 @@ const OtherProductSection = () => {
         </div>
       ) : (
         /* No related products */
-        <p className="text-center text-gray-500 mt-5">
+        <p className="text-center text-[#AFB1AE] mt-5">
           No related products found.
         </p>
       )}

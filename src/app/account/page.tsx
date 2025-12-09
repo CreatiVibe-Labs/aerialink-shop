@@ -16,9 +16,9 @@ const AccountPage: React.FC = () => {
   return (
     <>
       <BreadCrumbs />
-      <div className=" ">
+      <div className="  ">
         {/* Header */}
-        <h1 className="lg:text-[36px] text-[21.05px] font-[500] lg:font-semibold mb-5 text-[#686868] ">
+        <h1 className="lg:text-[36px] text-[21.05px] font-[500] lg:font-semibold mb-5 text-[#AFB1AE] ">
           Hello {user?.name || "username"}
         </h1>
 
@@ -78,7 +78,7 @@ const AccountPage: React.FC = () => {
         </div>
 
 
-        <div className="w-full max-w-6xl mx-auto">
+        <div className="w-full max-w-6xl mb-10 mx-auto">
           {" "}
           <ProfileCardsSection />
         </div>
@@ -115,7 +115,7 @@ const Box: React.FC<BoxProps> = ({
         gap-[10px] cursor-pointer transition-all duration-200 group 
         ${isActive
           ? "bg-[#98C1A9] shadow-[0_0_6.1px_0_#00000040]"
-          : "bg-[#FFFDFA]  border-gray-200 shadow-lg"
+          : "bg-[#fdfdfd]  border-gray-200 shadow-lg"
         }`}
     >
       <div className="flex items-center gap-2">
@@ -134,7 +134,7 @@ const Box: React.FC<BoxProps> = ({
 
         <h2
           className={`text-lg font-semibold transition-all duration-200
-            ${isActive ? "text-white" : "text-[#666664] "}`}
+            ${isActive ? "text-white" : "text-[#AFB1AE] "}`}
         >
           {title}
         </h2>
@@ -142,7 +142,7 @@ const Box: React.FC<BoxProps> = ({
 
       <p
         className={`text-sm leading-snug pl-8 transition-all duration-200 hidden sm:block
-          ${isActive ? "text-white/90" : "text-gray-600 "}`}
+          ${isActive ? "text-white/90" : "text-[#AFB1AE] "}`}
       >
         {description}
       </p>

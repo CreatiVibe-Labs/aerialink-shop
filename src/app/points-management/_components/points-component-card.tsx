@@ -13,7 +13,7 @@ const PointsComponentCard: FC<PointsComponentCardProps> = ({
 }) => {
   return (
     <div className={`flex flex-col items-center ${className}`}>
-      <h3 className="text-min-gray text-lg font-bold max-sm:text-sm">{title}</h3>
+      <h3 className="text-[#AFB1AE] text-lg font-bold max-sm:text-sm">{title}</h3>
       <h3 className=" text-7xl max-md:text-5xl font-bold text-primary max-sm:text-4xl">{value}</h3>
     </div>
   );

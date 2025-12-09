@@ -16,8 +16,6 @@ const WishListPage = () => {
     typeof window !== "undefined" ? Cookies.get("token") : null;
 
   useEffect(() => {
-    if (!token) return;
-
     if (wishlist && wishlist.length > 0) {
       const mappedProducts = wishlist.map((item) => {
         const product = item.product;
@@ -27,41 +25,22 @@ const WishListPage = () => {
             src: product.images[0]?.url
               ? `${process.env.NEXT_PUBLIC_API_URL}/storage/${product.images[0].url}`
               : "/assets/home/product/product.png",
-            alt:
-              language === "EN"
-                ? product?.title_en
-                : product?.title_jp,
+            alt: language === "EN" ? product?.title_en : product?.title_jp,
           },
           rating: 4,
-          title:
-            language === "EN"
-              ? product?.title_en
-              : product?.title_jp,
+          title: language === "EN" ? product?.title_en : product?.title_jp,
           product: product,
           onHeartOnClick: () => {},
           addToCardOnClick: () => {},
         };
       });
-
       setProducts(mappedProducts);
     } else {
-      // Clear when wishlist becomes empty, so UI updates without refresh
       setProducts([]);
     }
-  }, [wishlist, token, language]);
+  }, [wishlist, language]);
 
-  if (!token) {
-    return (
-      <div className="max-w-7xl w-full mx-auto max-md:px-5 max-sm:px-3 my-5">
-        <BreadCrumbs />
-        <div className="text-center py-10">
-          <p className="text-lg text-gray-600 font-medium">
-            Please log in first to view or add wishlist items.
-          </p>
-        </div>
-      </div>
-    );
-  }
+  // Both authenticated and guest users can view wishlist
 
   if (loading) {
     return (
@@ -86,7 +65,7 @@ const WishListPage = () => {
       <div className="max-w-7xl w-full mx-auto max-md:px-5 max-sm:px-3 my-5">
         <BreadCrumbs />
         <div className="text-center py-10">
-          <p className="text-lg text-gray-500">Your wishlist is empty.</p>
+          <p className="text-lg text-[#AFB1AE]">Your wishlist is empty.</p>
         </div>
       </div>
     );
